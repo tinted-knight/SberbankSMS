@@ -3,7 +3,6 @@ package ru.tinted_knight.sberbanksms.Message;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -52,7 +51,7 @@ public class Message {
         Pattern pattern = Pattern.compile(Constants.pattern);
         // проверка на "нормальный" паттерн
         if (tryExtractData(messageBody, Pattern.compile(Constants.newPattern))){
-            // smth
+            // nothing
         }
         else {
             pattern = Pattern.compile(Constants.passwordPattern);

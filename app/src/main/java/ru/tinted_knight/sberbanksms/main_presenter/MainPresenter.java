@@ -149,12 +149,12 @@ public class MainPresenter implements IMainPresenter, ISimpleModel.OnProgressUpd
                     return;
                 }
                 switch (item.getId()) {
-                    case R.id.ivOperationIcon:
-                        int type = mAdapter.getType(position);
-                        mAdapter.addTypeFilter(type);
-                        mFilterOperation = true;
-                        mView.scrollToFirst();
-                        break;
+//                    case R.id.ivOperationIcon:
+//                        int type = mAdapter.getType(position);
+//                        mAdapter.addTypeFilter(type);
+//                        mFilterOperation = true;
+//                        mView.scrollToFirst();
+//                        break;
                     case R.id.tvSumma:
                         mAdapter.addTypeFilter(mAdapter.getType(position));
                         mFilterOperation = true;

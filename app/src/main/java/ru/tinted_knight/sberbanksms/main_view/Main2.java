@@ -62,8 +62,7 @@ public class Main2 extends AppCompatActivity
 
     @Override
     public Context getContext() {
-//        return getApplicationContext();
-        return this;
+        return getApplicationContext();
     }
 
     @Override

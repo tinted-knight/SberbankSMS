@@ -17,7 +17,6 @@ import ru.tinted_knight.sberbanksms.Message.MessageReader.DeviceInboxCursorMessa
 import ru.tinted_knight.sberbanksms.Settings.Preferences;
 import ru.tinted_knight.sberbanksms.Tools.DB.DBHandler;
 import ru.tinted_knight.sberbanksms.Tools.DB.MessageContentProvider;
-import ru.tinted_knight.sberbanksms.Tools.Slog;
 
 
 public class SimpleModel implements ISimpleModel {
@@ -117,16 +116,12 @@ public class SimpleModel implements ISimpleModel {
         @Override
         protected Void doInBackground(Void... params) {
             if (cursor.moveToFirst()) {
-                Slog.log("agents start build list");
                 Agents agents = new Agents(context, cursor.getCount());
                 do {
                     agents.add(cursor.getString(cursor.getColumnIndex(DBHandler.MessagesTable.Agent)));
                     publishProgress(progress++);
                 } while (cursor.moveToNext());
-                Slog.log("agents end");
-                Slog.log("agents start save");
                 agents.save();
-                Slog.log("agents end");
             }
             cursor.close();
             Cards.extractCards(context);
