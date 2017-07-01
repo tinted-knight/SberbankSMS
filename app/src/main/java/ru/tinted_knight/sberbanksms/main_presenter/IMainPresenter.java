@@ -11,6 +11,8 @@ public interface IMainPresenter {
 
     void onResume();
 
+    void onCreate();
+
     void onDestroy();
 
     Loader<List<Message>> getLoader(Bundle args);

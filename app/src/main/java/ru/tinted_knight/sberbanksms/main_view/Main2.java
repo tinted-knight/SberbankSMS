@@ -51,6 +51,7 @@ public class Main2 extends AppCompatActivity
         rvMain = (RecyclerView) findViewById(R.id.rvMain);
 
         mPresenter = new MainPresenter(this);
+        mPresenter.onCreate();
     }
 
     @Override
@@ -61,6 +62,7 @@ public class Main2 extends AppCompatActivity
 
     @Override
     public Context getContext() {
+//        return getApplicationContext();
         return this;
     }
 
@@ -185,6 +187,7 @@ public class Main2 extends AppCompatActivity
     @Override
     public void hideProgress() {
         progressDialog.dismiss();
+        progressDialog.setCancelable(true);
     }
 
     @Override

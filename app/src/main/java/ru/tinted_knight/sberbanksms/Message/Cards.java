@@ -5,11 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Set;
 
 import ru.tinted_knight.sberbanksms.Tools.DB.DBHandler;

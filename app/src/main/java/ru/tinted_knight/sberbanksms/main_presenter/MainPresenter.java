@@ -51,6 +51,10 @@ public class MainPresenter implements IMainPresenter, ISimpleModel.OnProgressUpd
 
     @Override
     public void onResume() {
+    }
+
+    @Override
+    public void onCreate() {
         if (firstRun()) {
             checkPermissions();
         }
