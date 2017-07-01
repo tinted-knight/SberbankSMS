@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
@@ -19,6 +20,8 @@ import android.widget.Toast;
 
 import java.util.List;
 
+import ru.tinted_knight.sberbanksms.Dialogs.BundleConstants;
+import ru.tinted_knight.sberbanksms.Dialogs.CardsListDialog;
 import ru.tinted_knight.sberbanksms.Message.Cards;
 import ru.tinted_knight.sberbanksms.Message.CardsList;
 import ru.tinted_knight.sberbanksms.Message.Message;
@@ -33,7 +36,7 @@ import ru.tinted_knight.sberbanksms.main_presenter.MainPresenter;
 import static ru.tinted_knight.sberbanksms.Tools.Constants.BroadcastIncomeSms;
 
 public class Main2 extends AppCompatActivity
-        implements IMainView, LoaderManager.LoaderCallbacks<List<Message>> {
+        implements IMainView, LoaderManager.LoaderCallbacks<List<Message>>, DialogInterface.OnClickListener {
 
     BottomNavigationView bbar;
     CardsList mCardsList;
@@ -83,12 +86,12 @@ public class Main2 extends AppCompatActivity
                         startActivity(intent);
                         break;
                     case R.id.bbFilter:
-//                        item.setChecked(true);
-//                        CardsListDialog cardsListDialog = new CardsListDialog();
-//                        Bundle bundle = new Bundle();
-//                        bundle.putStringArrayList(BundleConstants.CARDS_LIST, cardsList.getStringArrayList());
-//                        cardsListDialog.setArguments(bundle);
-//                        cardsListDialog.show(getSupportFragmentManager(), "cards_list");
+                        item.setChecked(true);
+                        CardsListDialog cardsListDialog = new CardsListDialog();
+                        Bundle bundle = new Bundle();
+                        bundle.putStringArrayList(BundleConstants.CARDS_LIST, mCardsList.getStringArrayList());
+                        cardsListDialog.setArguments(bundle);
+                        cardsListDialog.show(getSupportFragmentManager(), "cards_list");
                         break;
                     case R.id.bbHome:
                         item.setChecked(true);
@@ -211,4 +214,13 @@ public class Main2 extends AppCompatActivity
         }
     }
 
+    @Override
+    public void onClick(DialogInterface dialog, int which) {
+        if (which != DialogInterface.BUTTON_NEGATIVE) {
+            mCardsList.setActive(which);
+            Bundle bundle = new Bundle();
+            bundle.putLong(Constants.Flag.CardFilter, mCardsList.getActiveId());
+            getSupportLoaderManager().restartLoader(LoadersConst.MainLoader, bundle, this);
+        }
+    }
 }
