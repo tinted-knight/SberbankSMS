@@ -6,12 +6,12 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
@@ -19,19 +19,16 @@ import android.widget.Toast;
 
 import java.util.List;
 
-import ru.tinted_knight.sberbanksms.MainOld;
 import ru.tinted_knight.sberbanksms.Message.Cards;
 import ru.tinted_knight.sberbanksms.Message.CardsList;
 import ru.tinted_knight.sberbanksms.Message.Message;
 import ru.tinted_knight.sberbanksms.R;
 import ru.tinted_knight.sberbanksms.RecyclerView.DividerItemDecoration;
-import ru.tinted_knight.sberbanksms.Settings.Preferences;
 import ru.tinted_knight.sberbanksms.Settings.Settings;
 import ru.tinted_knight.sberbanksms.Tools.Constants;
 import ru.tinted_knight.sberbanksms.Tools.LoadersConst;
-import ru.tinted_knight.sberbanksms.Tools.Slog;
-import ru.tinted_knight.sberbanksms.main_presenter.MainPresenter;
 import ru.tinted_knight.sberbanksms.main_presenter.IMainPresenter;
+import ru.tinted_knight.sberbanksms.main_presenter.MainPresenter;
 
 import static ru.tinted_knight.sberbanksms.Tools.Constants.BroadcastIncomeSms;
 
@@ -123,6 +120,11 @@ public class Main2 extends AppCompatActivity
     }
 
     @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        mPresenter.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    @Override
     public void initLoader() {
         mCardsList = Cards.getCardsList(this);
         mCardsList.setActive(0);
@@ -162,11 +164,8 @@ public class Main2 extends AppCompatActivity
         progressDialog.setMax(max);
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setCancelable(false);
-
         progressDialog.setTitle(title);
-//        progressDialog.setTitle("Немного терпения - это не долго");
         progressDialog.setMessage(message);
-//        progressDialog.setMessage("Запись в базу данных...");
         progressDialog.setProgress(0);
         progressDialog.show();
     }
@@ -186,7 +185,6 @@ public class Main2 extends AppCompatActivity
     @Override
     public void hideProgress() {
         progressDialog.dismiss();
-        Slog.log("==== main: progress dismiss");
     }
 
     @Override

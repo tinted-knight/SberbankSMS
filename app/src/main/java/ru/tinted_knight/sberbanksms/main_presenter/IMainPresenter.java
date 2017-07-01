@@ -21,4 +21,5 @@ public interface IMainPresenter {
 
     boolean onBackPressed();
 
+    void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults);
 }

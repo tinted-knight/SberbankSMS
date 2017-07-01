@@ -45,8 +45,6 @@
         </activity>
         <activity android:name=".Settings.Cards.CardsListActivity">
         </activity>
-        <activity android:name=".MainOld">
-        </activity>
     </application>
 
 </manifest>

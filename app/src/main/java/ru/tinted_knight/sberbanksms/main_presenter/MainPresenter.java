@@ -3,7 +3,6 @@ package ru.tinted_knight.sberbanksms.main_presenter;
 import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -14,7 +13,6 @@ import java.text.ParseException;
 import java.util.List;
 
 import ru.tinted_knight.sberbanksms.Message.Message;
-import ru.tinted_knight.sberbanksms.Message.MessageReader.DeviceInboxCursorMessageReader;
 import ru.tinted_knight.sberbanksms.R;
 import ru.tinted_knight.sberbanksms.RecyclerView.MessagesRecyclerViewAdapter;
 import ru.tinted_knight.sberbanksms.Settings.Preferences;
@@ -45,13 +43,6 @@ public class MainPresenter implements IMainPresenter, ISimpleModel.OnProgressUpd
         mView.initBroadcastReceiver();
 
         mModel = new SimpleModel();
-
-        if (firstRun()) {
-            checkPermissions();
-        }
-        else {
-            mView.initLoader();
-        }
     }
 
     private boolean firstRun() {
@@ -60,6 +51,12 @@ public class MainPresenter implements IMainPresenter, ISimpleModel.OnProgressUpd
 
     @Override
     public void onResume() {
+        if (firstRun()) {
+            checkPermissions();
+        }
+        else {
+            mView.initLoader();
+        }
     }
 
     @Override
@@ -69,7 +66,7 @@ public class MainPresenter implements IMainPresenter, ISimpleModel.OnProgressUpd
 
     private void checkPermissions() {
         int readSms = ContextCompat.checkSelfPermission(mContext, android.Manifest.permission.READ_SMS);
-        int receiveSms = ContextCompat.checkSelfPermission(mContext, Manifest.permission.RECEIVE_SMS);
+        int receiveSms = ContextCompat.checkSelfPermission(mContext, android.Manifest.permission.RECEIVE_SMS);
 
         if (readSms != PackageManager.PERMISSION_GRANTED || receiveSms != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(
@@ -83,7 +80,7 @@ public class MainPresenter implements IMainPresenter, ISimpleModel.OnProgressUpd
 
     private void firstStart() {
         int count = mModel.loadDeviceSms(mContext, this);
-        mView.showProgress("title", "message", count);
+        mView.showProgress("Анализ СМС-сообщений", "Это займет немного времени...", count);
     }
 
     @Override
@@ -119,6 +116,15 @@ public class MainPresenter implements IMainPresenter, ISimpleModel.OnProgressUpd
             return true;
         }
         return false;
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == Constants.RequestCodes.Permissions
+                && grantResults.length > 0
+                && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            firstStart();
+        }
     }
 
     private void clearFilter() {

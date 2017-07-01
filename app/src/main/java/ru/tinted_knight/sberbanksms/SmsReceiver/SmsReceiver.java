@@ -14,7 +14,6 @@ import android.telephony.SmsMessage;
 import java.text.ParseException;
 import java.util.HashSet;
 
-import ru.tinted_knight.sberbanksms.MainOld;
 import ru.tinted_knight.sberbanksms.Message.Agents;
 import ru.tinted_knight.sberbanksms.Message.Cards;
 import ru.tinted_knight.sberbanksms.Message.Message;
@@ -24,6 +23,7 @@ import ru.tinted_knight.sberbanksms.R;
 import ru.tinted_knight.sberbanksms.Tools.Constants;
 import ru.tinted_knight.sberbanksms.Tools.Constants.OperationType;
 import ru.tinted_knight.sberbanksms.Tools.DB.MessageContentProvider;
+import ru.tinted_knight.sberbanksms.main_view.Main2;
 
 public class SmsReceiver extends BroadcastReceiver {
 
@@ -112,7 +112,7 @@ public class SmsReceiver extends BroadcastReceiver {
         protected void onPostExecute(Long rowId) {
             super.onPostExecute(rowId);
 //            Slog.log("onPostExecute");
-            Intent responsibleActivity = new Intent(context, MainOld.class);
+            Intent responsibleActivity = new Intent(context, Main2.class);
             PendingIntent responsibleIntent = PendingIntent.getActivity(context, 0, responsibleActivity, 0);
 
 //            String text = rowId == -1 ? "Странная СМС-ка" : "Возможно, Вы покупаете что-то прямо сейчас :(";

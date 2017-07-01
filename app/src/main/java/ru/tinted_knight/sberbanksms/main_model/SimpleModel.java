@@ -110,7 +110,7 @@ public class SimpleModel implements ISimpleModel {
         protected void onPreExecute() {
             super.onPreExecute();
             cursor = context.getContentResolver().query(MessageContentProvider.UriAgentsInitial, null, null, null, null);
-            mListener.onProgressUpdate("title2", "message2", cursor.getCount());
+            mListener.onProgressUpdate("Запись в базу данных", "Спасибо за терпение!", cursor.getCount());
         }
 
         @Override
