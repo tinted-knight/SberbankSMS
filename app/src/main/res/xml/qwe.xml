@@ -1,0 +1,14 @@
+<tabs>
+    <tab
+        id="@+id/bbFilter"
+        icon="@drawable/filter_outline"
+        title="Cards filter" />
+    <tab
+        id="@+id/bbHome"
+        icon="@drawable/ic_coin_red2"
+        title="Home" />
+    <tab
+        id="@+id/bbSettings"
+        icon="@drawable/ic_settings"
+        title="Settings" />
+</tabs>

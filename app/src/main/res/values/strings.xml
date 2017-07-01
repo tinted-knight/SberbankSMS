@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Crazy shopping</string>
+    <string name="red_coin">Red coin</string>
+    <string name="summa">75.20р</string>
+    <string name="sample_date">31 июл</string>
+    <string name="sample_agent_0">PYATEROCHKA 5367</string>
+    <string name="settings_activity_actionbar_title">Settings</string>
+    <string name="agentsactivity_actionbar_title">Список агентов</string>
+    <string name="agent_unrecognized_income">Зачисление</string>
+    <string name="agent_unrecognized_outcome">Какое-то списание</string>
+    <string name="aliases">Aliases</string>
+    <string name="clear_filter">Убрать фильтр</string>
+    <string name="cards">Карты</string>
+    <string name="settings">Настройки</string>
+</resources>
