@@ -12,8 +12,6 @@ import ru.tinted_knight.sberbanksms.Message.Message;
 import ru.tinted_knight.sberbanksms.Message.MessageProcessor.ArrayListFullMessageProcessor;
 import ru.tinted_knight.sberbanksms.Tools.DB.MessageContentProvider;
 
-import static android.R.attr.data;
-
 public class MessageListLoader extends AsyncTaskLoader<List<Message>> {
 
     private List<Message> mData;
@@ -34,7 +32,6 @@ public class MessageListLoader extends AsyncTaskLoader<List<Message>> {
     public List<Message> loadInBackground() {
 //        Slog.log("MLL.loadInBackgroud()");
         Uri uri;
-//        String selection;
         if (mCardFilter) {
             uri = ContentUris.withAppendedId(MessageContentProvider.UriSmsByCard, mCard);
         } else {
@@ -43,7 +40,6 @@ public class MessageListLoader extends AsyncTaskLoader<List<Message>> {
         Cursor cursor = getContext().getContentResolver()
                 .query(uri, null, null, null, null);
         if (cursor != null) {
-//            mData = new ArrayListFullMessageProcessor(cursor, getContext()).process();
             mData = new ArrayListFullMessageProcessor(cursor, getContext()).process();
             cursor.close();
         }

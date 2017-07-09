@@ -130,11 +130,12 @@ public class Main2 extends AppCompatActivity
 
     @Override
     public void initLoader() {
-        mCardsList = Cards.getCardsList(this);
-        mCardsList.setActive(0);
-        Bundle bundle = new Bundle();
-        bundle.putLong(Constants.Flag.CardFilter, mCardsList.getActiveId());
-        getSupportLoaderManager().initLoader(LoadersConst.MainLoader, bundle, this);
+        if((mCardsList = Cards.getCardsList(this)) != null) {
+            mCardsList.setActive(0);
+            Bundle bundle = new Bundle();
+            bundle.putLong(Constants.Flag.CardFilter, mCardsList.getActiveId());
+            getSupportLoaderManager().initLoader(LoadersConst.MainLoader, bundle, this);
+        }
     }
 
     @Override
