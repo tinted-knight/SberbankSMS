@@ -22,8 +22,6 @@ import java.util.List;
 
 import ru.tinted_knight.sberbanksms.Dialogs.BundleConstants;
 import ru.tinted_knight.sberbanksms.Dialogs.CardsListDialog;
-import ru.tinted_knight.sberbanksms.Message.Cards;
-import ru.tinted_knight.sberbanksms.Message.CardsList;
 import ru.tinted_knight.sberbanksms.Message.Message;
 import ru.tinted_knight.sberbanksms.R;
 import ru.tinted_knight.sberbanksms.RecyclerView.DividerItemDecoration;
@@ -39,7 +37,6 @@ public class Main2 extends AppCompatActivity
         implements IMainView, LoaderManager.LoaderCallbacks<List<Message>>, DialogInterface.OnClickListener {
 
     BottomNavigationView bbar;
-    CardsList mCardsList;
     RecyclerView rvMain;
     ProgressDialog progressDialog;
 
@@ -85,17 +82,18 @@ public class Main2 extends AppCompatActivity
                         Intent intent = new Intent(Main2.this, Settings.class);
                         startActivity(intent);
                         break;
-                    case R.id.bbFilter:
+                    case R.id.bbCards:
                         item.setChecked(true);
                         CardsListDialog cardsListDialog = new CardsListDialog();
                         Bundle bundle = new Bundle();
-                        bundle.putStringArrayList(BundleConstants.CARDS_LIST, mCardsList.getStringArrayList());
+                        bundle.putStringArrayList(BundleConstants.CARDS_LIST, mPresenter.getCardsList());
                         cardsListDialog.setArguments(bundle);
                         cardsListDialog.show(getSupportFragmentManager(), "cards_list");
                         break;
-                    case R.id.bbHome:
+                    case R.id.bbFilter:
                         item.setChecked(true);
-//                        clearFilter();
+                        //TODO: некрасиво, но работает
+                        mPresenter.onBackPressed();
                         break;
                 }
                 return false;
@@ -130,12 +128,13 @@ public class Main2 extends AppCompatActivity
 
     @Override
     public void initLoader() {
-        if((mCardsList = Cards.getCardsList(this)) != null) {
-            mCardsList.setActive(0);
-            Bundle bundle = new Bundle();
-            bundle.putLong(Constants.Flag.CardFilter, mCardsList.getActiveId());
-            getSupportLoaderManager().initLoader(LoadersConst.MainLoader, bundle, this);
-        }
+//        if((mCardsList = Cards.getCardsList(this)) != null) {
+//            mCardsList.setActive(0);
+//            Bundle bundle = new Bundle();
+//            bundle.putLong(Constants.Flag.CardFilter, mCardsList.getActiveId());
+//            getSupportLoaderManager().initLoader(LoadersConst.MainLoader, bundle, this);
+//        }
+            getSupportLoaderManager().initLoader(LoadersConst.MainLoader, null, this);
     }
 
     @Override
@@ -218,9 +217,9 @@ public class Main2 extends AppCompatActivity
     @Override
     public void onClick(DialogInterface dialog, int which) {
         if (which != DialogInterface.BUTTON_NEGATIVE) {
-            mCardsList.setActive(which);
+            mPresenter.setActiveCard(which);
             Bundle bundle = new Bundle();
-            bundle.putLong(Constants.Flag.CardFilter, mCardsList.getActiveId());
+            bundle.putLong(Constants.Flag.CardFilter, mPresenter.getActiveCard());
             getSupportLoaderManager().restartLoader(LoadersConst.MainLoader, bundle, this);
         }
     }

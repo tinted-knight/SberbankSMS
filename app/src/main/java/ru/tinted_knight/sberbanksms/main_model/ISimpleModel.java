@@ -2,9 +2,7 @@ package ru.tinted_knight.sberbanksms.main_model;
 
 import android.content.Context;
 
-import java.util.List;
-
-import ru.tinted_knight.sberbanksms.Message.Message;
+import java.util.ArrayList;
 
 public interface ISimpleModel {
 
@@ -16,6 +14,12 @@ public interface ISimpleModel {
 
     int loadDeviceSms(Context context, OnProgressUpdateListener listener);
 
-    List<Message> loadFromDatabase();
+    int getActiveCardId();
+
+    ArrayList<String> getCardsList();
+
+    void setActiveCard(int id);
+
+//    List<Message> loadFromDatabase();
 
 }

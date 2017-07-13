@@ -3,6 +3,7 @@ package ru.tinted_knight.sberbanksms.main_presenter;
 import android.os.Bundle;
 import android.support.v4.content.Loader;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import ru.tinted_knight.sberbanksms.Message.Message;
@@ -20,6 +21,12 @@ public interface IMainPresenter {
     void onLoaderReset();
 
     void showMessages(List<Message> data);
+
+    ArrayList<String> getCardsList();
+
+    void setActiveCard(int id);
+
+    int getActiveCard();
 
     boolean onBackPressed();
 

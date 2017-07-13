@@ -6,10 +6,11 @@ import android.os.AsyncTask;
 import android.provider.Telephony;
 
 import java.text.ParseException;
-import java.util.List;
+import java.util.ArrayList;
 
 import ru.tinted_knight.sberbanksms.Message.Agents;
 import ru.tinted_knight.sberbanksms.Message.Cards;
+import ru.tinted_knight.sberbanksms.Message.CardsList;
 import ru.tinted_knight.sberbanksms.Message.Message;
 import ru.tinted_knight.sberbanksms.Message.MessageProcessor.MessageProcessor;
 import ru.tinted_knight.sberbanksms.Message.MessageProcessor.RawProcessor;
@@ -22,6 +23,13 @@ import ru.tinted_knight.sberbanksms.Tools.DB.MessageContentProvider;
 public class SimpleModel implements ISimpleModel {
 
     private OnProgressUpdateListener mListener;
+    private CardsList mCardsList;
+
+    public SimpleModel(Context context) {
+        if ((mCardsList = Cards.getCardsList(context)) != null) {
+            mCardsList.setActive(0);
+        }
+    }
 
     @Override
     public int loadDeviceSms(Context context, OnProgressUpdateListener listener) {
@@ -33,8 +41,18 @@ public class SimpleModel implements ISimpleModel {
     }
 
     @Override
-    public List<Message> loadFromDatabase() {
-        return null;
+    public int getActiveCardId() {
+        return mCardsList.getActiveId();
+    }
+
+    @Override
+    public ArrayList<String> getCardsList() {
+        return mCardsList.getStringArrayList();
+    }
+
+    @Override
+    public void setActiveCard(int id) {
+        mCardsList.setActive(id);
     }
 
     private class AsyncSmsSQLiteWriter extends AsyncTask<Cursor, Integer, Void> {

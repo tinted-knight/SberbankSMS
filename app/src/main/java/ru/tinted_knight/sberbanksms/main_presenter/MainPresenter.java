@@ -10,6 +10,7 @@ import android.support.v4.content.Loader;
 import android.view.View;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 import ru.tinted_knight.sberbanksms.Message.Message;
@@ -17,7 +18,6 @@ import ru.tinted_knight.sberbanksms.R;
 import ru.tinted_knight.sberbanksms.RecyclerView.MessagesRecyclerViewAdapter;
 import ru.tinted_knight.sberbanksms.Settings.Preferences;
 import ru.tinted_knight.sberbanksms.Tools.Constants;
-import ru.tinted_knight.sberbanksms.Tools.Constants.Flag;
 import ru.tinted_knight.sberbanksms.Tools.Loader.MessageListLoader;
 import ru.tinted_knight.sberbanksms.main_model.ISimpleModel;
 import ru.tinted_knight.sberbanksms.main_model.SimpleModel;
@@ -31,9 +31,7 @@ public class MainPresenter implements IMainPresenter, ISimpleModel.OnProgressUpd
     private MessagesRecyclerViewAdapter mAdapter;
 
     private Context mContext;
-
     private boolean mFilterOperation;
-
     private boolean mFilterAgent;
 
     public MainPresenter(IMainView view) {
@@ -42,7 +40,7 @@ public class MainPresenter implements IMainPresenter, ISimpleModel.OnProgressUpd
         mView.initBottomBar();
         mView.initBroadcastReceiver();
 
-        mModel = new SimpleModel();
+        mModel = new SimpleModel(mContext);
     }
 
     private boolean firstRun() {
@@ -57,8 +55,7 @@ public class MainPresenter implements IMainPresenter, ISimpleModel.OnProgressUpd
     public void onCreate() {
         if (firstRun()) {
             checkPermissions();
-        }
-        else {
+        } else {
             mView.initLoader();
         }
     }
@@ -89,11 +86,7 @@ public class MainPresenter implements IMainPresenter, ISimpleModel.OnProgressUpd
 
     @Override
     public Loader<List<Message>> getLoader(Bundle args) {
-        if (args != null && args.getLong(Flag.CardFilter, -1) != -1) {
-            return new MessageListLoader(mContext, args.getLong(Flag.CardFilter));
-        }
-        return new MessageListLoader(mContext);
-
+        return new MessageListLoader(mContext, mModel.getActiveCardId());
     }
 
     @Override
@@ -110,6 +103,21 @@ public class MainPresenter implements IMainPresenter, ISimpleModel.OnProgressUpd
         } catch (ParseException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public ArrayList<String> getCardsList() {
+        return mModel.getCardsList();
+    }
+
+    @Override
+    public void setActiveCard(int id) {
+        mModel.setActiveCard(id);
+    }
+
+    @Override
+    public int getActiveCard() {
+        return mModel.getActiveCardId();
     }
 
     @Override
@@ -139,7 +147,7 @@ public class MainPresenter implements IMainPresenter, ISimpleModel.OnProgressUpd
         mView.scrollToFirst();
     }
 
-    private void initAdapterClickListeners(){
+    private void initAdapterClickListeners() {
         mAdapter.setOnItemClickListener(new MessagesRecyclerViewAdapter.OnItemClickListener() {
             //                viewAdapter.setOnItemClickListener(new MessagesRVAdapterMonths.OnItemClickListener() {
             @Override
