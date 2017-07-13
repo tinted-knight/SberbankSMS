@@ -10,8 +10,6 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.Loader;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -34,7 +32,7 @@ import ru.tinted_knight.sberbanksms.main_presenter.MainPresenter;
 import static ru.tinted_knight.sberbanksms.Tools.Constants.BroadcastIncomeSms;
 
 public class Main2 extends AppCompatActivity
-        implements IMainView, LoaderManager.LoaderCallbacks<List<Message>>, DialogInterface.OnClickListener {
+        implements IMainView, DialogInterface.OnClickListener {
 
     BottomNavigationView bbar;
     RecyclerView rvMain;
@@ -108,7 +106,7 @@ public class Main2 extends AppCompatActivity
             public void onReceive(Context context, Intent intent) {
                 int status = intent.getIntExtra("status", -1);
                 if (status == 1) {
-                    getSupportLoaderManager().restartLoader(LoadersConst.MainLoader, null, Main2.this);
+                    getSupportLoaderManager().restartLoader(LoadersConst.MainLoader, null, mPresenter);
                 }
             }
         };
@@ -128,13 +126,7 @@ public class Main2 extends AppCompatActivity
 
     @Override
     public void initLoader() {
-//        if((mCardsList = Cards.getCardsList(this)) != null) {
-//            mCardsList.setActive(0);
-//            Bundle bundle = new Bundle();
-//            bundle.putLong(Constants.Flag.CardFilter, mCardsList.getActiveId());
-//            getSupportLoaderManager().initLoader(LoadersConst.MainLoader, bundle, this);
-//        }
-            getSupportLoaderManager().initLoader(LoadersConst.MainLoader, null, this);
+            getSupportLoaderManager().initLoader(LoadersConst.MainLoader, null, mPresenter);
     }
 
     @Override
@@ -193,21 +185,6 @@ public class Main2 extends AppCompatActivity
     }
 
     @Override
-    public Loader<List<Message>> onCreateLoader(int id, Bundle args) {
-        return mPresenter.getLoader(args);
-    }
-
-    @Override
-    public void onLoadFinished(Loader<List<Message>> loader, List<Message> data) {
-        mPresenter.showMessages(data);
-    }
-
-    @Override
-    public void onLoaderReset(Loader<List<Message>> loader) {
-        mPresenter.onLoaderReset();
-    }
-
-    @Override
     public void onBackPressed() {
         if (!mPresenter.onBackPressed()) {
             super.onBackPressed();
@@ -220,7 +197,7 @@ public class Main2 extends AppCompatActivity
             mPresenter.setActiveCard(which);
             Bundle bundle = new Bundle();
             bundle.putLong(Constants.Flag.CardFilter, mPresenter.getActiveCard());
-            getSupportLoaderManager().restartLoader(LoadersConst.MainLoader, bundle, this);
+            getSupportLoaderManager().restartLoader(LoadersConst.MainLoader, bundle, mPresenter);
         }
     }
 }

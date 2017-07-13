@@ -23,7 +23,8 @@ import ru.tinted_knight.sberbanksms.main_model.ISimpleModel;
 import ru.tinted_knight.sberbanksms.main_model.SimpleModel;
 import ru.tinted_knight.sberbanksms.main_view.IMainView;
 
-public class MainPresenter implements IMainPresenter, ISimpleModel.OnProgressUpdateListener {
+public class MainPresenter implements
+        IMainPresenter, ISimpleModel.OnProgressUpdateListener {
 
     private IMainView mView;
     private ISimpleModel mModel;
@@ -82,16 +83,6 @@ public class MainPresenter implements IMainPresenter, ISimpleModel.OnProgressUpd
     private void firstStart() {
         int count = mModel.loadDeviceSms(mContext, this);
         mView.showProgress("Анализ СМС-сообщений", "Это займет немного времени...", count);
-    }
-
-    @Override
-    public Loader<List<Message>> getLoader(Bundle args) {
-        return new MessageListLoader(mContext, mModel.getActiveCardId());
-    }
-
-    @Override
-    public void onLoaderReset() {
-        mAdapter.swapCursor(null);
     }
 
     @Override
@@ -200,4 +191,18 @@ public class MainPresenter implements IMainPresenter, ISimpleModel.OnProgressUpd
         mView.initLoader();
     }
 
+    @Override
+    public Loader<List<Message>> onCreateLoader(int id, Bundle args) {
+        return new MessageListLoader(mContext, mModel.getActiveCardId());
+    }
+
+    @Override
+    public void onLoadFinished(Loader<List<Message>> loader, List<Message> data) {
+        this.showMessages(data);
+    }
+
+    @Override
+    public void onLoaderReset(Loader<List<Message>> loader) {
+        mAdapter.swapCursor(null);
+    }
 }
