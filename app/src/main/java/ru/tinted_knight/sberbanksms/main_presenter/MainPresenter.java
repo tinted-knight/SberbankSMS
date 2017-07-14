@@ -90,7 +90,7 @@ public class MainPresenter implements
         try {
             mAdapter = new MessagesRecyclerViewAdapter(mContext, data);
             initAdapterClickListeners();
-            mView.showMessages(data, mAdapter);
+            mView.showItems(data, mAdapter);
         } catch (ParseException e) {
             e.printStackTrace();
         }

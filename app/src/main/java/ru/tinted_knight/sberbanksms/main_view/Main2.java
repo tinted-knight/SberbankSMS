@@ -130,7 +130,7 @@ public class Main2 extends AppCompatActivity
     }
 
     @Override
-    public void showMessages(List<Message> data, RecyclerView.Adapter adapter) {
+    public void showItems(List<Message> data, RecyclerView.Adapter adapter) {
         rvMain.setAdapter(adapter);
         rvMain.setLayoutManager(new LinearLayoutManager(this));
         rvMain.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
@@ -193,6 +193,7 @@ public class Main2 extends AppCompatActivity
 
     @Override
     public void onClick(DialogInterface dialog, int which) {
+        //TODO: mPresenter.selectCard()
         if (which != DialogInterface.BUTTON_NEGATIVE) {
             mPresenter.setActiveCard(which);
             Bundle bundle = new Bundle();

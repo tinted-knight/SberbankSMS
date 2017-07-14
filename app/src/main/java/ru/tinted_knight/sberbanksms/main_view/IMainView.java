@@ -22,7 +22,7 @@ public interface IMainView {
 
     void  initLoader();
 
-    void showMessages(List<Message> data, RecyclerView.Adapter adapter);
+    void showItems(List<Message> data, RecyclerView.Adapter adapter);
 
     void scrollToFirst();
 
