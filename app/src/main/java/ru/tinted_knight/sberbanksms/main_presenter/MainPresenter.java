@@ -41,7 +41,7 @@ public class MainPresenter implements
         mView.initBottomBar();
         mView.initBroadcastReceiver();
 
-        mModel = new SimpleModel(mContext);
+//        mModel = new SimpleModel(mContext);
     }
 
     private boolean firstRun() {
@@ -57,6 +57,7 @@ public class MainPresenter implements
         if (firstRun()) {
             checkPermissions();
         } else {
+            mModel = new SimpleModel(mContext);
             mView.initLoader();
         }
     }
@@ -81,6 +82,7 @@ public class MainPresenter implements
     }
 
     private void firstStart() {
+        mModel = new SimpleModel();
         int count = mModel.loadDeviceSms(mContext, this);
         mView.showProgress("Анализ СМС-сообщений", "Это займет немного времени...", count);
     }

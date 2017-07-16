@@ -13,7 +13,6 @@ import ru.tinted_knight.sberbanksms.Message.Cards;
 import ru.tinted_knight.sberbanksms.Message.CardsList;
 import ru.tinted_knight.sberbanksms.Message.Message;
 import ru.tinted_knight.sberbanksms.Message.MessageProcessor.MessageProcessor;
-import ru.tinted_knight.sberbanksms.Message.MessageProcessor.RawProcessor;
 import ru.tinted_knight.sberbanksms.Message.MessageReader.DeviceInboxCursorMessageReader;
 import ru.tinted_knight.sberbanksms.Settings.Preferences;
 import ru.tinted_knight.sberbanksms.Tools.DB.DBHandler;
@@ -25,7 +24,14 @@ public class SimpleModel implements ISimpleModel {
     private OnProgressUpdateListener mListener;
     private CardsList mCardsList;
 
+    public SimpleModel() {
+    }
+
     public SimpleModel(Context context) {
+        initCardsList(context);
+    }
+
+    private void initCardsList(Context context) {
         if ((mCardsList = Cards.getCardsList(context)) != null) {
             mCardsList.setActive(0);
         }
@@ -76,13 +82,14 @@ public class SimpleModel implements ISimpleModel {
                         MessageProcessor messageProcessor =
                                 new MessageProcessor(context, MessageContentProvider.UriFullSms,
                                         new Message(cursor.getString(indexBody), cursor.getLong(indexDate)));
-                        long rowId = messageProcessor.save();
-                        if (rowId != -1 && rowId != 0) {
-                            RawProcessor rawProcessor =
-                                    new RawProcessor(context, MessageContentProvider.UriRawSms,
-                                            cursor.getString(indexBody));
-                            rawProcessor.save(rowId);
-                        }
+                        messageProcessor.save();
+//                        long rowId = messageProcessor.save();
+//                        if (rowId != -1 && rowId != 0) {
+//                            RawProcessor rawProcessor =
+//                                    new RawProcessor(context, MessageContentProvider.UriRawSms,
+//                                            cursor.getString(indexBody));
+//                            rawProcessor.save(rowId);
+//                        }
                         publishProgress(progress++);
                     } while (cursor.moveToPrevious());
                 }
@@ -155,6 +162,7 @@ public class SimpleModel implements ISimpleModel {
         @Override
         protected void onPostExecute(Void aVoid) {
             super.onPostExecute(aVoid);
+            initCardsList(context);
             mListener.onProgressDone();
         }
     }
