@@ -58,8 +58,13 @@ public class MainPresenter implements
             checkPermissions();
         } else {
             mModel = new SimpleModel(mContext);
-            mView.initLoader();
+            doAfterLoad();
+//            mView.initLoader();
         }
+    }
+
+    private void doAfterLoad(){
+        mView.initLoader();
     }
 
     @Override
@@ -93,6 +98,7 @@ public class MainPresenter implements
             mAdapter = new MessagesRecyclerViewAdapter(mContext, data);
             initAdapterClickListeners();
             mView.showItems(data, mAdapter);
+            mView.showActiveCard(mModel.getActiveCardName());
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -190,7 +196,9 @@ public class MainPresenter implements
     @Override
     public void onProgressDone() {
         mView.hideProgress();
-        mView.initLoader();
+        doAfterLoad();
+//        mView.initLoader();
+//        mView.showActiveCard(mModel.getActiveCardName());
     }
 
     @Override

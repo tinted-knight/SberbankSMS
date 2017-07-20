@@ -20,9 +20,11 @@ public interface IMainView {
 
     void unregisterBroadcastReceiver();
 
-    void  initLoader();
+    void initLoader();
 
     void showItems(List<Message> data, RecyclerView.Adapter adapter);
+
+    void showActiveCard(String cardName);
 
     void scrollToFirst();
 

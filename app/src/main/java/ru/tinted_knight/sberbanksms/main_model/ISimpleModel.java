@@ -16,6 +16,8 @@ public interface ISimpleModel {
 
     int getActiveCardId();
 
+    String getActiveCardName();
+
     ArrayList<String> getCardsList();
 
     void setActiveCard(int id);

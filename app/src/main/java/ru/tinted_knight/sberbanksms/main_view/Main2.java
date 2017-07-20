@@ -138,6 +138,11 @@ public class Main2 extends AppCompatActivity
     }
 
     @Override
+    public void showActiveCard(String cardName) {
+        getSupportActionBar().setTitle("Операции по карте < " + cardName + " >");
+    }
+
+    @Override
     public void scrollToFirst() {
         rvMain.scrollToPosition(0);
     }

@@ -52,6 +52,11 @@ public class SimpleModel implements ISimpleModel {
     }
 
     @Override
+    public String getActiveCardName() {
+        return mCardsList.getActiveCard();
+    }
+
+    @Override
     public ArrayList<String> getCardsList() {
         return mCardsList.getStringArrayList();
     }
