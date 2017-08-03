@@ -54,15 +54,27 @@ public final class Constants {
             "(\\sRUB)";                         // 5. Currency
 
     public static final String newPattern =
-                    "(\\w{4})" +                    // 0. card type ECMC or VISA
-                    "(\\d{4}\\s)" +                // 1. card number
-                    "(\\d\\d\\.\\d\\d\\.\\d\\d\\s)" +    // 2. date
-                    "(\\d{1,2}:\\d{1,2})?" +             // 3. time
-                    "(.*\\s)" +                          // 4. operation type
-                    "(\\d+\\.?\\d+р)" +                  // 5. summa
-                    "(.*)" +                             // 6. agent
-                    "(Баланс:\\s)" +                     // 7. "Баланс"
-                    "(\\d+\\.?\\d+р)"                  // 8. balance
+                    "(\\w{4})" +                        // 0. card type ECMC or VISA
+                    "(\\d{4}\\s)" +                     // 1. card number
+                    "(\\d\\d\\.\\d\\d\\.\\d\\d\\s)" +   // 2. date
+                    "(\\d{1,2}:\\d{1,2})?" +            // 3. time
+                    "(.*\\s)" +                         // 4. operation type
+                    "(\\d+\\.?\\d+)р" +                 // 5. summa
+                    "(.*)" +                            // 6. agent
+                    "(Баланс:\\s)" +                    // 7. "Баланс"
+                    "(\\d+\\.?\\d+р)"                   // 8. balance
+            ;
+
+    public static final String dollarPattern =
+                    "(\\w{4})" +                        // 0. ECMC or VISA
+                    "(\\d{4}\\s)" +                     // 1. card number
+                    "(\\d\\d\\.\\d\\d\\.\\d\\d\\s)" +   // 2. date
+                    "(\\d{1,2}:\\d{1,2})?" +            // 3. time
+                    "(.*\\s)" +                         // 4. oper type
+                    "(\\d+\\.?\\d?)USD" +               // 5. summa
+                    "(.*)" +                            // 6. agent
+                    "(Баланс:\\s)" +                    // 7. "Баланс"
+                    "(\\d+\\.?\\d+р)"                   // 9. balance
             ;
 
     public static final String smsDateFormat = "dd.MM.yy HH:mm";

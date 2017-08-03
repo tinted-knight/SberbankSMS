@@ -48,9 +48,10 @@ public class Message {
     public Message(final String messageBody, final long receiveDate) throws ParseException {
 //        this.raw = messageBody;
         this.alias = null;
-        Pattern pattern = Pattern.compile(Constants.pattern);
+        Pattern pattern;
         // проверка на "нормальный" паттерн
-        if (tryExtractData(messageBody, Pattern.compile(Constants.newPattern))){
+        if (tryExtractData(messageBody, Pattern.compile(Constants.newPattern))
+                || tryExtractData(messageBody, Pattern.compile(Constants.dollarPattern))){
             // nothing
         }
         else {
@@ -92,32 +93,6 @@ public class Message {
                     this.date = receiveDate / 1_000;
                 }
             }
-/*
-            Pattern oddPattern = Pattern.compile(Constants.OddPattern);
-            matcher = oddPattern.matcher(messageBody);
-            if (matcher.find()) {
-                Slog.log("==== ПЕРЕВОД ДЕНЕГ :) ====");
-                date = Calendar.getInstance().getTimeInMillis() / 1000;
-
-                String sumString = matcher.group(4).trim();
-                sumString = sumString.replace(",", ".");
-                this.summa = Float.valueOf(sumString);
-
-                this.cardNumber = "0000";
-                this.agent = "";
-                this.type = OperationType.OUTCOME;
-                this.balance = 0f;
-                Slog.log("raw: " + messageBody);
-            } else {
-                Slog.log("==== НЕ НАЙДЕНО ====");
-                this.cardNumber = null;
-                this.date = 0;
-                this.agent = null;
-                this.summa = null;
-                this.balance = null;
-                this.type = OperationType.ERRORCODE;
-            }
-*/
         }
     }
 
@@ -130,7 +105,6 @@ public class Message {
             catch (IllegalArgumentException e) {
                 mCardType = CardType.NONE;
             }
-//            Slog.log(mCardType.toString());
             this.cardNumber  = matcher.group(2).trim();
 
             String dateString;
@@ -146,11 +120,10 @@ public class Message {
             this.agent = matcher.group(7).trim();
 
             String typeString = matcher.group(5).trim();
-//            type = calculateType(typeString);
             type = OperationType.getType(typeString);
 
             String sumString = matcher.group(6).trim();
-            this.summa = Float.valueOf(sumString.substring(0, sumString.length()-1));
+            this.summa = Float.valueOf(sumString.substring(0, sumString.length()));
 
             String balanceString = matcher.group(9).trim();
             this.balance = Float.valueOf(balanceString.substring(0, balanceString.length()-1));
