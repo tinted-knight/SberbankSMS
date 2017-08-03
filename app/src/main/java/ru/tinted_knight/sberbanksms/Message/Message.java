@@ -51,7 +51,8 @@ public class Message {
         Pattern pattern;
         // проверка на "нормальный" паттерн
         if (tryExtractData(messageBody, Pattern.compile(Constants.newPattern))
-                || tryExtractData(messageBody, Pattern.compile(Constants.dollarPattern))){
+                || tryExtractData(messageBody, Pattern.compile(Constants.dollarPattern))
+                || tryExtractData(messageBody, Pattern.compile(Constants.euroPattern))){
             // nothing
         }
         else {
