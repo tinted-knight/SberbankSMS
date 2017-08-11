@@ -118,34 +118,39 @@ public class SmsReceiver extends BroadcastReceiver {
 //            String text = rowId == -1 ? "Странная СМС-ка" : "Возможно, Вы покупаете что-то прямо сейчас :(";
             String displayedMessage;
             String displayedTitle;
+            boolean notifFlag = false;
             switch (mOperationType) {
                 case OperationType.INCOME:
-                    displayedMessage = "Йо-хо-хо, пора тратить заработанное ;)";
+                    displayedMessage = "Поступление средств";
                     displayedTitle = "Уряяяя!!!";
+                    notifFlag = true;
                     break;
                 case OperationType.OUTCOME:
-                    displayedMessage = "Возможно, Вы покупаете что-то прямо сейчас :(";
+                    displayedMessage = "Вы покупаете что-то прямо сейчас :D";
                     displayedTitle = "Опасно!!!";
+                    notifFlag = true;
                     break;
                 default:
                     displayedMessage = "грусть-тоска :(";
                     displayedTitle = "грусть-тоска :(";
                     break;
             }
-            String text = rowId == -1 ? "Я в замешательстве, не понимаю..." : displayedMessage;
-            Notification notification = new NotificationCompat.Builder(context)
-                    .setSmallIcon(R.drawable.ic_shopping_basket)
+//            String text = rowId == -1 ? "Я в замешательстве, не понимаю..." : displayedMessage;
+            if (notifFlag && rowId != -1) {
+                Notification notification = new NotificationCompat.Builder(context)
+                        .setSmallIcon(R.drawable.ic_shopping_basket)
 //                    .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher))
-                    .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_shopping_basket))
-                    .setTicker("O_O Что-то происходит...")
-                    .setContentTitle(displayedTitle)
-                    .setContentText(text)
-                    .setContentIntent(responsibleIntent)
-                    //TODO:  проверить настройку автоотмены уведомления
-                    .setAutoCancel(true)
-                    .build();
-            NotificationManagerCompat manager = NotificationManagerCompat.from(context);
-            manager.notify(NOTIFY_ID, notification);
+                        .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_shopping_basket))
+                        .setTicker("O_O Что-то происходит...")
+                        .setContentTitle(displayedTitle)
+                        .setContentText(displayedMessage)
+                        .setContentIntent(responsibleIntent)
+                        //TODO:  проверить настройку автоотмены уведомления
+                        .setAutoCancel(true)
+                        .build();
+                NotificationManagerCompat manager = NotificationManagerCompat.from(context);
+                manager.notify(NOTIFY_ID, notification);
+            }
 
             Intent intent = new Intent(Constants.BroadcastIncomeSms);
             intent.putExtra("status", 1);

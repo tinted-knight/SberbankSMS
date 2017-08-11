@@ -53,7 +53,7 @@ public final class Constants {
             "(\\d*,\\d*)" +                     // 4. Summa
             "(\\sRUB)";                         // 5. Currency
 
-    public static final String newPattern =
+    public static final String rublePattern =
                     "(\\w{4})" +                        // 0. card type ECMC or VISA
                     "(\\d{4}\\s)" +                     // 1. card number
                     "(\\d\\d\\.\\d\\d\\.\\d\\d\\s)" +   // 2. date

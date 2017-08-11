@@ -50,7 +50,7 @@ public class Message {
         this.alias = null;
         Pattern pattern;
         // проверка на "нормальный" паттерн
-        if (tryExtractData(messageBody, Pattern.compile(Constants.newPattern))
+        if (tryExtractData(messageBody, Pattern.compile(Constants.rublePattern))
                 || tryExtractData(messageBody, Pattern.compile(Constants.dollarPattern))
                 || tryExtractData(messageBody, Pattern.compile(Constants.euroPattern))){
             // nothing
