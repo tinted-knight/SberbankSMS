@@ -89,6 +89,10 @@ public class MainPresenter implements
     private void firstStart() {
         mModel = new SimpleModel();
         int count = mModel.loadDeviceSms(mContext, this);
+        if (count == -1) {
+            mView.popupMessage("No SMS from 900 found");
+            return;
+        }
         mView.showProgress("Анализ СМС-сообщений", "Это займет немного времени...", count);
     }
 

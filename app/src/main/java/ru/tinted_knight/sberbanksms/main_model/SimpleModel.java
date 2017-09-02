@@ -40,6 +40,7 @@ public class SimpleModel implements ISimpleModel {
     @Override
     public int loadDeviceSms(Context context, OnProgressUpdateListener listener) {
         Cursor cursor = new DeviceInboxCursorMessageReader(context).read();
+        if (cursor.getCount() == 0) return -1;
         mListener = listener;
         AsyncSmsSQLiteWriter parser = new AsyncSmsSQLiteWriter(context);
         parser.execute(cursor);
@@ -48,7 +49,10 @@ public class SimpleModel implements ISimpleModel {
 
     @Override
     public int getActiveCardId() {
-        return mCardsList.getActiveId();
+        if (mCardsList != null)
+            return mCardsList.getActiveId();
+        else
+            return -1;
     }
 
     @Override
