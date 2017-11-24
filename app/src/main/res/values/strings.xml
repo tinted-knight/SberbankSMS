@@ -7,7 +7,7 @@
     <string name="settings_activity_actionbar_title">Settings</string>
     <string name="agentsactivity_actionbar_title">Список агентов</string>
     <string name="agent_unrecognized_income">Зачисление</string>
-    <string name="agent_unrecognized_outcome">Какое-то списание</string>
+    <string name="agent_unrecognized_outcome">Списание</string>
     <string name="aliases">Aliases</string>
     <string name="clear_filter">Убрать фильтр</string>
     <string name="cards">Карты</string>

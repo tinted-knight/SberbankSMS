@@ -1,6 +1,8 @@
 package ru.tinted_knight.sberbanksms.Tools;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public final class Constants {
 
@@ -110,24 +112,46 @@ public final class Constants {
         public static final int DEBUG = 3; // покупка
 
         //todo: возможны проблемы с сортировкой
-        public static final String[] OUTCOME_SET = new String[] { "оплата услуг", "покупка", "списание" };
-        public static final String[] INCOME_SET = new String[] { "зачисление", "зачисление зарплаты" };
+//        public static final String[] OUTCOME_SET = new String[] { "оплата услуг", "покупка", "списание" };
+        public static final Set<String> OUTCOME_SET = new HashSet<>();
+        static {
+            OUTCOME_SET.add("оплата услуг");
+            OUTCOME_SET.add("оплата");
+            OUTCOME_SET.add("покупка");
+            OUTCOME_SET.add("списание");
+        }
+//        public static final String[] INCOME_SET = new String[] { "зачисление", "зачисление зарплаты" };
+        public static final Set<String> INCOME_SET = new HashSet<>();
+        static {
+            INCOME_SET.add("зачисление зарплаты");
+            INCOME_SET.add("зачисление");
+        }
         public static final String ATM_OUT_STRING = "выдача наличных";
         public static final String DEBUG_STRING = "debug string";
+        public static final Set<String> ATM_OUT_SET = new HashSet<>();
+        static {
+            ATM_OUT_SET.add("выдача наличных");
+            ATM_OUT_SET.add("выдача");
+        }
 
         public static final int ERRORCODE = -1;
 
         public static int getType(String typeString) {
-            switch (typeString.toLowerCase()) {
-                case  ATM_OUT_STRING: return ATM_OUT;
-                case OperationType.DEBUG_STRING:    return OperationType.DEBUG;
-            }
-            if (Arrays.binarySearch(OperationType.OUTCOME_SET, typeString) >= 0) {
+//            switch (typeString.toLowerCase()) {
+//                case OperationType.DEBUG_STRING:    return OperationType.DEBUG;
+//            }
+            if (OperationType.DEBUG_STRING.equals(typeString.toLowerCase()))
+                return OperationType.DEBUG;
+//            if (Arrays.binarySearch(OperationType.OUTCOME_SET, typeString) >= 0)
+//                return OperationType.OUTCOME;
+//            if (Arrays.binarySearch(OperationType.INCOME_SET, typeString) >= 0)
+//                return OperationType.INCOME;
+            if (OUTCOME_SET.contains(typeString.toLowerCase()))
                 return OperationType.OUTCOME;
-            }
-            if (Arrays.binarySearch(OperationType.INCOME_SET, typeString) >= 0) {
+            if (INCOME_SET.contains(typeString.toLowerCase()))
                 return OperationType.INCOME;
-            }
+            if (ATM_OUT_SET.contains(typeString))
+                return OperationType.ATM_OUT;
             return OperationType.ERRORCODE;
         }
 
