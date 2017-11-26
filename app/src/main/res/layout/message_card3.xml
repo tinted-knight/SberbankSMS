@@ -5,14 +5,14 @@
     android:id="@+id/relativeLayout2"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp">
+    android:padding="8dp">
 
 
     <ImageView
         android:id="@+id/ivOperationIcon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:contentDescription="@string/red_coin"
         android:src="@drawable/point_transparent"
@@ -26,13 +26,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:layout_marginTop="2dp"
+        android:layout_marginStart="8dp"
         android:text="30"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
         android:textColor="@android:color/holo_orange_dark"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/guideline"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintEnd_toEndOf="@+id/ivOperationIcon"
+        app:layout_constraintStart_toStartOf="@+id/ivOperationIcon"
         app:layout_constraintTop_toTopOf="@+id/ivOperationIcon"/>
 
     <TextView
@@ -40,13 +40,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:text="june"
         android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
         android:textColor="@android:color/holo_orange_dark"
         android:textSize="12sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toStartOf="@+id/guideline"
-        app:layout_constraintStart_toStartOf="@+id/guideline"
+        app:layout_constraintEnd_toEndOf="@+id/ivOperationIcon"
+        app:layout_constraintStart_toStartOf="@+id/ivOperationIcon"
         app:layout_constraintTop_toBottomOf="@+id/tvDay"/>
 
 
@@ -70,27 +71,26 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
+        android:ellipsize="end"
+        android:maxLines="1"
         android:text="@string/sample_agent_0"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         app:layout_constraintBottom_toTopOf="@+id/guideline2"
         app:layout_constraintEnd_toStartOf="@+id/tvSumma"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/ivOperationIcon"
         app:layout_constraintTop_toTopOf="@+id/guideline2"/>
 
     <android.support.constraint.Guideline
-        android:id="@+id/guideline"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="24dp"/>
-
-    <android.support.constraint.Guideline
         android:id="@+id/guideline2"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="1dp"
         android:orientation="horizontal"
-        app:layout_constraintGuide_begin="26dp"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintGuide_percent="0.5"
+        app:layout_constraintTop_toTopOf="parent"
+        />
 
 </android.support.constraint.ConstraintLayout>
