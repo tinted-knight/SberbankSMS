@@ -28,6 +28,7 @@ import ru.tinted_knight.sberbanksms.Tools.Constants;
 import ru.tinted_knight.sberbanksms.Tools.LoadersConst;
 import ru.tinted_knight.sberbanksms.main_presenter.IMainPresenter;
 import ru.tinted_knight.sberbanksms.main_presenter.MainPresenter;
+import ru.tinted_knight.sberbanksms.detail_screen.DetailActivity;
 
 import static ru.tinted_knight.sberbanksms.Tools.Constants.BroadcastIncomeSms;
 
@@ -135,6 +136,13 @@ public class Main2 extends AppCompatActivity
         rvMain.setLayoutManager(new LinearLayoutManager(this));
         rvMain.addItemDecoration(new DividerItemDecoration(this, DividerItemDecoration.VERTICAL_LIST));
         rvMain.setVerticalScrollBarEnabled(true);
+    }
+
+    @Override
+    public void showDetailActivity(long id) {
+        Intent intent = new Intent(this, DetailActivity.class);
+        intent.putExtra("_id", id);
+        startActivity(intent);
     }
 
     @Override

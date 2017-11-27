@@ -12,4 +12,6 @@
     <string name="clear_filter">Убрать фильтр</string>
     <string name="cards">Карты</string>
     <string name="settings">Настройки</string>
+
+    <string name="label_balance">Баланс</string>
 </resources>

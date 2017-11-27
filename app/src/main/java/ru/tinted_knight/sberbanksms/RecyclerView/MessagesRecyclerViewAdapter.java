@@ -31,11 +31,11 @@ public class MessagesRecyclerViewAdapter extends RecyclerView.Adapter<MessagesRe
     private static OnItemLongClickListener sListenerLong;
 
     public interface OnItemClickListener {
-        void onItemClick(View item, int position);
+        void onItemClick(View item, long position);
     }
 
     public interface OnItemLongClickListener {
-        void onLongClick(View item, int position);
+        void onLongClick(Long id);
     }
 
     public void setOnItemLongClickListener(OnItemLongClickListener listenerLong) {
@@ -148,6 +148,12 @@ public class MessagesRecyclerViewAdapter extends RecyclerView.Adapter<MessagesRe
     public void onBindViewHolder(ViewHolder holder, int position) {
         Message message = mMessages.get(position);
 
+        holder.itemView.setTag(message.get_id());
+        holder.tvDay.setTag(message.get_id());
+        holder.tvMonth.setTag(message.get_id());
+//        holder.tvAgent.setTag(message.get_id());
+//        holder.tvSumma.setTag(message.get_id());
+
         String[] dates = message.getDateShort().split(" ");
         holder.tvDay.setText(dates[0]);
         holder.tvMonth.setText(dates[1]);
@@ -204,7 +210,7 @@ public class MessagesRecyclerViewAdapter extends RecyclerView.Adapter<MessagesRe
         return 0;
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         TextView tvSumma;
         TextView tvDay;
@@ -212,15 +218,18 @@ public class MessagesRecyclerViewAdapter extends RecyclerView.Adapter<MessagesRe
         TextView tvAgent;
         ImageView ivOperationIcon;
 
-        ViewHolder(View itemView) {
+        ViewHolder(final View itemView) {
             super(itemView);
 
             tvSumma = (TextView) itemView.findViewById(R.id.tvSumma);
             tvAgent = (TextView) itemView.findViewById(R.id.tvAgent);
-            ivOperationIcon = (ImageView) itemView.findViewById(R.id.ivOperationIcon);
+//            ivOperationIcon = (ImageView) itemView.findViewById(R.id.ivOperationIcon);
 
             tvDay = (TextView) itemView.findViewById(R.id.tvDay);
             tvMonth = (TextView) itemView.findViewById(R.id.tvMonth);
+
+            tvDay.setOnClickListener(this);
+            tvMonth.setOnClickListener(this);
 
             if (sListener != null) {
                 tvSumma.setOnClickListener(new View.OnClickListener() {
@@ -230,14 +239,14 @@ public class MessagesRecyclerViewAdapter extends RecyclerView.Adapter<MessagesRe
                     }
                 });
 
-                ivOperationIcon.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (sListener != null) {
-                            sListener.onItemClick(v, getLayoutPosition());
-                        }
-                    }
-                });
+//                ivOperationIcon.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        if (sListener != null) {
+//                            sListener.onItemClick(v, getLayoutPosition());
+//                        }
+//                    }
+//                });
 
                 tvAgent.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -248,19 +257,23 @@ public class MessagesRecyclerViewAdapter extends RecyclerView.Adapter<MessagesRe
                     }
                 });
             }
-
-            ivOperationIcon.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    if (sListenerLong != null) {
-                        sListenerLong.onLongClick(v, getLayoutPosition());
-                        return true;
-                    }
-                    return false;
-                }
-            });
+//            if (sListenerLong != null) {
+//                itemView.setOnLongClickListener(this);
+//                tvAgent.setOnLongClickListener(this);
+//                tvSumma.setOnLongClickListener(this);
+//            }
         }
 
+        @Override
+        public void onClick(View view) {
+            sListener.onItemClick(view, Integer.valueOf(view.getTag().toString()));
+        }
+
+//        @Override
+//        public boolean onLongClick(View view) {
+//            sListenerLong.onLongClick((Long) view.getTag());
+//            return true;
+//        }
     }
 
 }

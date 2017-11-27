@@ -24,6 +24,8 @@ public interface IMainView {
 
     void showItems(List<Message> data, RecyclerView.Adapter adapter);
 
+    void showDetailActivity(long id);
+
     void showActiveCard(String cardName);
 
     void scrollToFirst();

@@ -152,39 +152,45 @@ public class MainPresenter implements
 
     private void initAdapterClickListeners() {
         mAdapter.setOnItemClickListener(new MessagesRecyclerViewAdapter.OnItemClickListener() {
-            //                viewAdapter.setOnItemClickListener(new MessagesRVAdapterMonths.OnItemClickListener() {
             @Override
-            public void onItemClick(View item, int position) {
+            public void onItemClick(View item, long position) {
                 if (mFilterOperation && mFilterAgent) {
                     mView.popupMessage("Posible filter combination alredy enabled. Clear before use another one.");
                     return;
                 }
                 switch (item.getId()) {
-//                    case R.id.ivOperationIcon:
-//                        int type = mAdapter.getType(position);
-//                        mAdapter.addTypeFilter(type);
-//                        mFilterOperation = true;
-//                        mView.scrollToFirst();
-//                        break;
                     case R.id.tvSumma:
-                        mAdapter.addTypeFilter(mAdapter.getType(position));
+                        mAdapter.addTypeFilter(mAdapter.getType((int) position));
                         mFilterOperation = true;
                         mView.scrollToFirst();
                         break;
                     case R.id.tvAgent:
-                        String agent = mAdapter.getAgent(position);
+                        String agent = mAdapter.getAgent((int) position);
                         mAdapter.addAgentFilter(agent);
                         mFilterAgent = true;
                         mView.scrollToFirst();
                         break;
                     case R.id.tvDate:
-                        String smth = mAdapter.getDateFull(position);
+                        String smth = mAdapter.getDateFull((int) position);
                         mView.popupMessage(smth);
+                        break;
+                    case R.id.tvDay:
+                        mView.showDetailActivity(position);
+                        break;
+                    case R.id.tvMonth:
+                        mView.showDetailActivity(position);
                         break;
                 }
                 mAdapter.notifyDataSetChanged();
             }
         });
+//        mAdapter.setOnItemLongClickListener(new MessagesRecyclerViewAdapter.OnItemLongClickListener() {
+//            @Override
+//            public void onLongClick(Long id) {
+//                mView.popupMessage("Item tag is: " + id);
+//                mView.showDetailActivity(id);
+//            }
+//        });
     }
 
     @Override

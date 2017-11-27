@@ -77,12 +77,14 @@ public class MessageContentProvider extends ContentProvider {
     private static final int SmsByCardId = 13;
     private static final int CardsListId = 14;
     private static final int YearsListId = 15;
+    private static final int DetailSmsById = 16;
 
     private static final UriMatcher uriMatcher;
 
     static {
         uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
         uriMatcher.addURI(Authority, FullSms, FullSmsId);
+        uriMatcher.addURI(Authority, FullSms + "/#", DetailSmsById);
         uriMatcher.addURI(Authority, RawSms, RawSmsId);
         uriMatcher.addURI(Authority, GetRawSms + "/#", GetRawSmsId);
         uriMatcher.addURI(Authority, Agents, AgentsId);
@@ -126,6 +128,11 @@ public class MessageContentProvider extends ContentProvider {
                         " where agents.default_text = messages.agent" +
                         " order by messages.year desc, messages.month desc, messages.day desc," +
                         " messages.hour desc, messages.minute desc";
+                break;
+            case DetailSmsById:
+                String message_id = uri.getLastPathSegment();
+                query = "select * from messages " +
+                        "where _id = " + message_id;
                 break;
             case SmsByCardId:
                 String cardId = uri.getLastPathSegment();
