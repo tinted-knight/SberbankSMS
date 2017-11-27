@@ -1,38 +1,39 @@
 package ru.tinted_knight.sberbanksms.detail_screen;
 
+import android.app.Application;
+import android.arch.lifecycle.AndroidViewModel;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 
 import java.util.Locale;
 
-import ru.tinted_knight.sberbanksms.Message.Message;
-import ru.tinted_knight.sberbanksms.Message.MessageBuilder;
+import ru.tinted_knight.sberbanksms.R;
+import ru.tinted_knight.sberbanksms.Tools.Constants;
+import ru.tinted_knight.sberbanksms.Tools.DB.DBHandler;
 import ru.tinted_knight.sberbanksms.Tools.DB.MessageContentProvider;
 import ru.tinted_knight.sberbanksms.databinding.ActivityDetailBinding;
 
-import static ru.tinted_knight.sberbanksms.Tools.DB.DBHandler.*;
-
-public class DetailViewModel implements DetailContract.IDetailViewModel {
+public class DetailViewModel extends AndroidViewModel {
 
     private ActivityDetailBinding mBinding;
-
-    private Context mContext;
-
     private long _id;
-
     private Cursor mCursor;
 
-    public DetailViewModel(Context context, ActivityDetailBinding b, long id) {
-        mBinding = b;
-        this._id = id;
-        this.mContext = context;
-        loadDetails();
+    public DetailViewModel(@NonNull Application application) {
+        super(application);
+    }
+
+    public void init(ActivityDetailBinding binding, long id){
+        mBinding = binding;
+        _id = id;
     }
 
     private void loadDetails() {
         Uri uri = Uri.parse(MessageContentProvider.UriFullSms + "/" + _id);
-        mCursor = mContext.getContentResolver().query(
+        mCursor = getApplication().getApplicationContext().getContentResolver().query(
                 uri,
                 null,
                 null,
@@ -41,27 +42,43 @@ public class DetailViewModel implements DetailContract.IDetailViewModel {
         );
     }
 
-    @Override
     public void bindData() {
+        this.loadDetails();
         if (mCursor == null)
             return;
         mCursor.moveToFirst();
 
         mBinding.tvAgent.setText(
-                mCursor.getString(mCursor.getColumnIndex(MessagesTable.Agent)));
+                mCursor.getString(mCursor.getColumnIndex(DBHandler.MessagesTable.Agent)));
         mBinding.tvSumma.setText(String.format(Locale.getDefault(), "%,.2f",
-                mCursor.getFloat(mCursor.getColumnIndex(MessagesTable.Summa))));
+                mCursor.getFloat(mCursor.getColumnIndex(DBHandler.MessagesTable.Summa))));
         mBinding.tvBalance.setText(String.format(Locale.getDefault(), "%,.2f",
-                mCursor.getFloat(mCursor.getColumnIndex(MessagesTable.Balance))));
-        String card = mCursor.getString(mCursor.getColumnIndex(MessagesTable.CardType))
-                + mCursor.getString(mCursor.getColumnIndex(MessagesTable.Card));
+                mCursor.getFloat(mCursor.getColumnIndex(DBHandler.MessagesTable.Balance))));
+        String card = mCursor.getString(mCursor.getColumnIndex(DBHandler.MessagesTable.CardType))
+                + mCursor.getString(mCursor.getColumnIndex(DBHandler.MessagesTable.Card));
         mBinding.tvCard.setText(card);
-        String date = mCursor.getString(mCursor.getColumnIndex(MessagesTable.Day)) + "."
-                + mCursor.getString(mCursor.getColumnIndex(MessagesTable.Month)) + "."
-                + mCursor.getString(mCursor.getColumnIndex(MessagesTable.Year));
+        String date = mCursor.getString(mCursor.getColumnIndex(DBHandler.MessagesTable.Day)) + "."
+                + mCursor.getString(mCursor.getColumnIndex(DBHandler.MessagesTable.Month)) + "."
+                + mCursor.getString(mCursor.getColumnIndex(DBHandler.MessagesTable.Year));
         mBinding.tvDate.setText(date);
-        String time = mCursor.getString(mCursor.getColumnIndex(MessagesTable.Hour)) + ":"
-                + mCursor.getString(mCursor.getColumnIndex(MessagesTable.Minute));
+        String time = mCursor.getString(mCursor.getColumnIndex(DBHandler.MessagesTable.Hour)) + ":"
+                + mCursor.getString(mCursor.getColumnIndex(DBHandler.MessagesTable.Minute));
         mBinding.tvTime.setText(time);
+
+        int opType = mCursor.getInt(mCursor.getColumnIndex(DBHandler.MessagesTable.Type));
+        switch (opType) {
+            case Constants.OperationType.INCOME:
+                mBinding.tvSumma.setTextColor(ContextCompat.getColor(
+                        this.getApplication().getApplicationContext(), R.color.summa_income));
+                break;
+            case Constants.OperationType.OUTCOME:
+                mBinding.tvSumma.setTextColor(ContextCompat.getColor(
+                        this.getApplication().getApplicationContext(), R.color.summa_expense));
+                break;
+            case Constants.OperationType.ATM_OUT:
+                mBinding.tvSumma.setTextColor(ContextCompat.getColor(
+                        this.getApplication().getApplicationContext(), R.color.summa_atm));
+                break;
+        }
     }
 }

@@ -185,15 +185,18 @@ public class MessagesRecyclerViewAdapter extends RecyclerView.Adapter<MessagesRe
         int type = message.getType();
         switch (type) {
             case Constants.OperationType.INCOME:
-                holder.tvSumma.setTextColor(Color.parseColor("#1B5E20"));
+//                holder.tvSumma.setTextColor(Color.parseColor("#1B5E20"));
+                holder.tvSumma.setTextColor(ContextCompat.getColor(mContext, R.color.summa_income));
                 holder.tvSumma.setText(String.format(Locale.getDefault(), "+ %1$,.2f", message.getSumma()));
                 break;
             case Constants.OperationType.OUTCOME:
-                holder.tvSumma.setTextColor(Color.parseColor("#D50000"));
+//                holder.tvSumma.setTextColor(Color.parseColor("#D50000"));
+                holder.tvSumma.setTextColor(ContextCompat.getColor(mContext, R.color.summa_expense));
                 holder.tvSumma.setText(String.format(Locale.getDefault(), "- %1$,.2f", message.getSumma()));
                 break;
             case Constants.OperationType.ATM_OUT:
-                holder.tvSumma.setTextColor(Color.parseColor("#0D47A1"));
+//                holder.tvSumma.setTextColor(Color.parseColor("#0D47A1"));
+                holder.tvSumma.setTextColor(ContextCompat.getColor(mContext, R.color.summa_atm));
                 holder.tvSumma.setText(String.format(Locale.getDefault(), "%1$,.2f", message.getSumma()));
                 break;
             case Constants.OperationType.DEBUG:

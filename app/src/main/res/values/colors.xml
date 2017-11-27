@@ -17,4 +17,8 @@
     <color name="september">#D32F2F</color>
     <color name="october">#D50000</color>
     <color name="november">#880E4F</color>
+
+    <color name="summa_expense">#D50000</color>
+    <color name="summa_income">#1B5E20</color>
+    <color name="summa_atm">#0D47A1</color>
 </resources>
