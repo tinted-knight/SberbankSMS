@@ -26,9 +26,9 @@ import ru.tinted_knight.sberbanksms.RecyclerView.DividerItemDecoration;
 import ru.tinted_knight.sberbanksms.Settings.Settings;
 import ru.tinted_knight.sberbanksms.Tools.Constants;
 import ru.tinted_knight.sberbanksms.Tools.LoadersConst;
+import ru.tinted_knight.sberbanksms.detail_screen.DetailActivity;
 import ru.tinted_knight.sberbanksms.main_presenter.IMainPresenter;
 import ru.tinted_knight.sberbanksms.main_presenter.MainPresenter;
-import ru.tinted_knight.sberbanksms.detail_screen.DetailActivity;
 
 import static ru.tinted_knight.sberbanksms.Tools.Constants.BroadcastIncomeSms;
 
@@ -47,7 +47,7 @@ public class Main2 extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_v3);
 
-        rvMain = (RecyclerView) findViewById(R.id.rvMain);
+        rvMain = findViewById(R.id.rvMain);
 
         mPresenter = new MainPresenter(this);
         mPresenter.onCreate();
@@ -71,7 +71,7 @@ public class Main2 extends AppCompatActivity
 
     @Override
     public void initBottomBar() {
-        bbar = (BottomNavigationView) findViewById(R.id.bottomNavigationView);
+        bbar = findViewById(R.id.bottomNavigationView);
         bbar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {

@@ -1,6 +1,5 @@
 package ru.tinted_knight.sberbanksms.detail_screen;
 
-import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;

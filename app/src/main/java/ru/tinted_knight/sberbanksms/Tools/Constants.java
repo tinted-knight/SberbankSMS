@@ -25,7 +25,9 @@ public final class Constants {
     public static final String DeviceSmsUri = "content://sms/inbox";
 
     public static final int DebugSMSLimit = 50;
+
     public static final String SBER_PHONE_NUMBER = "900";
+
     public static final String pattern =
             "(\\w{4}\\d{4}\\s)" +                // 1. card number
             "(\\d\\d\\.\\d\\d\\.\\d\\d\\s)" +    // 2. date
@@ -37,6 +39,7 @@ public final class Constants {
             "(\\d+\\.?\\d+р)"                  // 8. balance
             ;
     public static final String passwordPattern = "(.*)(ароль)(.*)";
+
     public static final String inTransactionPattern =
             "(\\w{4}\\d{4}:\\s)" +               // 1. card number
             "(\\d{1,2}:\\d{1,2}:\\d{1,2})" +     // 2. time
@@ -61,6 +64,19 @@ public final class Constants {
                     "(\\d\\d\\.\\d\\d\\.\\d\\d\\s)" +   // 2. date
                     "(\\d{1,2}:\\d{1,2})?" +            // 3. time
                     "(.*\\s)" +                         // 4. operation type
+                    "(\\d+\\.?\\d*)р" +                 // 5. summa
+                    "(.*)" +                            // 6. agent
+                    "(Баланс:\\s)" +                    // 7. "Баланс"
+                    "(\\d+\\.?\\d+р)"                   // 8. balance
+            ;
+
+    public static final String MOBILE_BANK_FLAG = "Мобильного банка";
+    public static final String mobileBankPattern =
+                    "(\\w{4})" +                        // 0. card type ECMC or VISA
+                    "(\\d{4}\\s)" +                     // 1. card number
+                    "(\\d\\d\\.\\d\\d\\.\\d\\d\\s)" +   // 2. date
+                    "оплата Мобильного банка за (.*)" + // 3.
+                    "-(.*\\s)" +                        // 4.
                     "(\\d+\\.?\\d*)р" +                 // 5. summa
                     "(.*)" +                            // 6. agent
                     "(Баланс:\\s)" +                    // 7. "Баланс"

@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "ru.tinted_knight.sberbanksms"
-        minSdkVersion 19
+        minSdkVersion 16
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -32,4 +32,6 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     implementation "android.arch.lifecycle:extensions:1.0.0"
+    implementation "android.arch.persistence.room:runtime:1.0.0"
+    annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
 }

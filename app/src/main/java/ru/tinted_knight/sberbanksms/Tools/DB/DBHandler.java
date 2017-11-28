@@ -67,20 +67,20 @@ public class DBHandler extends SQLiteOpenHelper{
         public static final String Minute = "minute";
 
         static final String Create = "create table " + Table + "(" +
-                Id + " integer primary key autoincrement, " +
+                Id + " integer primary key autoincrement not null, " +
                 Card + " text, " +
                 CardType + " text, " +
-                Date + " integer, " +
-                Type + " integer, " +
+                Date + " integer not null, " +
+                Type + " integer not null, " +
                 Agent + " text, " +
-                Summa + " real, " +
-                Balance + " real, " +
+                Summa + " real not null, " +
+                Balance + " real not null, " +
 //                Raw + " text, " +
-                Year + " integer, " +
-                Month + " integer, " +
-                Day + " integer, " +
-                Hour + " integer, " +
-                Minute + " minute);";
+                Year + " integer not null, " +
+                Month + " integer not null, " +
+                Day + " integer not null, " +
+                Hour + " integer not null, " +
+                Minute + " integer not null);";
 
     }
 

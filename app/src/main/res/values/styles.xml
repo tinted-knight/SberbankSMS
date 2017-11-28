@@ -8,4 +8,22 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="detail_date">
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="detail_agent" parent="TextAppearance.AppCompat.Headline">
+        <item name="android:textSize">24sp</item>
+    </style>
+
+    <style name="detail_summa">
+        <item name="android:textColor">@color/summa_expense</item>
+        <item name="android:textSize">48sp</item>
+    </style>
+
+    <style name="detail_balance" parent="TextAppearance.AppCompat.Headline">
+        <item name="android:textSize">36sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 </resources>

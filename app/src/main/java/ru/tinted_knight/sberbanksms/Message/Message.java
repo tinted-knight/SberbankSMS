@@ -97,8 +97,8 @@ public class Message {
         }
     }
 
-    private boolean tryExtractData(String data, Pattern pattern) throws ParseException {
-        Matcher matcher = pattern.matcher(data);
+    private boolean extractMobileBank(String data) throws ParseException {
+        Matcher matcher = Pattern.compile(Constants.mobileBankPattern).matcher(data);
         if (matcher.find()) {
             try {
                 mCardType = CardType.valueOf(matcher.group(1).trim().toUpperCase());
@@ -109,19 +109,12 @@ public class Message {
             this.cardNumber  = matcher.group(2).trim();
 
             String dateString;
-            if (matcher.group(4) != null) { // 3-ей группы может не быть
-                dateString = matcher.group(3).trim() + " " + matcher.group(4).trim();
-            }
-            else {
-                dateString = matcher.group(3).trim() + " 00:00";
-            }
+            dateString = matcher.group(3).trim() + " 00:00";
             DateFormat dateFormat = new SimpleDateFormat(Constants.smsDateFormat, Locale.getDefault());
             date = dateFormat.parse(dateString).getTime() / 1000;
 
-            this.agent = matcher.group(7).trim();
-
-            String typeString = matcher.group(5).trim();
-            type = OperationType.getType(typeString);
+            this.agent = "Сбербанк " + matcher.group(4).trim() + "-" + matcher.group(5).trim();
+            this.type = OperationType.OUTCOME;
 
             String sumString = matcher.group(6).trim();
             this.summa = Float.valueOf(sumString.substring(0, sumString.length()));
@@ -130,6 +123,46 @@ public class Message {
             this.balance = Float.valueOf(balanceString.substring(0, balanceString.length()-1));
 
             return true;
+        }
+        return false;
+    }
+
+    private boolean tryExtractData(String data, Pattern pattern) throws ParseException {
+        Matcher matcher = pattern.matcher(data);
+        if (matcher.find()) {
+            if (data.contains(Constants.MOBILE_BANK_FLAG)) {
+                if (extractMobileBank(data))
+                    return true;
+            } else {
+                try {
+                    mCardType = CardType.valueOf(matcher.group(1).trim().toUpperCase());
+                } catch (IllegalArgumentException e) {
+                    mCardType = CardType.NONE;
+                }
+                this.cardNumber = matcher.group(2).trim();
+
+                String dateString;
+                if (matcher.group(4) != null) { // 3-ей группы может не быть
+                    dateString = matcher.group(3).trim() + " " + matcher.group(4).trim();
+                } else {
+                    dateString = matcher.group(3).trim() + " 00:00";
+                }
+                DateFormat dateFormat = new SimpleDateFormat(Constants.smsDateFormat, Locale.getDefault());
+                date = dateFormat.parse(dateString).getTime() / 1000;
+
+                this.agent = matcher.group(7).trim();
+
+                String typeString = matcher.group(5).trim();
+                type = OperationType.getType(typeString);
+
+                String sumString = matcher.group(6).trim();
+                this.summa = Float.valueOf(sumString.substring(0, sumString.length()));
+
+                String balanceString = matcher.group(9).trim();
+                this.balance = Float.valueOf(balanceString.substring(0, balanceString.length() - 1));
+
+                return true;
+            }
         }
         return false;
     }
