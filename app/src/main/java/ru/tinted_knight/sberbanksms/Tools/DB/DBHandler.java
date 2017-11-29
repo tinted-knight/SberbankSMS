@@ -9,7 +9,7 @@ import ru.tinted_knight.sberbanksms.Tools.Slog;
 public class DBHandler extends SQLiteOpenHelper{
 
     private static final String DbName = "BankSMS";
-    public static final int Version = 1;
+    public static final int Version = 2;
 
     public static final class CARDS {
 

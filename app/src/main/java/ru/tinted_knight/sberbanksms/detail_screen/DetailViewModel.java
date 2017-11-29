@@ -2,20 +2,21 @@ package ru.tinted_knight.sberbanksms.detail_screen;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
-import android.database.Cursor;
+import android.arch.lifecycle.LiveData;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 
 import ru.tinted_knight.sberbanksms.R;
 import ru.tinted_knight.sberbanksms.Tools.Constants;
+import ru.tinted_knight.sberbanksms.Tools.DB.AppDatabse;
 import ru.tinted_knight.sberbanksms.databinding.ActivityDetailBinding;
-import ru.tinted_knight.sberbanksms.detail_screen.db.AppDatabse;
 import ru.tinted_knight.sberbanksms.detail_screen.db.MessageEntity;
 
 public class DetailViewModel extends AndroidViewModel {
 
     private ActivityDetailBinding mBinding;
     private Long _id;
+    private LiveData<MessageEntity> mLiveData;
 
     private AppDatabse mDatabase;
 
@@ -29,8 +30,11 @@ public class DetailViewModel extends AndroidViewModel {
         _id = id;
     }
 
-    public void bindData() {
-        MessageEntity entity = mDatabase.messageDao().getMessage(_id.intValue());
+    public void loadData(){
+        mLiveData = mDatabase.messageDao().getMessage(_id.intValue());
+    }
+
+    public void bindData(MessageEntity entity) {
         mBinding.tvAgent.setText(entity.agent);
         mBinding.tvSumma.setText(entity.getSummaString());
         mBinding.tvBalance.setText(entity.getBalanceString());
@@ -52,6 +56,10 @@ public class DetailViewModel extends AndroidViewModel {
                         this.getApplication().getApplicationContext(), R.color.summa_atm));
                 break;
         }
+    }
+
+    public LiveData<MessageEntity> getLiveData() {
+        return mLiveData;
     }
 
 }
