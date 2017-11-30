@@ -8,9 +8,9 @@ import android.support.v4.content.ContextCompat;
 
 import ru.tinted_knight.sberbanksms.R;
 import ru.tinted_knight.sberbanksms.Tools.Constants;
-import ru.tinted_knight.sberbanksms.Tools.DB.AppDatabse;
+import ru.tinted_knight.sberbanksms.dao.AppDatabase;
+import ru.tinted_knight.sberbanksms.dao.MessageEntity;
 import ru.tinted_knight.sberbanksms.databinding.ActivityDetailBinding;
-import ru.tinted_knight.sberbanksms.detail_screen.db.MessageEntity;
 
 public class DetailViewModel extends AndroidViewModel {
 
@@ -18,11 +18,11 @@ public class DetailViewModel extends AndroidViewModel {
     private Long _id;
     private LiveData<MessageEntity> mLiveData;
 
-    private AppDatabse mDatabase;
+    private AppDatabase mDatabase;
 
     public DetailViewModel(@NonNull Application application) {
         super(application);
-        mDatabase = AppDatabse.getInstance(application);
+        mDatabase = AppDatabase.getInstance(application);
     }
 
     public void init(ActivityDetailBinding binding, long id) {
@@ -31,7 +31,7 @@ public class DetailViewModel extends AndroidViewModel {
     }
 
     public void loadData(){
-        mLiveData = mDatabase.messageDao().getMessage(_id.intValue());
+        mLiveData = mDatabase.dao().getMessage(_id.intValue());
     }
 
     public void bindData(MessageEntity entity) {

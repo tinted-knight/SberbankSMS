@@ -14,6 +14,7 @@ import ru.tinted_knight.sberbanksms.R;
 import ru.tinted_knight.sberbanksms.Settings.Agents.AgentsActivity;
 import ru.tinted_knight.sberbanksms.Settings.Agents.AliasesActivity;
 import ru.tinted_knight.sberbanksms.Settings.Cards.CardsListActivity;
+import ru.tinted_knight.sberbanksms.list_all.ListAllActivity;
 
 public class Settings extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
@@ -72,6 +73,8 @@ public class Settings extends AppCompatActivity implements AdapterView.OnItemCli
                 break;
             case AppMenuItems.RawSms:
                 Toast.makeText(this, "rawsms", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(this, ListAllActivity.class);
+                startActivity(intent, null);
                 break;
             case AppMenuItems.AppSettings:
                 Toast.makeText(this, "appsettings", Toast.LENGTH_SHORT).show();

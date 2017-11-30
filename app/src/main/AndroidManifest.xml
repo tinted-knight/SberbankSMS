@@ -47,6 +47,8 @@
         </activity>
         <activity android:name=".detail_screen.DetailActivity">
         </activity>
+        <activity android:name=".list_all.ListAllActivity">
+        </activity>
     </application>
 
 </manifest>

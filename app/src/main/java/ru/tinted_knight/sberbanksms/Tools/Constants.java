@@ -1,6 +1,5 @@
 package ru.tinted_knight.sberbanksms.Tools;
 
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -110,6 +109,8 @@ public final class Constants {
     public static final String smsDateFormat = "dd.MM.yy HH:mm";
     public static final String fullDateFormat = "dd MM yyyy HH mm";
     public static final String shortDateFormat = "dd MMM";
+    public static final String shortDateFormatMonth = "MMM";
+    public static final String shortDateFormatDay = "dd";
     public static final String DATEFORMAT_TIMEONLY = "HH mm";
 
     public static final class AppPreferences {

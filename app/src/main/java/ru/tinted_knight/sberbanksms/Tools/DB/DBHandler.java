@@ -116,18 +116,18 @@ public class DBHandler extends SQLiteOpenHelper{
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        if (oldVersion == 1 && newVersion == Version) {
-            try {
-                Slog.log("try to upgrade db");
-                db.beginTransaction();
-                db.execSQL(Agents.Create);
-                Slog.log("dbHandler: " + Agents.Table + " created");
-                db.execSQL(AgentsAliases.Create);
-                Slog.log("dbHandler: " + AgentsAliases.Table + " created");
-                db.setTransactionSuccessful();
-            } finally {
-                db.endTransaction();
-            }
-        }
+//        if (oldVersion == 1 && newVersion == Version) {
+//            try {
+//                Slog.log("try to upgrade db");
+//                db.beginTransaction();
+//                db.execSQL(Agents.Create);
+//                Slog.log("dbHandler: " + Agents.Table + " created");
+//                db.execSQL(AgentsAliases.Create);
+//                Slog.log("dbHandler: " + AgentsAliases.Table + " created");
+//                db.setTransactionSuccessful();
+//            } finally {
+//                db.endTransaction();
+//            }
+//        }
     }
 }

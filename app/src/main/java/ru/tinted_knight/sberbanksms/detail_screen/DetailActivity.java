@@ -8,8 +8,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
 import ru.tinted_knight.sberbanksms.R;
+import ru.tinted_knight.sberbanksms.dao.MessageEntity;
 import ru.tinted_knight.sberbanksms.databinding.ActivityDetailBinding;
-import ru.tinted_knight.sberbanksms.detail_screen.db.MessageEntity;
 
 public class DetailActivity extends AppCompatActivity {
 
