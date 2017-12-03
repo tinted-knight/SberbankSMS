@@ -9,7 +9,7 @@ import android.support.v4.content.ContextCompat;
 import ru.tinted_knight.sberbanksms.R;
 import ru.tinted_knight.sberbanksms.Tools.Constants;
 import ru.tinted_knight.sberbanksms.dao.AppDatabase;
-import ru.tinted_knight.sberbanksms.dao.MessageEntity;
+import ru.tinted_knight.sberbanksms.dao.query_pojos.MessageEntity;
 import ru.tinted_knight.sberbanksms.databinding.ActivityDetailBinding;
 
 public class DetailViewModel extends AndroidViewModel {

@@ -1,4 +1,4 @@
-package ru.tinted_knight.sberbanksms.list_all;
+package ru.tinted_knight.sberbanksms.list_all.ui;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -13,6 +13,7 @@ import java.util.List;
 
 import ru.tinted_knight.sberbanksms.R;
 import ru.tinted_knight.sberbanksms.Tools.Constants;
+import ru.tinted_knight.sberbanksms.dao.query_pojos.SimpleEntity;
 
 public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerViewAdapter.ViewHolder> {
 
@@ -54,8 +55,8 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
             case Constants.OperationType.ATM_OUT:
                 holder.tvSumma.setTextColor(ContextCompat.getColor(context, R.color.summa_atm));
                 break;
-            default:
-                throw new IllegalArgumentException(":: onBindViewHolder() - message type is incorrect");
+//            default:
+//                throw new IllegalArgumentException(":: onBindViewHolder() - message type is incorrect");
         }
 
         int color = defineDateColor(e.month);

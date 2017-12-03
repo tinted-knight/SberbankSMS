@@ -13,10 +13,12 @@ import java.util.List;
 
 import ru.tinted_knight.sberbanksms.R;
 import ru.tinted_knight.sberbanksms.RecyclerView.DividerItemDecoration;
+import ru.tinted_knight.sberbanksms.dao.query_pojos.SimpleEntity;
+import ru.tinted_knight.sberbanksms.list_all.ui.ListRecyclerViewAdapter;
 
 public class ListAllActivity extends AppCompatActivity {
 
-    ListViewModel mViewModel;
+    ListAllViewModel mViewModel;
     RecyclerView rvMain;
     ListRecyclerViewAdapter adapter;
 
@@ -25,12 +27,15 @@ public class ListAllActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_all);
 
-        mViewModel = ViewModelProviders.of(this).get(ListViewModel.class);
+        mViewModel = ViewModelProviders.of(this).get(ListAllViewModel.class);
         mViewModel.init();
 
         rvMain = findViewById(R.id.rvMain);
 
+        //TODO: onResume, onPause
         registerObservers();
+
+        mViewModel.firstStart();
     }
 
     private void registerObservers() {

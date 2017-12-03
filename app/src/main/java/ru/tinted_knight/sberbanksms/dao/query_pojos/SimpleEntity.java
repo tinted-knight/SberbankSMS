@@ -1,7 +1,4 @@
-package ru.tinted_knight.sberbanksms.list_all;
-
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
+package ru.tinted_knight.sberbanksms.dao.query_pojos;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -9,10 +6,8 @@ import java.util.Locale;
 
 import ru.tinted_knight.sberbanksms.Tools.Constants;
 
-@Entity
 public class SimpleEntity {
 
-    @PrimaryKey
     public int _id;
 
     public String agent;
