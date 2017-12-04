@@ -19,24 +19,21 @@ public class SmsReceiverLiveData extends BroadcastReceiver {
             Object[] pdus = (Object[]) intent.getExtras().get("pdus");
             AppDatabase database = AppDatabase.getInstance(context);
             // TODO: SmsProcessAsync
-            new SmsProcessAsync(pdus,database).execute();
+            new SmsProcessAsync(database).execute(pdus);
         }
     }
 
     private static class SmsProcessAsync extends AsyncTask<Object[], Void, Long> {
 
-        private Object[] pdus;
-
         private AppDatabase database;
 
-        SmsProcessAsync(Object[] pdus, AppDatabase database){
-            this.pdus = pdus;
+        SmsProcessAsync(AppDatabase database){
             this.database = database;
         }
         
         @Override
         protected Long doInBackground(Object[]... objects) {
-
+            Object[] pdus = objects[0];
             String messageString = ParseUtils.parseFromPdus(pdus);
             FullMessageEntity entity = ParseUtils.fromStringToEntity(messageString);
             if (entity != null)

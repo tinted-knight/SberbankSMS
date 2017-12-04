@@ -33,7 +33,7 @@ public class ParseUtils {
         }
 
         String sender = messages[0].getDisplayOriginatingAddress();
-        long dateReceived = messages[0].getTimestampMillis();
+//        long dateReceived = messages[0].getTimestampMillis();
         if (Constants.SBER_PHONE_NUMBER.equalsIgnoreCase(sender)) {
             StringBuilder raw = new StringBuilder();
             for (SmsMessage message : messages)

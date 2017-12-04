@@ -114,7 +114,7 @@ public final class Constants {
     public static final String DATEFORMAT_TIMEONLY = "HH mm";
 
     public static final class AppPreferences {
-        public static final String FirstRun = "firstRun";
+        public static final String FirstRun = "mFirstRun";
     }
 
     public enum CardType {
