@@ -4,24 +4,31 @@ import android.Manifest;
 import android.app.ProgressDialog;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.MenuItem;
 import android.widget.Toast;
+
+import com.roughike.bottombar.BottomBar;
 
 import java.util.List;
 
 import ru.tinted_knight.sberbanksms.R;
 import ru.tinted_knight.sberbanksms.RecyclerView.DividerItemDecoration;
+import ru.tinted_knight.sberbanksms.Settings.Settings;
 import ru.tinted_knight.sberbanksms.dao.query_pojos.SimpleEntity;
 import ru.tinted_knight.sberbanksms.list_all.ui.ListRecyclerViewAdapter;
+import ru.tinted_knight.sberbanksms.main_view.Main2;
 
 public class ListAllActivity
         extends AppCompatActivity
@@ -40,7 +47,7 @@ public class ListAllActivity
         setContentView(R.layout.activity_list_all);
 
         checkPermissions();
-
+        initBottomBar();
 //        mViewModel = ViewModelProviders.of(this).get(ListAllViewModel.class);
 //
 //        rvMain = findViewById(R.id.rvMain);
@@ -72,6 +79,27 @@ public class ListAllActivity
         } else {
             createViewModel();
         }
+    }
+
+    private void initBottomBar() {
+        BottomNavigationView bbar = findViewById(R.id.bottomNavigationView);
+        bbar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.bbSettings:
+                        item.setChecked(true);
+                        Intent intent = new Intent(ListAllActivity.this, Settings.class);
+                        startActivity(intent);
+                        break;
+                    case R.id.bbCards:
+                        break;
+                    case R.id.bbFilter:
+                        break;
+                }
+                return false;
+            }
+        });
     }
 
     @Override
@@ -137,7 +165,6 @@ public class ListAllActivity
         mViewModel.mProgress.observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(@Nullable Integer progress) {
-                Log.d("TAGG", "progressUpdate: " + progress);
                 progressDialog.setProgress(progress);
             }
         });
@@ -148,8 +175,9 @@ public class ListAllActivity
 //        progressDialog.dismiss();
         progressDialog.setCancelable(true);
         progressDialog.setCanceledOnTouchOutside(true);
-//        progressDialog.setTitle("Done");
-//        progressDialog.setMessage("Thank you for patience. Tap anywhere outside.");
+        progressDialog.setTitle("Done");
+        progressDialog.setMessage("Thank you for patience. Tap anywhere outside.");
+
         mViewModel.mProgress.removeObservers(this);
     }
 }
