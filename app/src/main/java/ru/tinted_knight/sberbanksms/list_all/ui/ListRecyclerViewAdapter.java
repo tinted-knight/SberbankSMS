@@ -20,10 +20,6 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
     private List<SimpleEntity> data;
     private Context context;
 
-    public ListRecyclerViewAdapter(List<SimpleEntity> data) {
-        this.data = data;
-    }
-
     public ListRecyclerViewAdapter(Context context, List<SimpleEntity> data) {
         this.data = data;
         this.context = context;

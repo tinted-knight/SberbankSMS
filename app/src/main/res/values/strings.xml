@@ -12,6 +12,9 @@
     <string name="clear_filter">Убрать фильтр</string>
     <string name="cards">Карты</string>
     <string name="settings">Настройки</string>
-
     <string name="label_balance">Баланс</string>
+    <string name="notif_message_income">Поступление средств</string>
+    <string name="notif_message_expense">Поступление средств</string>
+    <string name="notif_message_atm">Снятие наличных</string>
+
 </resources>

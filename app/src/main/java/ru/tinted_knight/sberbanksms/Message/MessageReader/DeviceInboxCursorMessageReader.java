@@ -15,7 +15,7 @@ public class DeviceInboxCursorMessageReader extends CursorMessageReader {
 
     public Cursor read() {
         Uri uri = Uri.parse(Constants.DeviceSmsUri);
-        String selection = Telephony.TextBasedSmsColumns.ADDRESS + " = '900'";
+        String selection = Telephony.TextBasedSmsColumns.ADDRESS + " = '" + Constants.SBER_PHONE_NUMBER + "'";
         return context.getContentResolver().query(uri, null, selection, null, null);
     }
 

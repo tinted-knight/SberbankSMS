@@ -51,7 +51,7 @@ public class ListAllViewModel extends AndroidViewModel {
     }
 
     public void onCreate() {
-        if (Preferences.isFirstRun2(this.getApplication())) {
+        if (Preferences.isFirstRun2(getApplication())) {
             //TODO check permissions
             this.firstStart();
         } else
@@ -64,7 +64,6 @@ public class ListAllViewModel extends AndroidViewModel {
             // TODO show popupmessage
         } else {
             // TODO progress update listener
-//            mView.showProgress("title", "text", cursor.getCount());
             listener.onProgressStart("Анализ СМС-сообщений", "Это займет немного времени...", cursor.getCount());
             AsyncSmsRoomWriter writer = new AsyncSmsRoomWriter();
             writer.execute(cursor);
@@ -108,6 +107,7 @@ public class ListAllViewModel extends AndroidViewModel {
 
     public interface IShowProgress {
         void onProgressStart(String title, String text, int max);
+
         void onProgressHide();
     }
 }
