@@ -31,7 +31,7 @@ public class DetailViewModel extends AndroidViewModel {
     }
 
     public void loadData(){
-        mLiveData = mDatabase.dao().getMessage(_id.intValue());
+        mLiveData = mDatabase.daoMessages().getMessage(_id.intValue());
     }
 
     public void bindData(MessageEntity entity) {

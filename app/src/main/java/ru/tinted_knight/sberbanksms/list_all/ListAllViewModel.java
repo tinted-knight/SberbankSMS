@@ -9,13 +9,19 @@ import android.os.AsyncTask;
 import android.provider.Telephony;
 import android.support.annotation.NonNull;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
+import ru.tinted_knight.sberbanksms.Message.Message;
 import ru.tinted_knight.sberbanksms.Message.MessageReader.DeviceInboxCursorMessageReader;
 import ru.tinted_knight.sberbanksms.Settings.Preferences;
+import ru.tinted_knight.sberbanksms.dao.AgentDao;
 import ru.tinted_knight.sberbanksms.dao.AppDatabase;
 import ru.tinted_knight.sberbanksms.dao.ParseUtils;
+import ru.tinted_knight.sberbanksms.dao.entities.AgentEntity;
 import ru.tinted_knight.sberbanksms.dao.entities.FullMessageEntity;
+import ru.tinted_knight.sberbanksms.dao.query_pojos.AgentOnly;
 import ru.tinted_knight.sberbanksms.dao.query_pojos.SimpleEntity;
 
 public class ListAllViewModel extends AndroidViewModel {
@@ -33,7 +39,7 @@ public class ListAllViewModel extends AndroidViewModel {
     public ListAllViewModel(@NonNull Application application) {
         super(application);
         mDatabase = AppDatabase.getInstance(application);
-        mLiveData = mDatabase.dao().getAll();
+        mLiveData = mDatabase.daoMessages().getAll();
         mFirstRun = new MutableLiveData<>();
         mProgress = new MutableLiveData<>();
     }
@@ -43,7 +49,7 @@ public class ListAllViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<SimpleEntity>> getData() {
-        mLiveData = mDatabase.dao().getAll();
+        mLiveData = mDatabase.daoMessages().getAll();
         if (mLiveData != null)
             return mLiveData;
         else
@@ -86,12 +92,29 @@ public class ListAllViewModel extends AndroidViewModel {
                 // TODO min api level 19
                 int indexBody = cursor.getColumnIndex(Telephony.TextBasedSmsColumns.BODY);
 //                int indexDate = cursor.getColumnIndex(Telephony.TextBasedSmsColumns.DATE);
+                List<FullMessageEntity> entityList = new LinkedList<>();
                 do {
                     FullMessageEntity entity = ParseUtils.fromStringToEntity(cursor.getString(indexBody));
                     if (entity != null)
-                        mDatabase.dao().insertMessage(entity);
-                    mProgress.postValue(progress++);
+                        entityList.add(entity);
+                    if (progress++ % 10 == 0) {
+                        mDatabase.daoMessages().insertBatch(entityList.toArray(new FullMessageEntity[]{}));
+                        entityList.clear();
+                        mProgress.postValue(progress);
+                    }
                 } while (cursor.moveToPrevious());
+                if (entityList.size() > 0)
+                    mDatabase.daoMessages().insertBatch(entityList.toArray(new FullMessageEntity[]{}));
+
+                List<String> agents = mDatabase.daoMessages().getUniqueAgentsList();
+                List<AgentEntity> entities = new LinkedList<>();
+                for (String agentName : agents) {
+                    AgentEntity e = new AgentEntity();
+                    e.aliasId = -1;
+                    e.defaultText = agentName;
+                    entities.add(e);
+                }
+                mDatabase.daoAgents().insert(entities.toArray(new AgentEntity[]{}));
                 return true;
             }
             return false;
@@ -107,7 +130,6 @@ public class ListAllViewModel extends AndroidViewModel {
 
     public interface IShowProgress {
         void onProgressStart(String title, String text, int max);
-
         void onProgressHide();
     }
 }

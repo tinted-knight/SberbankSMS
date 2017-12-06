@@ -148,8 +148,8 @@ public class ListAllActivity
 //        progressDialog.dismiss();
         progressDialog.setCancelable(true);
         progressDialog.setCanceledOnTouchOutside(true);
-        progressDialog.setTitle("Done");
-        progressDialog.setMessage("Thank you for patience. Tap anywhere outside.");
+//        progressDialog.setTitle("Done");
+//        progressDialog.setMessage("Thank you for patience. Tap anywhere outside.");
         mViewModel.mProgress.removeObservers(this);
     }
 }

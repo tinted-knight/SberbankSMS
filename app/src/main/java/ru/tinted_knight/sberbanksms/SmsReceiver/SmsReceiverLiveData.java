@@ -42,7 +42,7 @@ public class SmsReceiverLiveData extends BroadcastReceiver {
             if (messageString != null) {
                 FullMessageEntity entity = ParseUtils.fromStringToEntity(messageString);
                 if (entity != null)
-                    database.dao().insertMessage(entity);
+                    database.daoMessages().insertMessage(entity);
                 return entity;
             }
             return null;
