@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 
+import ru.tinted_knight.sberbanksms.Settings.Preferences;
 import ru.tinted_knight.sberbanksms.Tools.NotificationUtils;
 import ru.tinted_knight.sberbanksms.dao.AppDatabase;
 import ru.tinted_knight.sberbanksms.dao.ParseUtils;
@@ -14,20 +15,20 @@ public class SmsReceiverLiveData extends BroadcastReceiver {
 
     private static final String ACTION = "android.provider.Telephony.SMS_RECEIVED";
 
-    private static Context sContext;
+    private Context context;
 
     @Override
     public void onReceive(Context context, Intent intent) {
         if (intent != null && ACTION.equalsIgnoreCase(intent.getAction())) {
             Object[] pdus = (Object[]) intent.getExtras().get("pdus");
             AppDatabase database = AppDatabase.getInstance(context);
-            this.sContext = context;
+            this.context = context;
             // TODO: SmsProcessAsync
             new SmsProcessAsync(database).execute(pdus);
         }
     }
 
-    private static class SmsProcessAsync extends AsyncTask<Object[], Void, FullMessageEntity> {
+    private class SmsProcessAsync extends AsyncTask<Object[], Void, FullMessageEntity> {
 
         private AppDatabase database;
 
@@ -51,7 +52,10 @@ public class SmsReceiverLiveData extends BroadcastReceiver {
         @Override
         protected void onPostExecute(FullMessageEntity entity) {
             super.onPostExecute(entity);
-            NotificationUtils.showSmsReceived(sContext, entity);
+            if (entity != null) {
+                NotificationUtils.showSmsReceived(context, entity);
+                Preferences.setFirstRun2(context, false);
+            }
         }
     }
 

@@ -32,15 +32,12 @@ public class ListAllViewModel extends AndroidViewModel {
 
     private LiveData<List<SimpleEntity>> mLiveData;
 
-    public MutableLiveData<Boolean> mFirstRun;
-
     public MutableLiveData<Integer> mProgress;
 
     public ListAllViewModel(@NonNull Application application) {
         super(application);
         mDatabase = AppDatabase.getInstance(application);
         mLiveData = mDatabase.daoMessages().getAll();
-        mFirstRun = new MutableLiveData<>();
         mProgress = new MutableLiveData<>();
     }
 
@@ -60,8 +57,7 @@ public class ListAllViewModel extends AndroidViewModel {
         if (Preferences.isFirstRun2(getApplication())) {
             //TODO check permissions
             this.firstStart();
-        } else
-            mFirstRun.setValue(false);
+        }
     }
 
     private void firstStart() {
@@ -78,7 +74,6 @@ public class ListAllViewModel extends AndroidViewModel {
 
     private void setFirstRunPref(boolean value) {
         Preferences.setFirstRun2(this.getApplication(), !value);
-        this.mFirstRun.setValue(value);
     }
 
     private class AsyncSmsRoomWriter extends AsyncTask<Cursor, Integer, Boolean> {

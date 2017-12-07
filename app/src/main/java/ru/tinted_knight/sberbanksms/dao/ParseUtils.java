@@ -44,9 +44,9 @@ public class ParseUtils {
     }
 
     public static FullMessageEntity fromStringToEntity(String data) {
-        if (!tryExtractData(data, Constants.rublePattern)
-                || !tryExtractData(data, Constants.dollarPattern)
-                || !tryExtractData(data, Constants.euroPattern)) {
+        if (tryExtractData(data, Constants.rublePattern)
+                || tryExtractData(data, Constants.dollarPattern)
+                || tryExtractData(data, Constants.euroPattern)) {
 
             return sReturnEntity;
         }

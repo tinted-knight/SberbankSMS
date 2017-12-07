@@ -17,6 +17,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.roughike.bottombar.BottomBar;
@@ -44,18 +46,24 @@ public class ListAllActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_all);
 
         checkPermissions();
+    }
+
+    private void initNormalView() {
+        setContentView(R.layout.activity_list_all);
         initBottomBar();
-//        mViewModel = ViewModelProviders.of(this).get(ListAllViewModel.class);
-//
-//        rvMain = findViewById(R.id.rvMain);
-//
-//        //TODO: onResume, onPause
-//        registerObservers();
-//
-//        mViewModel.onCreate();
+    }
+
+    private void initNoPermissionsView() {
+        setContentView(R.layout.activity_list_all_permission_denied);
+        Button btnTryAgain = findViewById(R.id.btnTryAgain);
+        btnTryAgain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                checkPermissions();
+            }
+        });
     }
 
     private void createViewModel() {
@@ -77,6 +85,7 @@ public class ListAllActivity
                     REQUEST_CODE_GET_PERMISSIONS
             );
         } else {
+            initNormalView();
             createViewModel();
         }
     }
@@ -106,11 +115,16 @@ public class ListAllActivity
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_CODE_GET_PERMISSIONS) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                initNormalView();
                 createViewModel();
+            } else {
+                initNoPermissionsView();
+            }
         }
     }
 
+    //TODO: onResume, onPause
     private void registerObservers() {
         mViewModel.getData().observe(this, new Observer<List<SimpleEntity>>() {
             @Override
@@ -128,22 +142,11 @@ public class ListAllActivity
                         adapter.swapData(simpleEntities);
                         adapter.notifyDataSetChanged();
                     }
-                } else
-                    Log.d("TAGG", ":: null");
+                }
             }
         });
 
-        mViewModel.mFirstRun.observe(this, new Observer<Boolean>() {
-            @Override
-            public void onChanged(@Nullable Boolean aBoolean) {
-                if (aBoolean != null && aBoolean)
-                    popupMessage("first run");
-                else
-                    popupMessage("common run or null");
-            }
-        });
-
-        mViewModel.setProgressListener(this);
+        mViewModel.setProgressListener(ListAllActivity.this);
     }
 
     public void popupMessage(String text) {

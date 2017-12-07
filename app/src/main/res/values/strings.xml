@@ -16,5 +16,8 @@
     <string name="notif_message_income">Поступление средств</string>
     <string name="notif_message_expense">Поступление средств</string>
     <string name="notif_message_atm">Снятие наличных</string>
+    <string name="dummy_permissions_denied_message">Чтобы приложение могло быть Вам полезным, ему нужно разрешение читать Ваши СМС сообщения.
+    Нас интересуют только сообщения от номера 900. Мы не сможем и не будем отправлять СМС от Вашего имени. Спасибо</string>
+    <string name="dummy_permissions_denied_try_again">Попробовать еще раз</string>
 
 </resources>
