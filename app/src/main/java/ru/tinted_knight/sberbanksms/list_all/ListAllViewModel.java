@@ -34,6 +34,8 @@ public class ListAllViewModel extends AndroidViewModel {
 
     public MutableLiveData<Integer> mProgress;
 
+    public MutableLiveData<String> mPopupMessage;
+
     public ListAllViewModel(@NonNull Application application) {
         super(application);
         mDatabase = AppDatabase.getInstance(application);

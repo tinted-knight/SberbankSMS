@@ -146,11 +146,15 @@ public class ListAllActivity
             }
         });
 
-        mViewModel.setProgressListener(ListAllActivity.this);
-    }
+        mViewModel.mPopupMessage.observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable String s) {
+                if (s != null && !s.equals(""))
+                    Toast.makeText(ListAllActivity.this, s, Toast.LENGTH_SHORT).show();
+            }
+        });
 
-    public void popupMessage(String text) {
-        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+        mViewModel.setProgressListener(ListAllActivity.this);
     }
 
     @Override
