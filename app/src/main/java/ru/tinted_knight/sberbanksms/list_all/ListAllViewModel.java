@@ -9,38 +9,34 @@ import android.os.AsyncTask;
 import android.provider.Telephony;
 import android.support.annotation.NonNull;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-import ru.tinted_knight.sberbanksms.Message.Message;
 import ru.tinted_knight.sberbanksms.Message.MessageReader.DeviceInboxCursorMessageReader;
 import ru.tinted_knight.sberbanksms.Settings.Preferences;
-import ru.tinted_knight.sberbanksms.dao.AgentDao;
 import ru.tinted_knight.sberbanksms.dao.AppDatabase;
 import ru.tinted_knight.sberbanksms.dao.ParseUtils;
 import ru.tinted_knight.sberbanksms.dao.entities.AgentEntity;
 import ru.tinted_knight.sberbanksms.dao.entities.FullMessageEntity;
-import ru.tinted_knight.sberbanksms.dao.query_pojos.AgentOnly;
 import ru.tinted_knight.sberbanksms.dao.query_pojos.SimpleEntity;
 
 public class ListAllViewModel extends AndroidViewModel {
 
-    private AppDatabase mDatabase;
+    private AppDatabase appDatabase;
 
     private IShowProgress listener;
 
-    private LiveData<List<SimpleEntity>> mLiveData;
+    private LiveData<List<SimpleEntity>> liveData;
 
-    public MutableLiveData<Integer> mProgress;
+    public MutableLiveData<Integer> progress;
 
-    public MutableLiveData<String> mPopupMessage;
+    public MutableLiveData<String> popupMessage;
 
     public ListAllViewModel(@NonNull Application application) {
         super(application);
-        mDatabase = AppDatabase.getInstance(application);
-        mLiveData = mDatabase.daoMessages().getAll();
-        mProgress = new MutableLiveData<>();
+        appDatabase = AppDatabase.getInstance(application);
+        liveData = appDatabase.daoMessages().getAll();
+        progress = new MutableLiveData<>();
     }
 
     public void setProgressListener(IShowProgress listener) {
@@ -48,9 +44,9 @@ public class ListAllViewModel extends AndroidViewModel {
     }
 
     public LiveData<List<SimpleEntity>> getData() {
-        mLiveData = mDatabase.daoMessages().getAll();
-        if (mLiveData != null)
-            return mLiveData;
+        liveData = appDatabase.daoMessages().getAll();
+        if (liveData != null)
+            return liveData;
         else
             throw new NullPointerException("== getData(): LiveData is null");
     }
@@ -95,15 +91,15 @@ public class ListAllViewModel extends AndroidViewModel {
                     if (entity != null)
                         entityList.add(entity);
                     if (progress++ % 10 == 0) {
-                        mDatabase.daoMessages().insertBatch(entityList.toArray(new FullMessageEntity[]{}));
+                        appDatabase.daoMessages().insertBatch(entityList.toArray(new FullMessageEntity[]{}));
                         entityList.clear();
-                        mProgress.postValue(progress);
+                        ListAllViewModel.this.progress.postValue(progress);
                     }
                 } while (cursor.moveToPrevious());
                 if (entityList.size() > 0)
-                    mDatabase.daoMessages().insertBatch(entityList.toArray(new FullMessageEntity[]{}));
+                    appDatabase.daoMessages().insertBatch(entityList.toArray(new FullMessageEntity[]{}));
 
-                List<String> agents = mDatabase.daoMessages().getUniqueAgentsList();
+                List<String> agents = appDatabase.daoMessages().getUniqueAgentsList();
                 List<AgentEntity> entities = new LinkedList<>();
                 for (String agentName : agents) {
                     AgentEntity e = new AgentEntity();
@@ -111,7 +107,7 @@ public class ListAllViewModel extends AndroidViewModel {
                     e.defaultText = agentName;
                     entities.add(e);
                 }
-                mDatabase.daoAgents().insert(entities.toArray(new AgentEntity[]{}));
+                appDatabase.daoAgents().insert(entities.toArray(new AgentEntity[]{}));
                 return true;
             }
             return false;
@@ -121,6 +117,7 @@ public class ListAllViewModel extends AndroidViewModel {
         protected void onPostExecute(Boolean aBoolean) {
             super.onPostExecute(aBoolean);
             setFirstRunPref(aBoolean);
+            //TODO maybe should check listener != null
             listener.onProgressHide();
         }
     }

@@ -15,13 +15,10 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
-
-import com.roughike.bottombar.BottomBar;
 
 import java.util.List;
 
@@ -30,7 +27,6 @@ import ru.tinted_knight.sberbanksms.RecyclerView.DividerItemDecoration;
 import ru.tinted_knight.sberbanksms.Settings.Settings;
 import ru.tinted_knight.sberbanksms.dao.query_pojos.SimpleEntity;
 import ru.tinted_knight.sberbanksms.list_all.ui.ListRecyclerViewAdapter;
-import ru.tinted_knight.sberbanksms.main_view.Main2;
 
 public class ListAllActivity
         extends AppCompatActivity
@@ -146,7 +142,7 @@ public class ListAllActivity
             }
         });
 
-        mViewModel.mPopupMessage.observe(this, new Observer<String>() {
+        mViewModel.popupMessage.observe(this, new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {
                 if (s != null && !s.equals(""))
@@ -169,7 +165,7 @@ public class ListAllActivity
         progressDialog.setProgress(0);
         progressDialog.show();
 
-        mViewModel.mProgress.observe(this, new Observer<Integer>() {
+        mViewModel.progress.observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(@Nullable Integer progress) {
                 progressDialog.setProgress(progress);
@@ -185,6 +181,6 @@ public class ListAllActivity
         progressDialog.setTitle("Done");
         progressDialog.setMessage("Thank you for patience. Tap anywhere outside.");
 
-        mViewModel.mProgress.removeObservers(this);
+        mViewModel.progress.removeObservers(this);
     }
 }
