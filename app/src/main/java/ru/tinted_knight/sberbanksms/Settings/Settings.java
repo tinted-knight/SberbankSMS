@@ -14,7 +14,7 @@ import ru.tinted_knight.sberbanksms.R;
 import ru.tinted_knight.sberbanksms.Settings.Agents.AgentsActivity;
 import ru.tinted_knight.sberbanksms.Settings.Agents.AliasesActivity;
 import ru.tinted_knight.sberbanksms.Settings.Cards.CardsListActivity;
-import ru.tinted_knight.sberbanksms.list_all.ListAllActivity;
+import ru.tinted_knight.sberbanksms.ui.ListAllActivity;
 
 public class Settings extends AppCompatActivity implements AdapterView.OnItemClickListener {
 

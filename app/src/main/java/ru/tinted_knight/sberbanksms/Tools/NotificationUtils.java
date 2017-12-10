@@ -11,7 +11,7 @@ import android.support.v4.app.NotificationCompat;
 
 import ru.tinted_knight.sberbanksms.R;
 import ru.tinted_knight.sberbanksms.dao.entities.FullMessageEntity;
-import ru.tinted_knight.sberbanksms.list_all.ListAllActivity;
+import ru.tinted_knight.sberbanksms.ui.ListAllActivity;
 
 public class NotificationUtils {
 

@@ -294,7 +294,7 @@ public class MessagesRVAdapterMonths extends RecyclerView.Adapter<MessagesRVAdap
 //                    @Override
 //                    public void onClick(View v) {
 //                        if (sListener != null) {
-//                            sListener.onItemClick(v, getLayoutPosition());
+//                            sListener.onListItemClick(v, getLayoutPosition());
 //                        }
 //                    }
 //                });

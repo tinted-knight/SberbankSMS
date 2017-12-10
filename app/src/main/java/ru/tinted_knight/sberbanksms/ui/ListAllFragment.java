@@ -1,4 +1,4 @@
-package ru.tinted_knight.sberbanksms.list_all;
+package ru.tinted_knight.sberbanksms.ui;
 
 import android.app.ProgressDialog;
 import android.arch.lifecycle.Observer;
@@ -19,7 +19,8 @@ import java.util.List;
 import ru.tinted_knight.sberbanksms.R;
 import ru.tinted_knight.sberbanksms.RecyclerView.DividerItemDecoration;
 import ru.tinted_knight.sberbanksms.dao.query_pojos.SimpleEntity;
-import ru.tinted_knight.sberbanksms.list_all.ui.ListRecyclerViewAdapter;
+import ru.tinted_knight.sberbanksms.ui.adapters.ListRecyclerViewAdapter;
+import ru.tinted_knight.sberbanksms.viewmodel.ListAllViewModel;
 
 public class ListAllFragment extends Fragment
         implements ListAllViewModel.IShowProgress {
@@ -33,11 +34,9 @@ public class ListAllFragment extends Fragment
     private ProgressDialog progressDialog;
     private RecyclerView rvMain;
 
-    public static ListAllFragment newInstance() {
-        ListAllFragment fragment = new ListAllFragment();
-        Bundle args = new Bundle();
-        fragment.setArguments(args);
-        return fragment;
+    @Override
+    public void setRetainInstance(boolean retain) {
+        super.setRetainInstance(true);
     }
 
     @Override
@@ -49,39 +48,37 @@ public class ListAllFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.fragment_list_all, container, false);
-
         rvMain = root.findViewById(R.id.rvMain);
-
+        adapter = new ListRecyclerViewAdapter(
+                getActivity().getApplicationContext(),
+                listItemClickListener);
+        rvMain.setAdapter(adapter);
+        rvMain.setLayoutManager(new LinearLayoutManager(getActivity()));
+        rvMain.addItemDecoration(
+                new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
+        rvMain.setVerticalScrollBarEnabled(true);
         return root;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        ListAllViewModel viewModel = ViewModelProviders.of(this).get(ListAllViewModel.class);
+        final ListAllViewModel viewModel = ViewModelProviders.of(this).get(ListAllViewModel.class);
         registerObservers(viewModel);
-        viewModel.onCreate();
     }
 
     private void registerObservers(ListAllViewModel viewModel) {
         viewModel.liveData.observe(this, new Observer<List<SimpleEntity>>() {
             @Override
-            public void onChanged(@Nullable List<SimpleEntity> simpleEntities) {
-                if (simpleEntities != null) {
-                    if (adapter == null) {
-                        adapter = new ListRecyclerViewAdapter(
-                                getActivity().getApplicationContext(),
-                                simpleEntities,
-                                listItemClickListener);
-                        rvMain.setAdapter(adapter);
-                        rvMain.setLayoutManager(new LinearLayoutManager(getActivity()));
-                        rvMain.addItemDecoration(
-                                new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL_LIST));
-                        rvMain.setVerticalScrollBarEnabled(true);
-                    } else {
-                        adapter.swapData(simpleEntities);
-                        adapter.notifyDataSetChanged();
-                    }
+            public void onChanged(@Nullable List<SimpleEntity> entities) {
+                if (entities != null) {
+                    adapter.swapData(entities);
+                    adapter.notifyDataSetChanged();
                 }
             }
         });
@@ -144,25 +141,15 @@ public class ListAllFragment extends Fragment
         progressDialog.setMessage("Thank you for patience. Tap anywhere outside.");
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnItemClickListener {
         // TODO: Update argument type and name
-        void onItemClick(int id);
+        void onListItemClick(int id);
     }
 
     private ListRecyclerViewAdapter.ListItemClickListener listItemClickListener = new ListRecyclerViewAdapter.ListItemClickListener() {
         @Override
         public void onItemClick(int id) {
-            Toast.makeText(getActivity(), "item tag: " + String.valueOf(id), Toast.LENGTH_SHORT).show();
+            listener.onListItemClick(id);
         }
     };
 }

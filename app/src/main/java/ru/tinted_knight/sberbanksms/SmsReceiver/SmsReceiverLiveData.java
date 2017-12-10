@@ -23,7 +23,6 @@ public class SmsReceiverLiveData extends BroadcastReceiver {
             Object[] pdus = (Object[]) intent.getExtras().get("pdus");
             AppDatabase database = AppDatabase.getInstance(context);
             this.context = context;
-            // TODO: SmsProcessAsync
             new SmsProcessAsync(database).execute(pdus);
         }
     }

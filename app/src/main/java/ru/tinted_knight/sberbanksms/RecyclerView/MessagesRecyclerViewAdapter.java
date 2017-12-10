@@ -247,7 +247,7 @@ public class MessagesRecyclerViewAdapter extends RecyclerView.Adapter<MessagesRe
 //                    @Override
 //                    public void onClick(View v) {
 //                        if (sListener != null) {
-//                            sListener.onItemClick(v, getLayoutPosition());
+//                            sListener.onListItemClick(v, getLayoutPosition());
 //                        }
 //                    }
 //                });

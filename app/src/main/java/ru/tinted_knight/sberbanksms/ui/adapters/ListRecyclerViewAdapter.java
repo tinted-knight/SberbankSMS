@@ -1,4 +1,4 @@
-package ru.tinted_knight.sberbanksms.list_all.ui;
+package ru.tinted_knight.sberbanksms.ui.adapters;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -27,8 +27,7 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
         void onItemClick(int id);
     }
 
-    public ListRecyclerViewAdapter(Context context, List<SimpleEntity> data, ListItemClickListener listener) {
-        this.data = data;
+    public ListRecyclerViewAdapter(Context context, ListItemClickListener listener) {
         this.context = context;
         if (listener != null)
             sListener = listener;
