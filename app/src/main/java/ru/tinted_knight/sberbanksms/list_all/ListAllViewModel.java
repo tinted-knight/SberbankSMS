@@ -26,7 +26,7 @@ public class ListAllViewModel extends AndroidViewModel {
 
     private IShowProgress listener;
 
-    private LiveData<List<SimpleEntity>> liveData;
+    public LiveData<List<SimpleEntity>> liveData;
 
     public MutableLiveData<Integer> progress;
 
@@ -37,13 +37,19 @@ public class ListAllViewModel extends AndroidViewModel {
         appDatabase = AppDatabase.getInstance(application);
         liveData = appDatabase.daoMessages().getAll();
         progress = new MutableLiveData<>();
+        popupMessage = new MutableLiveData<>();
+
+//        if (Preferences.isFirstRun2(getApplication())) {
+//            //TODO check permissions
+//            this.firstStart();
+//        }
     }
 
     public void setProgressListener(IShowProgress listener) {
         this.listener = listener;
     }
 
-    public LiveData<List<SimpleEntity>> getData() {
+    private LiveData<List<SimpleEntity>> getData() {
         liveData = appDatabase.daoMessages().getAll();
         if (liveData != null)
             return liveData;
@@ -72,6 +78,8 @@ public class ListAllViewModel extends AndroidViewModel {
 
     private void setFirstRunPref(boolean value) {
         Preferences.setFirstRun2(this.getApplication(), !value);
+        if (value)
+            getData();
     }
 
     private class AsyncSmsRoomWriter extends AsyncTask<Cursor, Integer, Boolean> {

@@ -30,14 +30,9 @@ import ru.tinted_knight.sberbanksms.list_all.ui.ListRecyclerViewAdapter;
 
 public class ListAllActivity
         extends AppCompatActivity
-        implements ListAllViewModel.IShowProgress {
+        implements ListAllFragment.OnItemClickListener {
 
     private static final int REQUEST_CODE_GET_PERMISSIONS = 100;
-
-    ListAllViewModel mViewModel;
-    RecyclerView rvMain;
-    ListRecyclerViewAdapter adapter;
-    private ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +44,9 @@ public class ListAllActivity
     private void initNormalView() {
         setContentView(R.layout.activity_list_all);
         initBottomBar();
+        ListAllFragment fragment = ListAllFragment.newInstance();
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.flMain, fragment, ListAllFragment.TAG).commit();
     }
 
     private void initNoPermissionsView() {
@@ -60,14 +58,6 @@ public class ListAllActivity
                 checkPermissions();
             }
         });
-    }
-
-    private void createViewModel() {
-        mViewModel = ViewModelProviders.of(this).get(ListAllViewModel.class);
-        rvMain = findViewById(R.id.rvMain);
-        //TODO: onResume, onPause
-        registerObservers();
-        mViewModel.onCreate();
     }
 
     private void checkPermissions() {
@@ -82,7 +72,6 @@ public class ListAllActivity
             );
         } else {
             initNormalView();
-            createViewModel();
         }
     }
 
@@ -113,74 +102,14 @@ public class ListAllActivity
         if (requestCode == REQUEST_CODE_GET_PERMISSIONS) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 initNormalView();
-                createViewModel();
             } else {
                 initNoPermissionsView();
             }
         }
     }
 
-    //TODO: onResume, onPause
-    private void registerObservers() {
-        mViewModel.getData().observe(this, new Observer<List<SimpleEntity>>() {
-            @Override
-            public void onChanged(@Nullable List<SimpleEntity> simpleEntities) {
-                if (simpleEntities != null) {
-                    if (adapter == null) {
-                        adapter = new ListRecyclerViewAdapter(getApplicationContext(), simpleEntities);
-                        rvMain.setAdapter(adapter);
-                        rvMain.setLayoutManager(new LinearLayoutManager(ListAllActivity.this));
-                        rvMain.addItemDecoration(
-                                new DividerItemDecoration(
-                                        ListAllActivity.this, DividerItemDecoration.VERTICAL_LIST));
-                        rvMain.setVerticalScrollBarEnabled(true);
-                    } else {
-                        adapter.swapData(simpleEntities);
-                        adapter.notifyDataSetChanged();
-                    }
-                }
-            }
-        });
-
-        mViewModel.popupMessage.observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable String s) {
-                if (s != null && !s.equals(""))
-                    Toast.makeText(ListAllActivity.this, s, Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        mViewModel.setProgressListener(ListAllActivity.this);
-    }
-
     @Override
-    public void onProgressStart(String title, String text, int max) {
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        progressDialog.setMax(max);
-        progressDialog.setCanceledOnTouchOutside(false);
-        progressDialog.setCancelable(false);
-        progressDialog.setTitle(title);
-        progressDialog.setMessage(text);
-        progressDialog.setProgress(0);
-        progressDialog.show();
+    public void onItemClick(int id) {
 
-        mViewModel.progress.observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(@Nullable Integer progress) {
-                progressDialog.setProgress(progress);
-            }
-        });
-    }
-
-    @Override
-    public void onProgressHide() {
-//        progressDialog.dismiss();
-        progressDialog.setCancelable(true);
-        progressDialog.setCanceledOnTouchOutside(true);
-        progressDialog.setTitle("Done");
-        progressDialog.setMessage("Thank you for patience. Tap anywhere outside.");
-
-        mViewModel.progress.removeObservers(this);
     }
 }

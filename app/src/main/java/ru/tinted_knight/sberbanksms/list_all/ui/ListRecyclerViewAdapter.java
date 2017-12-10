@@ -18,11 +18,20 @@ import ru.tinted_knight.sberbanksms.dao.query_pojos.SimpleEntity;
 public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerViewAdapter.ViewHolder> {
 
     private List<SimpleEntity> data;
+
+    private static ListItemClickListener sListener;
+
     private Context context;
 
-    public ListRecyclerViewAdapter(Context context, List<SimpleEntity> data) {
+    public interface ListItemClickListener {
+        void onItemClick(int id);
+    }
+
+    public ListRecyclerViewAdapter(Context context, List<SimpleEntity> data, ListItemClickListener listener) {
         this.data = data;
         this.context = context;
+        if (listener != null)
+            sListener = listener;
     }
 
     @Override
@@ -40,6 +49,8 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
         holder.tvSumma.setText(e.getSummaString());
         holder.tvMonth.setText(e.getMonthString());
         holder.tvDay.setText(e.getDayString());
+
+        holder.tvAgent.setTag(e._id);
 
         switch (e.type) {
             case Constants.OperationType.INCOME:
@@ -115,6 +126,13 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
             tvSumma = itemView.findViewById(R.id.tvSumma);
             tvMonth = itemView.findViewById(R.id.tvMonth);
             tvDay = itemView.findViewById(R.id.tvDay);
+
+            tvAgent.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    sListener.onItemClick((Integer) view.getTag());
+                }
+            });
         }
 
     }
