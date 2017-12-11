@@ -15,6 +15,7 @@
 
         <TextView
             android:id="@+id/tvAgent"
+            android:transitionName="agent"
             style="@style/detail_agent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -26,6 +27,7 @@
 
         <TextView
             android:id="@+id/tvSumma"
+            android:transitionName="summa"
             style="@style/detail_summa"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

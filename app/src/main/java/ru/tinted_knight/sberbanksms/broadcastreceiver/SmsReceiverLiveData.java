@@ -1,4 +1,4 @@
-package ru.tinted_knight.sberbanksms.SmsReceiver;
+package ru.tinted_knight.sberbanksms.broadcastreceiver;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

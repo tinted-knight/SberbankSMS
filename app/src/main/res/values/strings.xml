@@ -1,26 +1,32 @@
 <resources>
     <string name="app_name">Crazy shopping</string>
+
     <string name="red_coin">Red coin</string>
     <string name="summa">75.20р</string>
     <string name="sample_date">31 июл</string>
     <string name="sample_agent_0">PYATEROCHKA 5367</string>
-    <string name="settings_activity_actionbar_title">Settings</string>
-    <string name="agentsactivity_actionbar_title">Список агентов</string>
+
     <string name="agent_unrecognized_income">Зачисление</string>
     <string name="agent_unrecognized_outcome">Списание</string>
+
+    <string name="agentsactivity_actionbar_title">Список агентов</string>
     <string name="aliases">Aliases</string>
-    <string name="clear_filter">Убрать фильтр</string>
     <string name="cards">Карты</string>
     <string name="settings">Настройки</string>
     <string name="label_balance">Баланс</string>
-    <string name="notif_message_income">Поступление средств</string>
-    <string name="notif_message_expense">Поступление средств</string>
-    <string name="notif_message_atm">Снятие наличных</string>
+
+    <string name="clear_filter">Очистить фильтр</string>
+    <string name="settings_activity_actionbar_title">Settings</string>
+
     <string name="dummy_permissions_denied_message">Чтобы приложение могло быть Вам полезным, ему нужно разрешение читать Ваши СМС сообщения.
     Нас интересуют только сообщения от номера 900. Мы не сможем и не будем отправлять СМС от Вашего имени. Спасибо</string>
     <string name="dummy_permissions_denied_try_again">Попробовать еще раз</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="notif_message_income">Поступление средств</string>
+    <string name="notif_message_expense">Покупка</string>
+    <string name="notif_message_atm">Снятие наличных</string>
 
 </resources>

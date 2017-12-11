@@ -6,6 +6,7 @@ import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -20,20 +21,13 @@ import ru.tinted_knight.sberbanksms.dao.query_pojos.MessageEntity;
 import ru.tinted_knight.sberbanksms.databinding.FragmentDetailBinding;
 import ru.tinted_knight.sberbanksms.viewmodel.DetailViewModel;
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link OnDetailInteraction} interface
- * to handle interaction events.
- * Use the {@link DetailFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class DetailFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     public static final String TAG = "detail_fragment";
 
     private static final String ITEM_ID = "item_id";
+    private static final String ITEM_POSITION = "item_pos";
 
     // TODO: Rename and change types of parameters
     private int itemId;
@@ -111,6 +105,10 @@ public class DetailFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail, container, false);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            binding.tvAgent.setTransitionName("agent");
+            binding.tvSumma.setTransitionName("summa");
+        }
         return binding.getRoot();
     }
 

@@ -2,6 +2,7 @@ package ru.tinted_knight.sberbanksms.ui.adapters;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Build;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -24,7 +25,9 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
     private Context context;
 
     public interface ListItemClickListener {
-        void onItemClick(int id);
+        void onItemClick(int id, ViewHolder holder);
+
+        void onItemLongClick(int id);
     }
 
     public ListRecyclerViewAdapter(Context context, ListItemClickListener listener) {
@@ -42,32 +45,48 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        SimpleEntity e = data.get(position);
-        holder.tvAgent.setText(e.agent);
-        holder.tvSumma.setText(e.getSummaString());
-        holder.tvMonth.setText(e.getMonthString());
-        holder.tvDay.setText(e.getDayString());
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
+        final SimpleEntity e = data.get(position);
+        holder.agent.setText(e.agent);
+        holder.summa.setText(e.getSummaString());
+        holder.month.setText(e.getMonthString());
+        holder.day.setText(e.getDayString());
 
-        holder.tvAgent.setTag(e._id);
+        holder.itemView.setTag(e._id);
+//        holder.agent.setTag(e._id);
+//        holder.summa.setTag(e._id);
+//        holder.month.setTag(e._id);
+//        holder.day.setTag(e._id);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            holder.agent.setTransitionName("agent" + position);
+            holder.summa.setTransitionName("summa" + position);
+        }
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sListener.onItemClick(e._id, holder);
+            }
+        });
 
         switch (e.type) {
             case Constants.OperationType.INCOME:
-                holder.tvSumma.setTextColor(ContextCompat.getColor(context, R.color.summa_income));
+                holder.summa.setTextColor(ContextCompat.getColor(context, R.color.summa_income));
                 break;
             case Constants.OperationType.OUTCOME:
-                holder.tvSumma.setTextColor(ContextCompat.getColor(context, R.color.summa_expense));
+                holder.summa.setTextColor(ContextCompat.getColor(context, R.color.summa_expense));
                 break;
             case Constants.OperationType.ATM_OUT:
-                holder.tvSumma.setTextColor(ContextCompat.getColor(context, R.color.summa_atm));
+                holder.summa.setTextColor(ContextCompat.getColor(context, R.color.summa_atm));
                 break;
 //            default:
 //                throw new IllegalArgumentException(":: onBindViewHolder() - message type is incorrect");
         }
 
         int color = defineDateColor(e.month);
-        holder.tvDay.setTextColor(color);
-        holder.tvMonth.setTextColor(color);
+        holder.day.setTextColor(color);
+        holder.month.setTextColor(color);
     }
 
     private int defineDateColor(int month) {
@@ -103,37 +122,31 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
 
     @Override
     public int getItemCount() {
-        return data.size();
+        if (data != null)
+            return data.size();
+        return 0;
     }
 
-    public void swapData(List<SimpleEntity> newData) {
+    public void setData(List<SimpleEntity> newData) {
         if (newData != null)
             this.data = newData;
     }
 
-    static class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView tvAgent;
-        private TextView tvSumma;
-        private TextView tvMonth;
-        private TextView tvDay;
+        public TextView agent;
+        public TextView summa;
+        public TextView month;
+        public TextView day;
 
         ViewHolder(View itemView) {
             super(itemView);
 
-            tvAgent = itemView.findViewById(R.id.tvAgent);
-            tvSumma = itemView.findViewById(R.id.tvSumma);
-            tvMonth = itemView.findViewById(R.id.tvMonth);
-            tvDay = itemView.findViewById(R.id.tvDay);
-
-            tvAgent.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    sListener.onItemClick((Integer) view.getTag());
-                }
-            });
+            agent = itemView.findViewById(R.id.tvAgent);
+            summa = itemView.findViewById(R.id.tvSumma);
+            month = itemView.findViewById(R.id.tvMonth);
+            day = itemView.findViewById(R.id.tvDay);
         }
 
     }
-
 }

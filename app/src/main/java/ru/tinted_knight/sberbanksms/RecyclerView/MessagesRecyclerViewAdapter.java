@@ -151,8 +151,8 @@ public class MessagesRecyclerViewAdapter extends RecyclerView.Adapter<MessagesRe
         holder.itemView.setTag(message.get_id());
         holder.tvDay.setTag(message.get_id());
         holder.tvMonth.setTag(message.get_id());
-//        holder.tvAgent.setTag(message.get_id());
-//        holder.tvSumma.setTag(message.get_id());
+//        holder.agent.setTag(message.get_id());
+//        holder.summa.setTag(message.get_id());
 
         String[] dates = message.getDateShort().split(" ");
         holder.tvDay.setText(dates[0]);
@@ -186,19 +186,19 @@ public class MessagesRecyclerViewAdapter extends RecyclerView.Adapter<MessagesRe
         holder.tvSumma.setText(String.format(Locale.getDefault(), "- %1$,.2f", message.getSumma()));
         switch (type) {
             case Constants.OperationType.INCOME:
-//                holder.tvSumma.setTextColor(Color.parseColor("#1B5E20"));
+//                holder.summa.setTextColor(Color.parseColor("#1B5E20"));
                 holder.tvSumma.setTextColor(ContextCompat.getColor(mContext, R.color.summa_income));
-//                holder.tvSumma.setText(String.format(Locale.getDefault(), "+ %1$,.2f", message.getSumma()));
+//                holder.summa.setText(String.format(Locale.getDefault(), "+ %1$,.2f", message.getSumma()));
                 break;
             case Constants.OperationType.OUTCOME:
-//                holder.tvSumma.setTextColor(Color.parseColor("#D50000"));
+//                holder.summa.setTextColor(Color.parseColor("#D50000"));
                 holder.tvSumma.setTextColor(ContextCompat.getColor(mContext, R.color.summa_expense));
-//                holder.tvSumma.setText(String.format(Locale.getDefault(), "- %1$,.2f", message.getSumma()));
+//                holder.summa.setText(String.format(Locale.getDefault(), "- %1$,.2f", message.getSumma()));
                 break;
             case Constants.OperationType.ATM_OUT:
-//                holder.tvSumma.setTextColor(Color.parseColor("#0D47A1"));
+//                holder.summa.setTextColor(Color.parseColor("#0D47A1"));
                 holder.tvSumma.setTextColor(ContextCompat.getColor(mContext, R.color.summa_atm));
-//                holder.tvSumma.setText(String.format(Locale.getDefault(), "%1$,.2f", message.getSumma()));
+//                holder.summa.setText(String.format(Locale.getDefault(), "%1$,.2f", message.getSumma()));
                 break;
             case Constants.OperationType.DEBUG:
                 holder.tvSumma.setTextColor(Color.parseColor("#7A7A7A"));
@@ -263,8 +263,8 @@ public class MessagesRecyclerViewAdapter extends RecyclerView.Adapter<MessagesRe
             }
 //            if (sListenerLong != null) {
 //                itemView.setOnLongClickListener(this);
-//                tvAgent.setOnLongClickListener(this);
-//                tvSumma.setOnLongClickListener(this);
+//                agent.setOnLongClickListener(this);
+//                summa.setOnLongClickListener(this);
 //            }
         }
 

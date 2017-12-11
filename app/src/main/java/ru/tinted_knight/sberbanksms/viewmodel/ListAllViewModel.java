@@ -4,6 +4,8 @@ import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.ViewModel;
+import android.arch.lifecycle.ViewModelProvider;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.provider.Telephony;
@@ -32,9 +34,11 @@ public class ListAllViewModel extends AndroidViewModel {
 
     public MutableLiveData<String> popupMessage;
 
-    public ListAllViewModel(@NonNull Application application) {
+    public ListAllViewModel(@NonNull Application application, AppDatabase database, IShowProgress progressListener) {
         super(application);
-        repo = AppDatabase.getInstance(application);
+        repo = database;
+        listener = progressListener;
+
         liveData = repo.daoMessages().getAll();
         progress = new MutableLiveData<>();
         popupMessage = new MutableLiveData<>();
@@ -45,9 +49,9 @@ public class ListAllViewModel extends AndroidViewModel {
 //        }
     }
 
-    public void setProgressListener(IShowProgress listener) {
-        this.listener = listener;
-    }
+//    public void setProgressListener(IShowProgress listener) {
+//        this.listener = listener;
+//    }
 
     private LiveData<List<SimpleEntity>> getData() {
         liveData = repo.daoMessages().getAll();
@@ -133,6 +137,27 @@ public class ListAllViewModel extends AndroidViewModel {
     public interface IShowProgress {
         void onProgressStart(String title, String text, int max);
         void onProgressHide();
+    }
+
+    public static class Factory extends ViewModelProvider.NewInstanceFactory {
+
+        private final Application application;
+
+        private final AppDatabase database;
+
+        private IShowProgress progressListener;
+
+        public Factory(Application application, IShowProgress listener) {
+            this.application = application;
+            this.database = AppDatabase.getInstance(application);
+            this.progressListener = listener;
+        }
+
+        @NonNull
+        @Override
+        public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
+            return (T) new ListAllViewModel(application, database, progressListener);
+        }
     }
 
 }

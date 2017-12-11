@@ -63,12 +63,16 @@ public class ListAllFragment extends Fragment
     @Override
     public void onResume() {
         super.onResume();
+        listener.onListResume();
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        final ListAllViewModel viewModel = ViewModelProviders.of(this).get(ListAllViewModel.class);
+        ListAllViewModel.Factory factory = new ListAllViewModel.Factory(
+                getActivity().getApplication(), this);
+        final ListAllViewModel viewModel =
+                ViewModelProviders.of(this, factory).get(ListAllViewModel.class);
         registerObservers(viewModel);
     }
 
@@ -77,7 +81,7 @@ public class ListAllFragment extends Fragment
             @Override
             public void onChanged(@Nullable List<SimpleEntity> entities) {
                 if (entities != null) {
-                    adapter.swapData(entities);
+                    adapter.setData(entities);
                     adapter.notifyDataSetChanged();
                 }
             }
@@ -99,7 +103,7 @@ public class ListAllFragment extends Fragment
             }
         });
 
-        viewModel.setProgressListener(this);
+//        viewModel.setProgressListener(this);
     }
 
     @Override
@@ -143,13 +147,20 @@ public class ListAllFragment extends Fragment
 
     public interface OnItemClickListener {
         // TODO: Update argument type and name
-        void onListItemClick(int id);
+        void onListItemClick(int id, ListRecyclerViewAdapter.ViewHolder holder);
+        void onListItemLongClick(int id);
+        void onListResume();
     }
 
     private ListRecyclerViewAdapter.ListItemClickListener listItemClickListener = new ListRecyclerViewAdapter.ListItemClickListener() {
         @Override
-        public void onItemClick(int id) {
-            listener.onListItemClick(id);
+        public void onItemClick(int id, ListRecyclerViewAdapter.ViewHolder holder) {
+            listener.onListItemClick(id, holder);
+        }
+
+        @Override
+        public void onItemLongClick(int id) {
+            listener.onListItemLongClick(id);
         }
     };
 }

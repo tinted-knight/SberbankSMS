@@ -18,7 +18,8 @@
         android:src="@drawable/point_transparent"
         android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="16dp"/>
 
 
     <TextView
@@ -64,7 +65,9 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/guideline2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/guideline2"/>
+        app:layout_constraintTop_toTopOf="@+id/guideline2"
+        android:layout_marginRight="8dp"
+        android:gravity="start"/>
 
     <TextView
         android:id="@+id/tvAgent"
@@ -81,7 +84,9 @@
         app:layout_constraintEnd_toStartOf="@+id/tvSumma"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/ivOperationIcon"
-        app:layout_constraintTop_toTopOf="@+id/guideline2"/>
+        app:layout_constraintTop_toTopOf="@+id/guideline2"
+        android:layout_marginRight="8dp"
+        android:layout_marginLeft="16dp"/>
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline2"
