@@ -4,16 +4,12 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.transition.Transition;
-import android.transition.TransitionInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -135,7 +131,7 @@ public class ListAllActivity
     public void onListItemClick(int id, ListRecyclerViewAdapter.ViewHolder holder) {
         DetailFragment detailFragment = DetailFragment.newInstance(id);
         getSupportFragmentManager().beginTransaction()
-                .setCustomAnimations(R.animator.slide_in_top, R.animator.fade_out)
+//                .setCustomAnimations(R.animator.slide_in_top, R.animator.fade_out)
                 .addToBackStack("detail")
                 .replace(R.id.flMain, detailFragment, DetailFragment.TAG).commit();
         setupActionBar(true);

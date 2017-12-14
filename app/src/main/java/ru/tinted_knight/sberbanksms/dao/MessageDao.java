@@ -8,7 +8,6 @@ import android.arch.persistence.room.Query;
 import java.util.List;
 
 import ru.tinted_knight.sberbanksms.dao.entities.FullMessageEntity;
-import ru.tinted_knight.sberbanksms.dao.query_pojos.AgentOnly;
 import ru.tinted_knight.sberbanksms.dao.query_pojos.MessageEntity;
 import ru.tinted_knight.sberbanksms.dao.query_pojos.SimpleEntity;
 
@@ -18,9 +17,9 @@ public interface MessageDao {
     @Query("select * from messages where _id = :id limit 1")
     LiveData<MessageEntity> getMessage(int id);
 
-    @Query("select _id, agent, summa, year, month, day, date, type" +
+    @Query("select _id, agent, summa, year, month, day, date, type, hour, minute" +
             " from messages" +
-            " order by year desc, month desc, day desc")
+            " order by year desc, month desc, day desc, hour desc, minute desc")
     LiveData<List<SimpleEntity>> getAll();
 
     @Query("select distinct agent from messages")

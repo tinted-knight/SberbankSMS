@@ -24,6 +24,10 @@ public class SimpleEntity {
 
     public int type;
 
+    public int hour;
+
+    public int minute;
+
     public String getSummaString() {
         return String.format(Locale.getDefault(), "%,.2f", summa);
     }

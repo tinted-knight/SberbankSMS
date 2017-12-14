@@ -15,7 +15,7 @@
     <string name="settings">Настройки</string>
     <string name="label_balance">Баланс</string>
 
-    <string name="clear_filter">Очистить фильтр</string>
+    <string name="clear_filter">Фильтр</string>
     <string name="settings_activity_actionbar_title">Settings</string>
 
     <string name="dummy_permissions_denied_message">Чтобы приложение могло быть Вам полезным, ему нужно разрешение читать Ваши СМС сообщения.
