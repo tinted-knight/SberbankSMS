@@ -13,9 +13,4 @@ public abstract class CursorMessageReader {
 
     public abstract Cursor read();
 
-/*
-    public abstract Cursor read(int operationType);
-
-    public abstract Cursor read(String operationType);
-*/
 }

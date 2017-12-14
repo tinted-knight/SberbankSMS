@@ -5,13 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ru.tinted_knight.sberbanksms.ui.ListAllActivity">
+    tools:context="ru.tinted_knight.sberbanksms.ui.main_screen.MainActivity">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvMain"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layoutAnimation="@anim/layout_slide_from_right"
+        android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

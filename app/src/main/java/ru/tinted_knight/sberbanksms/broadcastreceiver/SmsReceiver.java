@@ -11,7 +11,7 @@ import ru.tinted_knight.sberbanksms.dao.AppDatabase;
 import ru.tinted_knight.sberbanksms.dao.ParseUtils;
 import ru.tinted_knight.sberbanksms.dao.entities.FullMessageEntity;
 
-public class SmsReceiverLiveData extends BroadcastReceiver {
+public class SmsReceiver extends BroadcastReceiver {
 
     private static final String ACTION = "android.provider.Telephony.SMS_RECEIVED";
 
@@ -53,7 +53,7 @@ public class SmsReceiverLiveData extends BroadcastReceiver {
             super.onPostExecute(entity);
             if (entity != null) {
                 NotificationUtils.showSmsReceived(context, entity);
-                Preferences.setFirstRun2(context, false);
+                Preferences.setFirstRun(context, false);
             }
         }
     }

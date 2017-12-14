@@ -22,7 +22,7 @@ import ru.tinted_knight.sberbanksms.dao.entities.AgentEntity;
 import ru.tinted_knight.sberbanksms.dao.entities.FullMessageEntity;
 import ru.tinted_knight.sberbanksms.dao.query_pojos.SimpleEntity;
 
-public class ListAllViewModel extends AndroidViewModel {
+public class MainViewModel extends AndroidViewModel {
 
     private AppDatabase repo;
 
@@ -34,7 +34,7 @@ public class ListAllViewModel extends AndroidViewModel {
 
     public MutableLiveData<String> popupMessage;
 
-    public ListAllViewModel(@NonNull Application application, AppDatabase database, IShowProgress progressListener) {
+    public MainViewModel(@NonNull Application application, AppDatabase database, IShowProgress progressListener) {
         super(application);
         repo = database;
         listener = progressListener;
@@ -43,7 +43,7 @@ public class ListAllViewModel extends AndroidViewModel {
         progress = new MutableLiveData<>();
         popupMessage = new MutableLiveData<>();
         onCreate();
-//        if (Preferences.isFirstRun2(getApplication())) {
+//        if (Preferences.isFirstRun(getApplication())) {
 //            //TODO check permissions
 //            this.firstStart();
 //        }
@@ -53,16 +53,12 @@ public class ListAllViewModel extends AndroidViewModel {
 //        this.listener = listener;
 //    }
 
-    private LiveData<List<SimpleEntity>> getData() {
-        liveData = repo.daoMessages().getAll();
-        if (liveData != null)
-            return liveData;
-        else
-            throw new NullPointerException("== getData(): LiveData is null");
+    private void getData() {
+//        liveData = repo.daoMessages().getAll();
     }
 
     public void onCreate() {
-        if (Preferences.isFirstRun2(getApplication())) {
+        if (Preferences.isFirstRun(getApplication())) {
             //TODO check permissions
             this.firstStart();
         }
@@ -80,9 +76,9 @@ public class ListAllViewModel extends AndroidViewModel {
         }
     }
 
-    private void setFirstRunPref(boolean value) {
-        Preferences.setFirstRun2(this.getApplication(), !value);
-        if (value)
+    private void setFirstRunPref(boolean flag) {
+        Preferences.setFirstRun(this.getApplication(), !flag);
+        if (flag)
             getData();
     }
 
@@ -105,7 +101,7 @@ public class ListAllViewModel extends AndroidViewModel {
                     if (progress++ % 10 == 0) {
                         repo.daoMessages().insertBatch(entityList.toArray(new FullMessageEntity[]{}));
                         entityList.clear();
-                        ListAllViewModel.this.progress.postValue(progress);
+                        MainViewModel.this.progress.postValue(progress);
                     }
                 } while (cursor.moveToPrevious());
                 if (entityList.size() > 0)
@@ -156,7 +152,7 @@ public class ListAllViewModel extends AndroidViewModel {
         @NonNull
         @Override
         public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
-            return (T) new ListAllViewModel(application, database, progressListener);
+            return (T) new MainViewModel(application, database, progressListener);
         }
     }
 

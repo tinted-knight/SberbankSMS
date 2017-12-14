@@ -6,7 +6,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -175,7 +174,7 @@ public class ParseUtils {
     }
 
     private static int[] getDateSplit(long date) {
-        HashMap<String, Integer> map = new HashMap<>();
+//        HashMap<String, Integer> map = new HashMap<>();
         int[] result = new int[5];
 
         Date dateObject = new Date(date * 1_000);
@@ -183,29 +182,32 @@ public class ParseUtils {
 
         sdf.applyPattern("yyyy");
         String year = sdf.format(dateObject);
-        map.put(Constants.SmsMapKeys.YEAR, Integer.valueOf(year));
-        result[DateTimeKeys.YEAR] = Integer.valueOf(year);
 
         sdf.applyPattern("MM");
         String month = sdf.format(dateObject);
-        map.put(Constants.SmsMapKeys.MONTH, Integer.valueOf(month));
-        result[DateTimeKeys.MONTH] = Integer.valueOf(month);
 
         sdf.applyPattern("dd");
         String day = sdf.format(dateObject);
-        map.put(Constants.SmsMapKeys.DAY, Integer.valueOf(day));
-        result[DateTimeKeys.DAY] = Integer.valueOf(day);
 
         sdf.applyPattern("HH");
         String hour = sdf.format(dateObject);
-        map.put(Constants.SmsMapKeys.HOUR, Integer.valueOf(hour));
-        result[DateTimeKeys.HOUR] = Integer.valueOf(hour);
 
         sdf.applyPattern("mm");
         String minute = sdf.format(dateObject);
-        map.put(Constants.SmsMapKeys.MINUTE, Integer.valueOf(minute));
+
+        result[DateTimeKeys.YEAR] = Integer.valueOf(year);
+        result[DateTimeKeys.MONTH] = Integer.valueOf(month);
+        result[DateTimeKeys.DAY] = Integer.valueOf(day);
+        result[DateTimeKeys.HOUR] = Integer.valueOf(hour);
         result[DateTimeKeys.MINUTE] = Integer.valueOf(minute);
 
+//        map.put(Constants.SmsMapKeys.YEAR, Integer.valueOf(year));
+//        map.put(Constants.SmsMapKeys.MONTH, Integer.valueOf(month));
+//        map.put(Constants.SmsMapKeys.DAY, Integer.valueOf(day));
+//        map.put(Constants.SmsMapKeys.HOUR, Integer.valueOf(hour));
+//        map.put(Constants.SmsMapKeys.MINUTE, Integer.valueOf(minute));
+
         return result;
+//        return map;
     }
 }

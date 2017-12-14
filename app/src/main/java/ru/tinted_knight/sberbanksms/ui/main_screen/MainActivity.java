@@ -1,4 +1,4 @@
-package ru.tinted_knight.sberbanksms.ui;
+package ru.tinted_knight.sberbanksms.ui.main_screen;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -19,9 +19,9 @@ import ru.tinted_knight.sberbanksms.R;
 import ru.tinted_knight.sberbanksms.Settings.Settings;
 import ru.tinted_knight.sberbanksms.ui.adapters.ListRecyclerViewAdapter;
 
-public class ListAllActivity
+public class MainActivity
         extends AppCompatActivity
-        implements ListAllFragment.OnItemClickListener, DetailFragment.OnDetailInteraction {
+        implements MainFragment.OnMainFragmentInteractionListener, DetailFragment.OnDetailInteraction {
 
     private static final int REQUEST_CODE_GET_PERMISSIONS = 100;
 
@@ -38,9 +38,9 @@ public class ListAllActivity
     private void initNormalView() {
 //        setContentView(R.layout.activity_list_all);
         initBottomBar();
-        ListAllFragment fragment = new ListAllFragment();
+        MainFragment fragment = new MainFragment();
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.flMain, fragment, ListAllFragment.TAG).commit();
+                .add(R.id.flMain, fragment, MainFragment.TAG).commit();
     }
 
     private void initNoPermissionsView() {
@@ -77,7 +77,7 @@ public class ListAllActivity
                 switch (item.getItemId()) {
                     case R.id.bbSettings:
                         item.setChecked(true);
-                        Intent intent = new Intent(ListAllActivity.this, Settings.class);
+                        Intent intent = new Intent(MainActivity.this, Settings.class);
                         startActivity(intent);
                         break;
                     case R.id.bbCards:
@@ -145,7 +145,7 @@ public class ListAllActivity
             detailFragment.setSharedElementEnterTransition(default_transition);
             detailFragment.setEnterTransition(fade);
 
-            Fragment listFragment = getSupportFragmentManager().findFragmentByTag(ListAllFragment.TAG);
+            Fragment listFragment = getSupportFragmentManager().findFragmentByTag(MainFragment.TAG);
             listFragment.setSharedElementReturnTransition(default_transition);
             detailFragment.setEnterTransition(fade);
         }
@@ -169,7 +169,7 @@ public class ListAllActivity
     }
 
     @Override
-    public void onListResume() {
+    public void onFragmentResume() {
         setupActionBar(false);
     }
 

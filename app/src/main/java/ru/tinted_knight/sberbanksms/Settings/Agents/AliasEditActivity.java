@@ -63,7 +63,7 @@ public class AliasEditActivity extends AppCompatActivity implements LoaderManage
         fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(AliasEditActivity.this, AgentsActivity.class);
+                Intent intent = new Intent(AliasEditActivity.this, Agents2Activity.class);
                 intent.putExtra(Flag.AliasFilter, true);
                 intent.putExtra(Flag.AliasId, mAliasId);
                 startActivityForResult(intent, Constants.RequestCodes.AddAgent, null);

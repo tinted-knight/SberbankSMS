@@ -5,7 +5,7 @@ import java.util.Set;
 
 public final class Constants {
 
-    public static final String LOG_TAG = "sberLog";
+    public static final String LOG_TAG = "TAGG";
 
     public static final class RequestCodes {
         public static final int Permissions = 1;

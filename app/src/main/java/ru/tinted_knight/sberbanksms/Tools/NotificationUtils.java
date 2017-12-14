@@ -11,7 +11,7 @@ import android.support.v4.app.NotificationCompat;
 
 import ru.tinted_knight.sberbanksms.R;
 import ru.tinted_knight.sberbanksms.dao.entities.FullMessageEntity;
-import ru.tinted_knight.sberbanksms.ui.ListAllActivity;
+import ru.tinted_knight.sberbanksms.ui.main_screen.MainActivity;
 
 public class NotificationUtils {
 
@@ -51,7 +51,7 @@ public class NotificationUtils {
 
     public static void showSmsReceived(Context context, FullMessageEntity entity) {
         if (entity != null) {
-            Intent responsibleActivity = new Intent(context, ListAllActivity.class);
+            Intent responsibleActivity = new Intent(context, MainActivity.class);
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, responsibleActivity, 0);
 
             NotifContent.build(context, entity.type, entity.summa);

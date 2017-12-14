@@ -5,13 +5,18 @@ import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 
+import java.util.List;
+
 import ru.tinted_knight.sberbanksms.dao.entities.AgentEntity;
 
 @Dao
 public interface AgentDao {
 
-    @Query("select * from agents")
-    LiveData<AgentEntity> getAll();
+    @Query("select * from agents where defaultText != ''")
+    LiveData<List<AgentEntity>> getAll();
+
+    @Query("select * from agents where _id = :id")
+    LiveData<AgentEntity> getById(int id);
 
     @Insert
     void insert(AgentEntity... entities);

@@ -27,13 +27,6 @@ public abstract class AppDatabase extends RoomDatabase {
         }
     };
 
-    private static final Migration MIGRATION_2_3 = new Migration(2, 3) {
-        @Override
-        public void migrate(@NonNull SupportSQLiteDatabase database) {
-
-        }
-    };
-
     public static AppDatabase getInstance(Context context) {
         if (instance == null) {
             instance = Room.databaseBuilder(
@@ -42,7 +35,6 @@ public abstract class AppDatabase extends RoomDatabase {
                     "BankSMS")
                     .allowMainThreadQueries()
                     .addMigrations(MIGRATION_1_2)
-                    .addMigrations(MIGRATION_2_3)
                     .build();
             return instance;
         }

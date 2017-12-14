@@ -11,10 +11,10 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import ru.tinted_knight.sberbanksms.R;
-import ru.tinted_knight.sberbanksms.Settings.Agents.AgentsActivity;
 import ru.tinted_knight.sberbanksms.Settings.Agents.AliasesActivity;
 import ru.tinted_knight.sberbanksms.Settings.Cards.CardsListActivity;
-import ru.tinted_knight.sberbanksms.ui.ListAllActivity;
+import ru.tinted_knight.sberbanksms.ui.main_screen.MainActivity;
+import ru.tinted_knight.sberbanksms.ui.settings.AgentsActivity;
 
 public class Settings extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
@@ -73,7 +73,7 @@ public class Settings extends AppCompatActivity implements AdapterView.OnItemCli
                 break;
             case AppMenuItems.RawSms:
                 Toast.makeText(this, "rawsms", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(this, ListAllActivity.class);
+                Intent intent = new Intent(this, MainActivity.class);
                 startActivity(intent, null);
                 break;
             case AppMenuItems.AppSettings:

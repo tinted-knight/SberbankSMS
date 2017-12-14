@@ -1,4 +1,4 @@
-package ru.tinted_knight.sberbanksms.ui;
+package ru.tinted_knight.sberbanksms.ui.main_screen;
 
 import android.app.ProgressDialog;
 import android.arch.lifecycle.Observer;
@@ -17,21 +17,22 @@ import android.widget.Toast;
 import java.util.List;
 
 import ru.tinted_knight.sberbanksms.R;
-import ru.tinted_knight.sberbanksms.RecyclerView.DividerItemDecoration;
 import ru.tinted_knight.sberbanksms.dao.query_pojos.SimpleEntity;
+import ru.tinted_knight.sberbanksms.ui.adapters.DividerItemDecoration;
 import ru.tinted_knight.sberbanksms.ui.adapters.ListRecyclerViewAdapter;
-import ru.tinted_knight.sberbanksms.viewmodel.ListAllViewModel;
+import ru.tinted_knight.sberbanksms.viewmodel.MainViewModel;
 
-public class ListAllFragment extends Fragment
-        implements ListAllViewModel.IShowProgress {
+public class MainFragment extends Fragment
+        implements MainViewModel.IShowProgress {
 
-    public static final String TAG = "ListAllFragment";
+    public static final String TAG = "MainFragment";
 
-    private OnItemClickListener listener;
+    private OnMainFragmentInteractionListener listener;
 
     private ListRecyclerViewAdapter adapter;
 
     private ProgressDialog progressDialog;
+
     private RecyclerView rvMain;
 
     @Override
@@ -63,20 +64,20 @@ public class ListAllFragment extends Fragment
     @Override
     public void onResume() {
         super.onResume();
-        listener.onListResume();
+        listener.onFragmentResume();
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        ListAllViewModel.Factory factory = new ListAllViewModel.Factory(
+        MainViewModel.Factory factory = new MainViewModel.Factory(
                 getActivity().getApplication(), this);
-        final ListAllViewModel viewModel =
-                ViewModelProviders.of(this, factory).get(ListAllViewModel.class);
+        final MainViewModel viewModel =
+                ViewModelProviders.of(this, factory).get(MainViewModel.class);
         registerObservers(viewModel);
     }
 
-    private void registerObservers(ListAllViewModel viewModel) {
+    private void registerObservers(MainViewModel viewModel) {
         viewModel.liveData.observe(this, new Observer<List<SimpleEntity>>() {
             @Override
             public void onChanged(@Nullable List<SimpleEntity> entities) {
@@ -109,11 +110,11 @@ public class ListAllFragment extends Fragment
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnItemClickListener) {
-            listener = (OnItemClickListener) context;
+        if (context instanceof OnMainFragmentInteractionListener) {
+            listener = (OnMainFragmentInteractionListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnItemClickListener");
+                    + " must implement OnMainFragmentInteractionListener");
         }
     }
 
@@ -138,18 +139,20 @@ public class ListAllFragment extends Fragment
 
     @Override
     public void onProgressHide() {
-//        progressDialog.dismiss();
+        progressDialog.dismiss();
         progressDialog.setCancelable(true);
         progressDialog.setCanceledOnTouchOutside(true);
         progressDialog.setTitle("Done");
         progressDialog.setMessage("Thank you for patience. Tap anywhere outside.");
     }
 
-    public interface OnItemClickListener {
+    public interface OnMainFragmentInteractionListener {
         // TODO: Update argument type and name
         void onListItemClick(int id, ListRecyclerViewAdapter.ViewHolder holder);
+
         void onListItemLongClick(int id);
-        void onListResume();
+
+        void onFragmentResume();
     }
 
     private ListRecyclerViewAdapter.ListItemClickListener listItemClickListener = new ListRecyclerViewAdapter.ListItemClickListener() {

@@ -14,7 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.ListAllActivity"
+            android:name=".ui.main_screen.MainActivity"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -22,30 +22,12 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-<!--
-        <activity
-            android:name=".main_view.Main2"
-            android:launchMode="singleTop">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
--->
 
         <provider
             android:name=".Tools.DB.MessageContentProvider"
             android:authorities="ru.tinted_knight.sberbanksms.content"/>
 
-<!--
-        <receiver android:name=".SmsReceiver.SmsReceiver">
-            <intent-filter android:priority="100">
-                <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
-            </intent-filter>
-        </receiver>
--->
-        <receiver android:name=".broadcastreceiver.SmsReceiverLiveData">
+        <receiver android:name=".broadcastreceiver.SmsReceiver">
             <intent-filter android:priority="100">
                 <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
             </intent-filter>
@@ -53,7 +35,7 @@
 
         <activity android:name=".Settings.Settings">
         </activity>
-        <activity android:name=".Settings.Agents.AgentsActivity">
+        <activity android:name=".Settings.Agents.Agents2Activity">
         </activity>
         <activity android:name=".Settings.Agents.AgentEditActivity">
         </activity>
@@ -63,12 +45,10 @@
         </activity>
         <activity android:name=".Settings.Cards.CardsListActivity">
         </activity>
-        <activity android:name=".detail_screen.DetailActivity">
+        <!-- <activity android:name=".list_MainActivityvity"> -->
+        <!-- </activity> -->
+        <activity android:name=".ui.settings.AgentsActivity">
         </activity>
-        <activity android:name=".main_view.Main2">
-        </activity>
-        <!--<activity android:name=".list_all.ListAllActivity">-->
-        <!--</activity>-->
     </application>
 
 </manifest>

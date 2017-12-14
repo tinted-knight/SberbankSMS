@@ -1,11 +1,9 @@
-package ru.tinted_knight.sberbanksms.ui;
+package ru.tinted_knight.sberbanksms.ui.main_screen;
 
 import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.databinding.DataBindingUtil;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -22,12 +20,10 @@ import ru.tinted_knight.sberbanksms.databinding.FragmentDetailBinding;
 import ru.tinted_knight.sberbanksms.viewmodel.DetailViewModel;
 
 public class DetailFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
     public static final String TAG = "detail_fragment";
 
     private static final String ITEM_ID = "item_id";
-    private static final String ITEM_POSITION = "item_pos";
 
     // TODO: Rename and change types of parameters
     private int itemId;
@@ -56,7 +52,7 @@ public class DetailFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         DetailViewModel.Factory factory = new DetailViewModel.Factory(
-                getActivity().getApplication(),itemId);
+                getActivity().getApplication(), itemId);
         final DetailViewModel viewModel = ViewModelProviders.of(this, factory).get(DetailViewModel.class);
         registerObservers(viewModel);
     }
