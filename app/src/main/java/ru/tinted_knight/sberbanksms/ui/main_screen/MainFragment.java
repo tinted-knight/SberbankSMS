@@ -35,6 +35,15 @@ public class MainFragment extends Fragment
 
     private RecyclerView rvMain;
 
+
+    public static MainFragment newInstance() {
+        Bundle args = new Bundle();
+
+        MainFragment fragment = new MainFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+
     @Override
     public void setRetainInstance(boolean retain) {
         super.setRetainInstance(true);

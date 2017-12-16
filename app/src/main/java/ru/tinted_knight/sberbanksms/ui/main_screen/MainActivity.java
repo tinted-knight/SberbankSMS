@@ -31,16 +31,20 @@ public class MainActivity
         setContentView(R.layout.activity_list_all);
 
         //TODO maybe should show some loading stuff on slower devices
-//        initNormalView();
-        checkPermissions();
+        if (savedInstanceState == null)
+            if (checkPermissions())
+                initNormalView();
+        else {
+            getSupportFragmentManager().popBackStackImmediate();
+        }
     }
 
     private void initNormalView() {
-//        setContentView(R.layout.activity_list_all);
         initBottomBar();
-        MainFragment fragment = new MainFragment();
+        MainFragment fragment = MainFragment.newInstance();
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.flMain, fragment, MainFragment.TAG).commit();
+                .add(R.id.flMain, fragment, MainFragment.TAG)
+                .commit();
     }
 
     private void initNoPermissionsView() {
@@ -54,19 +58,24 @@ public class MainActivity
         });
     }
 
-    private void checkPermissions() {
+    private boolean checkPermissions() {
         int readSms = ContextCompat.checkSelfPermission(getApplication(), Manifest.permission.READ_SMS);
         int receiveSms = ContextCompat.checkSelfPermission(getApplication(), Manifest.permission.RECEIVE_SMS);
 
-        if (readSms != PackageManager.PERMISSION_GRANTED || receiveSms != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(
-                    this,
-                    new String[]{Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS},
-                    REQUEST_CODE_GET_PERMISSIONS
-            );
+        if (readSms == PackageManager.PERMISSION_GRANTED || receiveSms == PackageManager.PERMISSION_GRANTED) {
+            return true;
         } else {
-            initNormalView();
+            requestPermissions();
         }
+        return false;
+    }
+
+    private void requestPermissions(){
+        ActivityCompat.requestPermissions(
+                this,
+                new String[]{Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS},
+                REQUEST_CODE_GET_PERMISSIONS
+        );
     }
 
     private void initBottomBar() {
@@ -97,7 +106,8 @@ public class MainActivity
     @SuppressLint("MissingSuperCall")
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-//        super.onSaveInstanceState(outState);
+        super.onSaveInstanceState(outState);
+        outState.putString("BUG_19917_KEY", "WORKAROUND_FOR_BUG_19917_VALUE");
 
         // Don't make the call to super() on the saveInstanceState method
         // https://stackoverflow.com/questions/7575921/illegalstateexception-can-not-perform-this-action-after-onsaveinstancestate-wit
@@ -133,7 +143,8 @@ public class MainActivity
         getSupportFragmentManager().beginTransaction()
 //                .setCustomAnimations(R.animator.slide_in_top, R.animator.fade_out)
                 .addToBackStack("detail")
-                .replace(R.id.flMain, detailFragment, DetailFragment.TAG).commit();
+                .replace(R.id.flMain, detailFragment, DetailFragment.TAG)
+                .commit();
         setupActionBar(true);
 
 /*

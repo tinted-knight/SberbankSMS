@@ -49,6 +49,11 @@ public class DetailFragment extends Fragment {
     }
 
     @Override
+    public void setRetainInstance(boolean retain) {
+        super.setRetainInstance(true);
+    }
+
+    @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         DetailViewModel.Factory factory = new DetailViewModel.Factory(
