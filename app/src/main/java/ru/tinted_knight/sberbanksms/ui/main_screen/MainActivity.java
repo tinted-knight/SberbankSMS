@@ -1,7 +1,6 @@
 package ru.tinted_knight.sberbanksms.ui.main_screen;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -34,9 +33,9 @@ public class MainActivity
         if (savedInstanceState == null)
             if (checkPermissions())
                 initNormalView();
-        else {
-            getSupportFragmentManager().popBackStackImmediate();
-        }
+            else {
+                getSupportFragmentManager().popBackStackImmediate();
+            }
     }
 
     private void initNormalView() {
@@ -66,11 +65,11 @@ public class MainActivity
             return true;
         } else {
             requestPermissions();
+            return false;
         }
-        return false;
     }
 
-    private void requestPermissions(){
+    private void requestPermissions() {
         ActivityCompat.requestPermissions(
                 this,
                 new String[]{Manifest.permission.READ_SMS, Manifest.permission.RECEIVE_SMS},
@@ -103,7 +102,6 @@ public class MainActivity
         getSupportActionBar().setDisplayHomeAsUpEnabled(value);
     }
 
-    @SuppressLint("MissingSuperCall")
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);

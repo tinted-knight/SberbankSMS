@@ -66,6 +66,10 @@ class AgentsFragment : Fragment(), AgentsRecyclerViewAdapter.ListItemClickListen
         }
     }
 
+    override fun setRetainInstance(retain: Boolean) {
+        super.setRetainInstance(true)
+    }
+
     override fun onDetach() {
         super.onDetach()
         listener = null
@@ -73,6 +77,7 @@ class AgentsFragment : Fragment(), AgentsRecyclerViewAdapter.ListItemClickListen
 
     interface OnAgentsFragmentInteractionListener {
         fun onItemClick(id: Int, holder: AgentsRecyclerViewAdapter.ViewHolder)
+        fun onFragmentResume();
     }
 
     companion object {
