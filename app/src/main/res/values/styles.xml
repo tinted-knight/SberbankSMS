@@ -9,11 +9,20 @@
     </style>
 
     <style name="detail_date">
-        <item name="android:textSize">24sp</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="detail_date2" parent="detail_agent">
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="detail_card" parent="detail_agent">
+        <item name="android:textSize">16sp</item>
     </style>
 
     <style name="detail_agent" parent="TextAppearance.AppCompat.Headline">
         <item name="android:textSize">24sp</item>
+        <item name="android:textAlignment">center</item>
     </style>
 
     <style name="detail_summa">
@@ -24,6 +33,10 @@
     <style name="detail_balance" parent="TextAppearance.AppCompat.Headline">
         <item name="android:textSize">36sp</item>
         <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="detail_description">
+        <item name="android:textSize">20sp</item>
     </style>
 
 </resources>

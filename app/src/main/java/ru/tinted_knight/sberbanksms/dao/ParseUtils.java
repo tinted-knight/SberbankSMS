@@ -147,6 +147,13 @@ public class ParseUtils {
                 sReturnEntity.summa = summaFromString(matcher.group(6).trim());
                 sReturnEntity.balance = balanceFromString(matcher.group(9).trim());
 
+                int[] dtSplit = getDateSplit(sReturnEntity.date);
+                sReturnEntity.year = dtSplit[DateTimeKeys.YEAR];
+                sReturnEntity.month = dtSplit[DateTimeKeys.MONTH];
+                sReturnEntity.day = dtSplit[DateTimeKeys.DAY];
+                sReturnEntity.hour = dtSplit[DateTimeKeys.HOUR];
+                sReturnEntity.minute = dtSplit[DateTimeKeys.MINUTE];
+
                 return true;
             } catch (ParseException e) {
                 e.printStackTrace();

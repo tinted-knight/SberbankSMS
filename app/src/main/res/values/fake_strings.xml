@@ -3,7 +3,7 @@
     <string name="fake_agent_name">Aliexpress</string>
     <string name="fake_date">26 november 2017</string>
     <string name="fake_summa">170,39</string>
-    <string name="fake_card_type">ECMC6824</string>
+    <string name="fake_card_type">Зарплатная MasterCard</string>
     <string name="fake_time">18:39</string>
     <string name="fake_balance">271,040</string>
     <string name="fake_balance_label">Balance:</string>

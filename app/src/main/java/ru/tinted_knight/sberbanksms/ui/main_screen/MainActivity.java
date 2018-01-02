@@ -24,6 +24,10 @@ public class MainActivity
 
     private static final int REQUEST_CODE_GET_PERMISSIONS = 100;
 
+    private enum State {ALLOWED, DENIED, NONE}
+
+    private State flagState = State.NONE;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +43,7 @@ public class MainActivity
     }
 
     private void initNormalView() {
+        setContentView(R.layout.activity_list_all);
         initBottomBar();
         MainFragment fragment = MainFragment.newInstance();
         getSupportFragmentManager().beginTransaction()
@@ -121,10 +126,23 @@ public class MainActivity
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_CODE_GET_PERMISSIONS) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                initNormalView();
+                flagState = State.ALLOWED;
             } else {
-                initNoPermissionsView();
+                flagState = State.DENIED;
             }
+        }
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+        switch (flagState) {
+            case ALLOWED:
+                initNormalView();
+                break;
+            case DENIED:
+                initNoPermissionsView();
+                break;
         }
     }
 

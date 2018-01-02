@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 import ru.tinted_knight.sberbanksms.R;
 import ru.tinted_knight.sberbanksms.Tools.Constants;
 import ru.tinted_knight.sberbanksms.dao.query_pojos.MessageEntity;
-import ru.tinted_knight.sberbanksms.databinding.FragmentDetailBinding;
+import ru.tinted_knight.sberbanksms.databinding.FragmentDetail2Binding;
 import ru.tinted_knight.sberbanksms.viewmodel.DetailViewModel;
 
 public class DetailFragment extends Fragment {
@@ -28,7 +28,7 @@ public class DetailFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private int itemId;
 
-    private FragmentDetailBinding binding;
+    private FragmentDetail2Binding binding;
 
     private OnDetailInteraction listener;
 
@@ -105,7 +105,7 @@ public class DetailFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail, container, false);
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_detail2, container, false);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             binding.tvAgent.setTransitionName("agent");
             binding.tvSumma.setTransitionName("summa");
