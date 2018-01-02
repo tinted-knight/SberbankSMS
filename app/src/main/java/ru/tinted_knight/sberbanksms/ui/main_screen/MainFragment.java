@@ -79,11 +79,16 @@ public class MainFragment extends Fragment
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        registerObservers(getViewModel());
+    }
+
+    private MainViewModel getViewModel() {
         MainViewModel.Factory factory = new MainViewModel.Factory(
                 getActivity().getApplication(), this);
-        final MainViewModel viewModel =
-                ViewModelProviders.of(this, factory).get(MainViewModel.class);
-        registerObservers(viewModel);
+        MainViewModel viewModel = ViewModelProviders.of(this, factory).get(MainViewModel.class);
+        getLifecycle().addObserver(viewModel.lifecycleObserver);
+
+        return viewModel;
     }
 
     private void registerObservers(MainViewModel viewModel) {
@@ -108,7 +113,7 @@ public class MainFragment extends Fragment
         viewModel.progress.observe(this, new Observer<Integer>() {
             @Override
             public void onChanged(@Nullable Integer progress) {
-                if (progress != null)
+                if (progress != null && progressDialog != null)
                     progressDialog.setProgress(progress);
             }
         });

@@ -31,7 +31,7 @@ public class MainActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_all);
+//        setContentView(R.layout.activity_list_all);
 
         //TODO maybe should show some loading stuff on slower devices
         if (savedInstanceState == null)
@@ -142,6 +142,9 @@ public class MainActivity
                 break;
             case DENIED:
                 initNoPermissionsView();
+                break;
+            default:
+                initNormalView();
                 break;
         }
     }

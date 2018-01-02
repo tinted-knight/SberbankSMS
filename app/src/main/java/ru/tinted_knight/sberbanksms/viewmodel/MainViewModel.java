@@ -2,8 +2,11 @@ package ru.tinted_knight.sberbanksms.viewmodel;
 
 import android.app.Application;
 import android.arch.lifecycle.AndroidViewModel;
+import android.arch.lifecycle.Lifecycle;
+import android.arch.lifecycle.LifecycleObserver;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.MutableLiveData;
+import android.arch.lifecycle.OnLifecycleEvent;
 import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProvider;
 import android.database.Cursor;
@@ -27,6 +30,10 @@ public class MainViewModel extends AndroidViewModel {
     private AppDatabase repo;
 
     private IShowProgress listener;
+
+    private AsyncSmsRoomWriter writer;
+
+    private int progressMax;
 
     public LiveData<List<SimpleEntity>> liveData;
 
@@ -70,8 +77,10 @@ public class MainViewModel extends AndroidViewModel {
             // TODO show popupmessage
         } else {
             // TODO progress update listener
+            progressMax = cursor.getCount();
             listener.onProgressStart("Анализ СМС-сообщений", "Это займет немного времени...", cursor.getCount());
-            AsyncSmsRoomWriter writer = new AsyncSmsRoomWriter();
+//            AsyncSmsRoomWriter writer = new AsyncSmsRoomWriter();
+            writer = new AsyncSmsRoomWriter();
             writer.execute(cursor);
         }
     }
@@ -102,6 +111,11 @@ public class MainViewModel extends AndroidViewModel {
                         repo.daoMessages().insertBatch(entityList.toArray(new FullMessageEntity[]{}));
                         entityList.clear();
                         MainViewModel.this.progress.postValue(progress);
+//                        try {
+//                            Thread.sleep(100);
+//                        } catch (InterruptedException e) {
+//                            e.printStackTrace();
+//                        }
                     }
                 } while (cursor.moveToPrevious());
                 if (entityList.size() > 0)
@@ -132,6 +146,7 @@ public class MainViewModel extends AndroidViewModel {
 
     public interface IShowProgress {
         void onProgressStart(String title, String text, int max);
+
         void onProgressHide();
     }
 
@@ -155,5 +170,14 @@ public class MainViewModel extends AndroidViewModel {
             return (T) new MainViewModel(application, database, progressListener);
         }
     }
+
+    private class MainLifecycleObserver implements LifecycleObserver {
+        @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
+        public void onResume() {
+//            Log.d("TAGG", "=========== LifeCycle: onResume");
+        }
+    }
+
+    public MainLifecycleObserver lifecycleObserver = new MainLifecycleObserver();
 
 }
