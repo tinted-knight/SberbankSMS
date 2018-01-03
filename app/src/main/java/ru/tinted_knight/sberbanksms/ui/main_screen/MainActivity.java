@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import ru.tinted_knight.sberbanksms.R;
+import ru.tinted_knight.sberbanksms.Settings.Preferences;
 import ru.tinted_knight.sberbanksms.Settings.Settings;
 import ru.tinted_knight.sberbanksms.ui.adapters.ListRecyclerViewAdapter;
 
@@ -34,12 +35,12 @@ public class MainActivity
 //        setContentView(R.layout.activity_list_all);
 
         //TODO maybe should show some loading stuff on slower devices
-        if (savedInstanceState == null)
+        if (savedInstanceState == null) {
             if (checkPermissions())
                 initNormalView();
-            else {
-                getSupportFragmentManager().popBackStackImmediate();
-            }
+        } else {
+            getSupportFragmentManager().popBackStackImmediate();
+        }
     }
 
     private void initNormalView() {
@@ -144,7 +145,8 @@ public class MainActivity
                 initNoPermissionsView();
                 break;
             default:
-                initNormalView();
+                if (!Preferences.isFirstRun(getApplication()))
+                    initNormalView();
                 break;
         }
     }
