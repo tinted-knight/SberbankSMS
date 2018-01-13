@@ -34,11 +34,13 @@ class AgentsFragment : Fragment(), AgentsRecyclerViewAdapter.ListItemClickListen
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val root = inflater!!.inflate(R.layout.fragment_agents, container, false)
+
         val rvAgents = root.findViewById<RecyclerView>(R.id.rvAgents)
         rvAgents.adapter = adapter
         rvAgents.layoutManager = LinearLayoutManager(activity)
         rvAgents.addItemDecoration(DividerItemDecoration(activity, DividerItemDecoration.VERTICAL_LIST))
-//        rvAgents.isVerticalScrollBarEnabled = true
+        rvAgents.isVerticalScrollBarEnabled = true
+
         return root
     }
 

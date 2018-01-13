@@ -20,4 +20,7 @@ public interface AgentDao {
 
     @Insert
     void insert(AgentEntity... entities);
+
+    @Query("update agents set aliasId = :aliasId where _id = :agentId")
+    void update(int agentId, long aliasId);
 }

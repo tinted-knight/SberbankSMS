@@ -3,14 +3,12 @@ package ru.tinted_knight.sberbanksms.dao.entities;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 
-@Entity(tableName = "agents")
-public class AgentEntity {
+@Entity(tableName = "aliases")
+public class AliasEntity {
 
     @PrimaryKey(autoGenerate = true)
     public int _id;
 
-    public String defaultText;
-
-    public long aliasId;
+    public String alias;
 
 }

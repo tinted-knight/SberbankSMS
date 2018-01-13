@@ -12,6 +12,8 @@ public class SimpleEntity {
 
     public String agent;
 
+    public String alias;
+
     public float summa;
 
     public int year;

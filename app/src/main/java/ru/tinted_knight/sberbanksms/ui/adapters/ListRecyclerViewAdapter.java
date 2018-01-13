@@ -47,7 +47,11 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         final SimpleEntity e = data.get(position);
-        holder.agent.setText(e.agent);
+        if (e.alias != null && !"".equals(e.alias))
+            holder.agent.setText(e.alias);
+        else
+            holder.agent.setText(e.agent);
+
         holder.summa.setText(e.getSummaString());
         holder.month.setText(e.getMonthString());
         holder.day.setText(e.getDayString());

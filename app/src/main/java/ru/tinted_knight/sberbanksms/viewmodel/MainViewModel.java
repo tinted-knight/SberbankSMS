@@ -33,7 +33,7 @@ public class MainViewModel extends AndroidViewModel {
 
     private AsyncSmsRoomWriter writer;
 
-    private int progressMax;
+//    private int progressMax;
 
     public LiveData<List<SimpleEntity>> liveData;
 
@@ -46,7 +46,8 @@ public class MainViewModel extends AndroidViewModel {
         repo = database;
         listener = progressListener;
 
-        liveData = repo.daoMessages().getAll();
+//        liveData = repo.daoMessages().getAll();
+        liveData = repo.daoMessages().getAllAlias();
         progress = new MutableLiveData<>();
         popupMessage = new MutableLiveData<>();
         onCreate();
@@ -77,7 +78,7 @@ public class MainViewModel extends AndroidViewModel {
             // TODO show popupmessage
         } else {
             // TODO progress update listener
-            progressMax = cursor.getCount();
+//            progressMax = cursor.getCount();
             listener.onProgressStart("Анализ СМС-сообщений", "Это займет немного времени...", cursor.getCount());
 //            AsyncSmsRoomWriter writer = new AsyncSmsRoomWriter();
             writer = new AsyncSmsRoomWriter();
@@ -87,8 +88,8 @@ public class MainViewModel extends AndroidViewModel {
 
     private void setFirstRunPref(boolean flag) {
         Preferences.setFirstRun(this.getApplication(), !flag);
-        if (flag)
-            getData();
+//        if (flag)
+//            getData();
     }
 
     private class AsyncSmsRoomWriter extends AsyncTask<Cursor, Integer, Boolean> {
@@ -111,11 +112,6 @@ public class MainViewModel extends AndroidViewModel {
                         repo.daoMessages().insertBatch(entityList.toArray(new FullMessageEntity[]{}));
                         entityList.clear();
                         MainViewModel.this.progress.postValue(progress);
-//                        try {
-//                            Thread.sleep(100);
-//                        } catch (InterruptedException e) {
-//                            e.printStackTrace();
-//                        }
                     }
                 } while (cursor.moveToPrevious());
                 if (entityList.size() > 0)

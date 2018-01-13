@@ -23,10 +23,13 @@
     <string name="dummy_permissions_denied_try_again">Попробовать еще раз</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hint_enter_alias_name">Введите псевдоним</string>
 
     <string name="notif_message_income">Поступление средств</string>
     <string name="notif_message_expense">Покупка</string>
     <string name="notif_message_atm">Снятие наличных</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

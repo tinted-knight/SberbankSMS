@@ -11,9 +11,6 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import ru.tinted_knight.sberbanksms.R;
-import ru.tinted_knight.sberbanksms.Settings.Agents.AliasesActivity;
-import ru.tinted_knight.sberbanksms.Settings.Cards.CardsListActivity;
-import ru.tinted_knight.sberbanksms.ui.main_screen.MainActivity;
 import ru.tinted_knight.sberbanksms.ui.settings.AgentsActivity;
 
 public class Settings extends AppCompatActivity implements AdapterView.OnItemClickListener {
@@ -58,14 +55,14 @@ public class Settings extends AppCompatActivity implements AdapterView.OnItemCli
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         switch (position) {
             case AppMenuItems.Cards:
-                startActivity(new Intent(this, CardsListActivity.class));
+//                startActivity(new Intent(this, CardsListActivity.class));
 //                Toast.makeText(this, "cards", Toast.LENGTH_SHORT).show();
                 break;
             case AppMenuItems.Agents:
                 startActivity(new Intent(this, AgentsActivity.class));
                 break;
             case AppMenuItems.Aliases:
-                startActivity(new Intent(this, AliasesActivity.class));
+//                startActivity(new Intent(this, AliasesActivity.class));
 //                Toast.makeText(this, "aliases", Toast.LENGTH_SHORT).show();
                 break;
             case AppMenuItems.Operations:
@@ -73,8 +70,8 @@ public class Settings extends AppCompatActivity implements AdapterView.OnItemCli
                 break;
             case AppMenuItems.RawSms:
                 Toast.makeText(this, "rawsms", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(this, MainActivity.class);
-                startActivity(intent, null);
+//                Intent intent = new Intent(this, MainActivity.class);
+//                startActivity(intent, null);
                 break;
             case AppMenuItems.AppSettings:
                 Toast.makeText(this, "appsettings", Toast.LENGTH_SHORT).show();

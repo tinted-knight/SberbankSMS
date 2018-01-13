@@ -59,6 +59,7 @@ public class DetailFragment extends Fragment {
         DetailViewModel.Factory factory = new DetailViewModel.Factory(
                 getActivity().getApplication(), itemId);
         final DetailViewModel viewModel = ViewModelProviders.of(this, factory).get(DetailViewModel.class);
+
         registerObservers(viewModel);
     }
 
