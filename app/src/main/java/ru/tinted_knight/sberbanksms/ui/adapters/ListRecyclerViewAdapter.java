@@ -57,10 +57,6 @@ public class ListRecyclerViewAdapter extends RecyclerView.Adapter<ListRecyclerVi
         holder.day.setText(e.getDayString());
 
         holder.itemView.setTag(e._id);
-//        holder.agent.setTag(e._id);
-//        holder.summa.setTag(e._id);
-//        holder.month.setTag(e._id);
-//        holder.day.setTag(e._id);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             holder.agent.setTransitionName("agent" + position);

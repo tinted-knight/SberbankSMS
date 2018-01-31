@@ -91,14 +91,6 @@ public class ParseUtils {
                     sReturnEntity.agent = "Annual payment";
                     sReturnEntity.type = Constants.OperationType.OUTCOME;
                 }
-//                else if (data.contains(Constants.MOBILE_BANK_FLAG)) {
-//                    dateString = matcher.group(3).trim() + " 00:00";
-//                    dateFormat = new SimpleDateFormat(Constants.smsDateFormat, Locale.getDefault());
-//                    sReturnEntity.date = dateFormat.parse(dateString).getTime() / 1000;
-//
-//                    sReturnEntity.agent = "Сбербанк " + matcher.group(4).trim() + "-" + matcher.group(5).trim();
-//                    sReturnEntity.type = Constants.OperationType.OUTCOME;
-//                }
 
                 return true;
 
@@ -128,14 +120,7 @@ public class ParseUtils {
     private static boolean tryExtractPassword(String data) {
         Matcher matcher = Pattern.compile(Constants.passwordPattern).matcher(data);
         if (matcher.find()) {
-            // есть слово "пароль" в тексте - не делаем ничего
-//            this.cardNumber = null;
-//            this.mCardType = Constants.CardType.NONE;
-//            this.date = 0;
-//            this.agent = null;
-//            this.summa = null;
-//            this.balance = null;
-//            this.type = Constants.OperationType.ERRORCODE;
+            // Exactly. Do nothing if there is a password in message
             return true;
         }
         return false;

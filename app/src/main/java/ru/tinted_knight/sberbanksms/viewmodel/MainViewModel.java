@@ -33,8 +33,6 @@ public class MainViewModel extends AndroidViewModel {
 
     private AsyncSmsRoomWriter writer;
 
-//    private int progressMax;
-
     public LiveData<List<SimpleEntity>> liveData;
 
     public MutableLiveData<Integer> progress;
@@ -51,18 +49,6 @@ public class MainViewModel extends AndroidViewModel {
         progress = new MutableLiveData<>();
         popupMessage = new MutableLiveData<>();
         onCreate();
-//        if (Preferences.isFirstRun(getApplication())) {
-//            //TODO check permissions
-//            this.firstStart();
-//        }
-    }
-
-//    public void setProgressListener(IShowProgress listener) {
-//        this.listener = listener;
-//    }
-
-    private void getData() {
-//        liveData = repo.daoMessages().getAll();
     }
 
     public void onCreate() {
@@ -78,9 +64,7 @@ public class MainViewModel extends AndroidViewModel {
             // TODO show popupmessage
         } else {
             // TODO progress update listener
-//            progressMax = cursor.getCount();
             listener.onProgressStart("Анализ СМС-сообщений", "Это займет немного времени...", cursor.getCount());
-//            AsyncSmsRoomWriter writer = new AsyncSmsRoomWriter();
             writer = new AsyncSmsRoomWriter();
             writer.execute(cursor);
         }
@@ -88,8 +72,6 @@ public class MainViewModel extends AndroidViewModel {
 
     private void setFirstRunPref(boolean flag) {
         Preferences.setFirstRun(this.getApplication(), !flag);
-//        if (flag)
-//            getData();
     }
 
     private class AsyncSmsRoomWriter extends AsyncTask<Cursor, Integer, Boolean> {

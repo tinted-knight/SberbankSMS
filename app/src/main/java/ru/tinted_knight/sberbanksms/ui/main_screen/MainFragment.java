@@ -117,8 +117,6 @@ public class MainFragment extends Fragment
                     progressDialog.setProgress(progress);
             }
         });
-
-//        viewModel.setProgressListener(this);
     }
 
     @Override

@@ -143,10 +143,6 @@ public class MainActivity
             case DENIED:
                 initNoPermissionsView();
                 break;
-//            default:
-//                if (!Preferences.isFirstRun(getApplication()))
-//                    initNormalView();
-//                break;
         }
     }
 
@@ -192,11 +188,6 @@ public class MainActivity
     @Override
     public void onListItemLongClick(int id) {
         Toast.makeText(this, "tag: " + String.valueOf(id), Toast.LENGTH_SHORT).show();
-//        DetailFragment detailFragment = DetailFragment.newInstance(id, "none");
-//        getSupportFragmentManager().beginTransaction()
-//                .addToBackStack("detail")
-//                .replace(R.id.flMain, detailFragment, DetailFragment.TAG).commit();
-//        setupActionBar(true);
     }
 
     @Override
