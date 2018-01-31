@@ -53,12 +53,11 @@ public class ParseUtils {
         return null;
     }
 
-    public static boolean tryExtractData(String data, String patternString) {
+    private static boolean tryExtractData(String data, String patternString) {
         Matcher matcher = Pattern.compile(patternString).matcher(data);
         if (matcher.find()) {
             sReturnEntity = new FullMessageEntity();
-            if (data.contains(Constants.MOBILE_BANK_FLAG)
-                    && extractMobileBank(data)) {
+            if (data.contains(Constants.MOBILE_BANK_FLAG) && extractMobileBank(data)) {
                 return true;
             }
             try {
@@ -87,6 +86,19 @@ public class ParseUtils {
                 sReturnEntity.day = dtSplit[DateTimeKeys.DAY];
                 sReturnEntity.hour = dtSplit[DateTimeKeys.HOUR];
                 sReturnEntity.minute = dtSplit[DateTimeKeys.MINUTE];
+
+                if (data.contains(Constants.ANNUAL_PAYMENT_FLAG)) {
+                    sReturnEntity.agent = "Annual payment";
+                    sReturnEntity.type = Constants.OperationType.OUTCOME;
+                }
+//                else if (data.contains(Constants.MOBILE_BANK_FLAG)) {
+//                    dateString = matcher.group(3).trim() + " 00:00";
+//                    dateFormat = new SimpleDateFormat(Constants.smsDateFormat, Locale.getDefault());
+//                    sReturnEntity.date = dateFormat.parse(dateString).getTime() / 1000;
+//
+//                    sReturnEntity.agent = "Сбербанк " + matcher.group(4).trim() + "-" + matcher.group(5).trim();
+//                    sReturnEntity.type = Constants.OperationType.OUTCOME;
+//                }
 
                 return true;
 
@@ -142,7 +154,8 @@ public class ParseUtils {
                 DateFormat dateFormat = new SimpleDateFormat(Constants.smsDateFormat, Locale.getDefault());
                 sReturnEntity.date = dateFormat.parse(dateString).getTime() / 1000;
 
-                sReturnEntity.agent = "Сбербанк " + matcher.group(4).trim() + "-" + matcher.group(5).trim();
+//                sReturnEntity.agent = "Сбербанк " + matcher.group(4).trim() + "-" + matcher.group(5).trim();
+                sReturnEntity.agent = "Оплата мобильного банка";
                 sReturnEntity.type = Constants.OperationType.OUTCOME;
                 sReturnEntity.summa = summaFromString(matcher.group(6).trim());
                 sReturnEntity.balance = balanceFromString(matcher.group(9).trim());

@@ -70,6 +70,7 @@ public final class Constants {
             ;
 
     public static final String MOBILE_BANK_FLAG = "Мобильного банка";
+    public static final String ANNUAL_PAYMENT_FLAG = "оплата годового обслуживания карты";
     public static final String mobileBankPattern =
                     "(\\w{4})" +                        // 0. card type ECMC or VISA
                     "(\\d{4}\\s)" +                     // 1. card number
