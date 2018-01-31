@@ -18,6 +18,9 @@ public interface AgentDao {
     @Query("select * from agents where _id = :id")
     LiveData<AgentEntity> getById(int id);
 
+    @Query("select count(defaultText) from agents where defaultText like :name")
+    int countByName(String name);
+
     @Insert
     void insert(AgentEntity... entities);
 

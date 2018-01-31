@@ -18,13 +18,13 @@ import android.widget.EditText
 import android.widget.Toast
 import ru.tinted_knight.sberbanksms.R
 import ru.tinted_knight.sberbanksms.ui.adapters.AliasesRecyclerViewAdapter
-import ru.tinted_knight.sberbanksms.viewmodel.AliasListViewModel
+import ru.tinted_knight.sberbanksms.viewmodel.AgentCommonViewModel
 
 class AliasListFragment : Fragment(), AliasesRecyclerViewAdapter.ListItemClickListener {
 
     private var agentId: Int? = null
 
-    private lateinit var viewModel: AliasListViewModel
+    private lateinit var viewModel: AgentCommonViewModel
 
     private val adapter = AliasesRecyclerViewAdapter(this)
 
@@ -69,12 +69,13 @@ class AliasListFragment : Fragment(), AliasesRecyclerViewAdapter.ListItemClickLi
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(AliasListViewModel::class.java)
+//        viewModel = ViewModelProviders.of(this).get(AliasListViewModel::class.java)
+        viewModel = ViewModelProviders.of(activity).get(AgentCommonViewModel::class.java)
         registerObservers()
     }
 
     private fun registerObservers() {
-        viewModel.aliasList.observe(this, Observer { aliases ->
+        viewModel.aliasList().observe(this, Observer { aliases ->
             if (aliases != null) {
                 adapter.data = aliases
                 adapter.notifyDataSetChanged()

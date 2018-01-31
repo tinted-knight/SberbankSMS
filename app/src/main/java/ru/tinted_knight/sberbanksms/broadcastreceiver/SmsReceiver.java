@@ -9,6 +9,7 @@ import ru.tinted_knight.sberbanksms.Settings.Preferences;
 import ru.tinted_knight.sberbanksms.Tools.NotificationUtils;
 import ru.tinted_knight.sberbanksms.dao.AppDatabase;
 import ru.tinted_knight.sberbanksms.dao.ParseUtils;
+import ru.tinted_knight.sberbanksms.dao.entities.AgentEntity;
 import ru.tinted_knight.sberbanksms.dao.entities.FullMessageEntity;
 
 public class SmsReceiver extends BroadcastReceiver {
@@ -41,8 +42,15 @@ public class SmsReceiver extends BroadcastReceiver {
             String messageString = ParseUtils.parseFromPdus(pdus);
             if (messageString != null) {
                 FullMessageEntity entity = ParseUtils.fromStringToEntity(messageString);
-                if (entity != null)
+                if (entity != null) {
                     database.daoMessages().insertMessage(entity);
+                    if (database.daoAgents().countByName(entity.agent) == 0){
+                        AgentEntity agentEntity = new AgentEntity();
+                        agentEntity.defaultText = entity.agent;
+                        agentEntity.aliasId = -1;
+                        database.daoAgents().insert(agentEntity);
+                    }
+                }
                 return entity;
             }
             return null;

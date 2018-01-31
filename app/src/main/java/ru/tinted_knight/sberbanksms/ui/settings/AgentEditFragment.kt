@@ -11,8 +11,7 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import ru.tinted_knight.sberbanksms.R
-import ru.tinted_knight.sberbanksms.viewmodel.AgentViewModel
-import ru.tinted_knight.sberbanksms.viewmodel.factory.AgentEditVMFactory
+import ru.tinted_knight.sberbanksms.viewmodel.AgentCommonViewModel
 
 class AgentEditFragment : Fragment() {
 
@@ -22,7 +21,7 @@ class AgentEditFragment : Fragment() {
 
     private lateinit var tvAlias: TextView
 
-    private lateinit var viewModel: AgentViewModel
+    private lateinit var viewModel: AgentCommonViewModel
 
     private var listener: OnAgentEditFragmentInteractionListener? = null
 
@@ -52,18 +51,18 @@ class AgentEditFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        val factory = AgentEditVMFactory(activity.application, agentId!!)
-        viewModel = ViewModelProviders.of(this, factory).get(AgentViewModel::class.java)
-//        val viewModel = ViewModelProviders.of(this).get(AgentViewModel::class.java)
+//        val factory = AgentEditVMFactory(activity.application, agentId!!)
+//        viewModel = ViewModelProviders.of(this, factory).get(AgentViewModel::class.java)
+        viewModel = ViewModelProviders.of(activity).get(AgentCommonViewModel::class.java)
 
         registerObservers()
     }
 
     private fun registerObservers() {
-        viewModel.agent.observe(this, Observer { agent ->
+        viewModel.agent(agentId!!).observe(this, Observer { agent ->
             tvAgentDefaultName.text = agent?.defaultText
         })
-        viewModel.alias.observe(this, Observer { alias ->
+        viewModel.alias(agentId!!).observe(this, Observer { alias ->
             if (alias != "")
                 tvAlias.text = alias
         })

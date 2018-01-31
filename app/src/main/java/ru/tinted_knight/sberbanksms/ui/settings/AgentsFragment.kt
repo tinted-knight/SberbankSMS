@@ -14,7 +14,7 @@ import android.view.ViewGroup
 import ru.tinted_knight.sberbanksms.R
 import ru.tinted_knight.sberbanksms.ui.adapters.AgentsRecyclerViewAdapter
 import ru.tinted_knight.sberbanksms.ui.adapters.DividerItemDecoration
-import ru.tinted_knight.sberbanksms.viewmodel.AgentsViewModel
+import ru.tinted_knight.sberbanksms.viewmodel.AgentCommonViewModel
 
 class AgentsFragment : Fragment(), AgentsRecyclerViewAdapter.ListItemClickListener {
 
@@ -47,13 +47,14 @@ class AgentsFragment : Fragment(), AgentsRecyclerViewAdapter.ListItemClickListen
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val agentsViewModel = ViewModelProviders.of(this).get(AgentsViewModel::class.java)
+//        val agentsViewModel = ViewModelProviders.of(this).get(AgentsViewModel::class.java)
+        val viewModel = ViewModelProviders.of(activity).get(AgentCommonViewModel::class.java)
 
-        registerObservers(agentsViewModel)
+        registerObservers(viewModel)
     }
 
-    private fun registerObservers(agentsViewModel: AgentsViewModel) {
-        agentsViewModel.agents.observe(this, Observer { agents ->
+    private fun registerObservers(viewModel: AgentCommonViewModel) {
+        viewModel.agentList.observe(this, Observer { agents ->
             adapter.data = agents!!
             adapter.notifyDataSetChanged()
         })

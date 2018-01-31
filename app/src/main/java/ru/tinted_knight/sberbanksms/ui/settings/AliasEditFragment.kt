@@ -8,13 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import ru.tinted_knight.sberbanksms.R
-import ru.tinted_knight.sberbanksms.viewmodel.AliasEditViewModel
+import ru.tinted_knight.sberbanksms.viewmodel.AgentCommonViewModel
 
 class AliasEditFragment : Fragment() {
 
     private var agentId: Int? = null
 
-    private lateinit var viewModel: AliasEditViewModel
+    private lateinit var viewModel: AgentCommonViewModel
 
     private lateinit var etAlias : EditText
 
@@ -35,7 +35,7 @@ class AliasEditFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(AliasEditViewModel::class.java)
+        viewModel = ViewModelProviders.of(activity).get(AgentCommonViewModel::class.java)
 
         registerObservers()
     }

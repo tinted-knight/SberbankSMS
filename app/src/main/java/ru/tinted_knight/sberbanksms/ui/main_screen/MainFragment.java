@@ -133,7 +133,7 @@ public class MainFragment extends Fragment
     @Override
     public void onDetach() {
         super.onDetach();
-        progressDialog.dismiss();
+        if (progressDialog != null) progressDialog.dismiss();
         listener = null;
     }
 
