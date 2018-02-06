@@ -34,4 +34,17 @@ public class FullMessageEntity {
 
     public int minute;
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) return true;
+        if (obj instanceof FullMessageEntity){
+            FullMessageEntity e = (FullMessageEntity) obj;
+            if (e.card.equals(this.card) && e.cardType.equals(this.cardType) && e.date == this.date
+                    && e.type == this.type && e.agent.equals(this.agent) && e.summa == this.summa
+                    && e.balance == this.balance && e.year == this.year && e.month == this.month
+                    && e.day == this.day && e.hour == this.hour && e.minute == this.minute)
+                return true;
+        }
+        return false;
+    }
 }

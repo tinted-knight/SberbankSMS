@@ -117,6 +117,29 @@ public class MainFragment extends Fragment
                     progressDialog.setProgress(progress);
             }
         });
+
+        viewModel.isProgressGoing.observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(@Nullable Boolean aBoolean) {
+                if (aBoolean != null && aBoolean) {
+                    progressDialog = new ProgressDialog(getActivity());
+                    progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+                    progressDialog.setMax(100);
+                    progressDialog.setCanceledOnTouchOutside(false);
+                    progressDialog.setCancelable(false);
+                    progressDialog.setTitle("Анализ СМС-сообщений");
+                    progressDialog.setMessage("Это займет немного времени...");
+                    progressDialog.setProgress(0);
+                    progressDialog.show();
+                } else {
+                    progressDialog.dismiss();
+                    progressDialog.setCancelable(true);
+                    progressDialog.setCanceledOnTouchOutside(true);
+                    progressDialog.setTitle("Done");
+                    progressDialog.setMessage("Thank you for patience. Tap anywhere outside.");
+                }
+            }
+        });
     }
 
     @Override

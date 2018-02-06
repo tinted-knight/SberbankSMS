@@ -37,12 +37,15 @@ public class MainViewModel extends AndroidViewModel {
 
     public MutableLiveData<Integer> progress;
 
+    public MutableLiveData<Boolean> isProgressGoing;
+
     public MutableLiveData<String> popupMessage;
 
     public MainViewModel(@NonNull Application application, AppDatabase database, IShowProgress progressListener) {
         super(application);
         repo = database;
         listener = progressListener;
+        isProgressGoing = new MutableLiveData<>();
 
 //        liveData = repo.daoMessages().getAll();
         liveData = repo.daoMessages().getAllAlias();
@@ -64,7 +67,8 @@ public class MainViewModel extends AndroidViewModel {
             // TODO show popupmessage
         } else {
             // TODO progress update listener
-            listener.onProgressStart("Анализ СМС-сообщений", "Это займет немного времени...", cursor.getCount());
+//            listener.onProgressStart("Анализ СМС-сообщений", "Это займет немного времени...", cursor.getCount());
+            isProgressGoing.setValue(true);
             writer = new AsyncSmsRoomWriter();
             writer.execute(cursor);
         }
@@ -93,7 +97,8 @@ public class MainViewModel extends AndroidViewModel {
                     if (progress++ % 10 == 0) {
                         repo.daoMessages().insertBatch(entityList.toArray(new FullMessageEntity[]{}));
                         entityList.clear();
-                        MainViewModel.this.progress.postValue(progress);
+//                        MainViewModel.this.progress.postValue(progress);
+                        MainViewModel.this.progress.postValue(progress * 100 / cursor.getCount());
                     }
                 } while (cursor.moveToPrevious());
                 if (entityList.size() > 0)
@@ -118,7 +123,8 @@ public class MainViewModel extends AndroidViewModel {
             super.onPostExecute(aBoolean);
             setFirstRunPref(aBoolean);
             //TODO maybe should check listener != null
-            listener.onProgressHide();
+            isProgressGoing.setValue(false);
+//            listener.onProgressHide();
         }
     }
 
