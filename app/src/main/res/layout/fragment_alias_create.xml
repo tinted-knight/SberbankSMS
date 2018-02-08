@@ -4,7 +4,7 @@
                                              android:id="@+id/frameLayout"
                                              android:layout_width="match_parent"
                                              android:layout_height="match_parent"
-                                             tools:context="ru.tinted_knight.sberbanksms.ui.settings.AliasCreateFragment"
+                                             tools:context="ru.tinted_knight.sberbanksms.ui.settings.agents.AliasCreateFragment"
                                              android:layoutAnimation="@anim/layout_fall_down">
 
     <!-- TODO: Update blank fragment layout -->

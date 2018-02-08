@@ -1,4 +1,4 @@
-package ru.tinted_knight.sberbanksms.ui.settings
+package ru.tinted_knight.sberbanksms.ui.settings.agents
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders

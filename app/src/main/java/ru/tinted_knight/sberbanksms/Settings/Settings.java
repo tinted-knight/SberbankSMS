@@ -11,7 +11,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import ru.tinted_knight.sberbanksms.R;
-import ru.tinted_knight.sberbanksms.ui.settings.AgentsActivity;
+import ru.tinted_knight.sberbanksms.ui.settings.agents.AgentsActivity;
 
 public class Settings extends AppCompatActivity implements AdapterView.OnItemClickListener {
 

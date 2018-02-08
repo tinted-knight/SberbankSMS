@@ -1,4 +1,4 @@
-package ru.tinted_knight.sberbanksms.ui.settings
+package ru.tinted_knight.sberbanksms.ui.settings.agents
 
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -59,30 +59,20 @@ class AgentsActivity : AppCompatActivity(),
         return false
     }
 
-    override fun onAddAliasBtnPressed(agentId: Int, operation: Int) {
-        when (operation) {
-            AgentEditFragment.CREATE -> {
-                val fragment = AliasCreateFragment.newInstance(agentId)
-                supportFragmentManager.beginTransaction()
-                        .addToBackStack("aliasCreate")
-                        .replace(R.id.flAgents, fragment, AliasCreateFragment.TAG)
-                        .commit()
-            }
-            AgentEditFragment.EDIT -> {
-                val fragment = AliasEditFragment.newInstance(agentId)
-                supportFragmentManager.beginTransaction()
-                        .addToBackStack("aliasEdit")
-                        .replace(R.id.flAgents, fragment, AliasEditFragment.TAG)
-                        .commit()
-            }
-            AgentEditFragment.SHOW -> {
-                val fragment = AliasListFragment.newInstance(agentId)
-                supportFragmentManager.beginTransaction()
-                        .addToBackStack("aliasList")
-                        .replace(R.id.flAgents, fragment, AliasListFragment.TAG)
-                        .commit()
-            }
-        }
+    override fun onBtnEditPressed(agentId: Int) {
+        val fragment = AliasEditFragment.newInstance(agentId)
+        supportFragmentManager.beginTransaction()
+                .addToBackStack("aliasEdit")
+                .replace(R.id.flAgents, fragment, AliasEditFragment.TAG)
+                .commit()
+    }
+
+    override fun onBtnCreatePressed(agentId: Int) {
+        val fragment = AliasListFragment.newInstance(agentId)
+        supportFragmentManager.beginTransaction()
+                .addToBackStack("aliasList")
+                .replace(R.id.flAgents, fragment, AliasListFragment.TAG)
+                .commit()
     }
 
 }

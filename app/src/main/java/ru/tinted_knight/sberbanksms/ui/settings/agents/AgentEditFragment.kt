@@ -1,4 +1,4 @@
-package ru.tinted_knight.sberbanksms.ui.settings
+package ru.tinted_knight.sberbanksms.ui.settings.agents
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
@@ -8,7 +8,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
+import android.widget.Button
 import android.widget.TextView
 import ru.tinted_knight.sberbanksms.R
 import ru.tinted_knight.sberbanksms.viewmodel.AgentCommonViewModel
@@ -26,12 +26,8 @@ class AgentEditFragment : Fragment() {
     private var listener: OnAgentEditFragmentInteractionListener? = null
 
     companion object {
-        private val ARG_AGENT_ID = "agentId"
-        val TAG = "agent_edit_fragment"
-
-        val CREATE = 101
-        val EDIT = 102
-        val SHOW = 103
+        private const val ARG_AGENT_ID = "agentId"
+        const val TAG = "agent_edit_fragment"
 
         fun newInstance(agentId: Int): AgentEditFragment {
             val fragment = AgentEditFragment()
@@ -51,8 +47,6 @@ class AgentEditFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-//        val factory = AgentEditVMFactory(activity.application, agentId!!)
-//        viewModel = ViewModelProviders.of(this, factory).get(AgentViewModel::class.java)
         viewModel = ViewModelProviders.of(activity).get(AgentCommonViewModel::class.java)
 
         registerObservers()
@@ -71,22 +65,33 @@ class AgentEditFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         val root = inflater!!.inflate(R.layout.fragment_agent_edit, container, false)
-        tvAgentDefaultName = root.findViewById(R.id.tvAgentDefaultName)
-        tvAlias = root.findViewById(R.id.tvAlias)
-        tvAlias.setOnClickListener({
-            listener?.onAddAliasBtnPressed(agentId!!, SHOW)
-        })
 
-        val btnAddOrEdit: ImageButton = root.findViewById(R.id.btnAdd)
-        btnAddOrEdit.setOnClickListener({
-            if (tvAlias.text.trim() != "")
-                listener?.onAddAliasBtnPressed(agentId!!, EDIT)
-            else
-//                listener?.onAddAliasBtnPressed(agentId!!, CREATE)
-                listener?.onAddAliasBtnPressed(agentId!!, SHOW)
-        })
+        tvAgentDefaultName = root.findViewById(R.id.tvAgentDefaultName)
+
+        tvAlias = root.findViewById(R.id.tvAlias)
+        tvAlias.setOnClickListener(tvAliasClick)
+
+        val btnCreate = root.findViewById<Button>(R.id.btnCreate)
+        btnCreate.setOnClickListener(btnCreateClick)
+
+        val btnEdit = root.findViewById<Button>(R.id.btnEdit)
+        btnEdit.setOnClickListener(btnEditClick)
 
         return root
+    }
+
+    private val btnCreateClick = View.OnClickListener {
+        if (it is Button && it.id == R.id.btnCreate)
+            listener?.onBtnCreatePressed(agentId!!)
+    }
+
+    private val btnEditClick = View.OnClickListener {
+        if (it is Button && it.id == R.id.btnEdit && tvAlias.text.trim() != "")
+            listener?.onBtnEditPressed(agentId!!)
+    }
+
+    private val tvAliasClick = View.OnClickListener {
+        listener?.onBtnCreatePressed(agentId!!)
     }
 
     override fun onAttach(context: Context?) {
@@ -107,7 +112,8 @@ class AgentEditFragment : Fragment() {
     }
 
     interface OnAgentEditFragmentInteractionListener {
-        fun onAddAliasBtnPressed(agentId: Int, operation : Int)
+        fun onBtnEditPressed(agentId: Int)
+        fun onBtnCreatePressed(agentId: Int)
     }
 
 }

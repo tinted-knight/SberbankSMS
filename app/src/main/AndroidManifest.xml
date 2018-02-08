@@ -49,7 +49,7 @@
         </activity>
         <!-- <activity android:name=".list_MainActivityvity"> -->
         <!-- </activity> -->
-        <activity android:name=".ui.settings.AgentsActivity">
+        <activity android:name=".ui.settings.agents.AgentsActivity">
         </activity>
     </application>
 

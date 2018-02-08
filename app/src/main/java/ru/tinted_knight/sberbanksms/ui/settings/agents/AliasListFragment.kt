@@ -1,4 +1,4 @@
-package ru.tinted_knight.sberbanksms.ui.settings
+package ru.tinted_knight.sberbanksms.ui.settings.agents
 
 import android.app.AlertDialog
 import android.arch.lifecycle.Observer
@@ -31,7 +31,7 @@ class AliasListFragment : Fragment(), AliasesRecyclerViewAdapter.ListItemClickLi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
-            agentId = arguments.getInt(AliasListFragment.ARG_AGENT_ID)
+            agentId = arguments.getInt(ARG_AGENT_ID)
         }
     }
 
@@ -96,7 +96,7 @@ class AliasListFragment : Fragment(), AliasesRecyclerViewAdapter.ListItemClickLi
         fun newInstance(agentId: Int): AliasListFragment {
             val fragment = AliasListFragment()
             val args = Bundle()
-            args.putInt(AliasListFragment.ARG_AGENT_ID, agentId)
+            args.putInt(ARG_AGENT_ID, agentId)
             fragment.arguments = args
             return fragment
         }

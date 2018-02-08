@@ -2,7 +2,7 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context="ru.tinted_knight.sberbanksms.ui.settings.AgentsFragment">
+             tools:context="ru.tinted_knight.sberbanksms.ui.settings.agents.AgentsFragment">
 
     <!-- TODO: Update blank fragment layout -->
 
