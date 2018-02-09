@@ -25,7 +25,7 @@ class AgentsActivity : AppCompatActivity(),
         if (savedInstanceState == null)
             supportFragmentManager.beginTransaction()
                     .add(R.id.flAgents, fragment, AgentsFragment.TAG)
-                    .commit()
+                      .commit()
 //        else
 //            supportFragmentManager.popBackStackImmediate()
     }

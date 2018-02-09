@@ -77,7 +77,7 @@ public class ParseUtilsTest {
         result.card = "6824";
         result.date = 1509442380L;
         result.type = 0;
-        result.agent = "";
+        result.agent = "Зачисление";
         result.summa = 87423.92f;
         result.balance = 276643.28f;
         result.year = 2017;
@@ -137,7 +137,7 @@ public class ParseUtilsTest {
         result.card = "6824";
         result.date = 1511537040L;
         result.type = 0;
-        result.agent = "";
+        result.agent = "Зачисление";
         result.summa = 10000;
         result.balance = 271538.37f;
         result.year = 2017;
@@ -157,7 +157,7 @@ public class ParseUtilsTest {
         result.card = "6824";
         result.date = 1516231500L;
         result.type = 2;
-        result.agent = "Annual payment";
+        result.agent = "Оплата годового обслуживания";
         result.summa = 100;
         result.balance = 153404.13f;
         result.year = 2018;

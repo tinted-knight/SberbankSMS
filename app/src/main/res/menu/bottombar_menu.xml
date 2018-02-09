@@ -2,14 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/bbFilter"
-        android:icon="@drawable/filter_outline"
+        android:icon="@drawable/funnel"
         android:title="@string/clear_filter" />
     <item
         android:id="@+id/bbCards"
-        android:icon="@drawable/ic_card"
+        android:icon="@drawable/credit_card"
         android:title="@string/cards"/>
     <item
         android:id="@+id/bbSettings"
-        android:icon="@drawable/ic_settings"
+        android:icon="@drawable/settings"
         android:title="@string/settings" />
 </menu>

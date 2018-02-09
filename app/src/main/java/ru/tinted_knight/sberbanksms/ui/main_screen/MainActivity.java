@@ -84,6 +84,7 @@ public class MainActivity
 
     private void initBottomBar() {
         BottomNavigationView bbar = findViewById(R.id.bottomNavigationView);
+        bbar.setItemIconTintList(null);
         bbar.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {

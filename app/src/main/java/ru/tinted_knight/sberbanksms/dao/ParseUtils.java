@@ -87,8 +87,11 @@ public class ParseUtils {
                 sReturnEntity.hour = dtSplit[DateTimeKeys.HOUR];
                 sReturnEntity.minute = dtSplit[DateTimeKeys.MINUTE];
 
+                if (sReturnEntity.type == Constants.OperationType.INCOME && sReturnEntity.agent.equals(""))
+                    sReturnEntity.agent = "Зачисление";
+
                 if (data.contains(Constants.ANNUAL_PAYMENT_FLAG)) {
-                    sReturnEntity.agent = "Annual payment";
+                    sReturnEntity.agent = "Оплата годового обслуживания";
                     sReturnEntity.type = Constants.OperationType.OUTCOME;
                 }
 
