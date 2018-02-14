@@ -5,7 +5,7 @@
                                              android:id="@+id/constraintLayout"
                                              android:layout_width="match_parent"
                                              android:layout_height="match_parent"
-                                             >
+    >
 
     <TextView
         android:id="@+id/tvLabelAgentDefaultName"
@@ -60,9 +60,7 @@
 
     <Button
         android:id="@+id/btnCreate"
-        style="@style/Widget.AppCompat.Button.Borderless.Colored"
-        android:background="@color/colorAccent"
-        android:textColor="@color/cardview_light_background"
+        style="@style/AppTheme.Button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -75,12 +73,10 @@
 
     <Button
         android:id="@+id/btnEdit"
-        style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
+        style="@style/AppTheme.Button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:background="@color/colorAccent"
-        android:textColor="@color/cardview_light_background"
         android:text="Edit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

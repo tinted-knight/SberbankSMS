@@ -8,4 +8,10 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:statusBarColor">@color/colorPrimaryDark</item>
     </style>
+
+    <style name="AppTheme.Button" parent="Base.Widget.AppCompat.Button.Borderless.Colored">
+        <item name="android:background">@drawable/btn_ripple</item>
+        <item name="android:textColor">@color/primary_button_text</item>
+    </style>
+
 </resources>

@@ -39,4 +39,8 @@
         <item name="android:textSize">20sp</item>
     </style>
 
+    <style name="AppTheme.Button" parent="Base.Widget.AppCompat.Button.Borderless.Colored">
+        <item name="android:background">@color/april</item>
+    </style>
+
 </resources>
