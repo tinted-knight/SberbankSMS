@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import ru.tinted_knight.sberbanksms.R
 import ru.tinted_knight.sberbanksms.dao.entities.AgentEntity
 
 class AgentsRecyclerViewAdapter(val listener: ListItemClickListener) : RecyclerView.Adapter<AgentsRecyclerViewAdapter.ViewHolder>() {
@@ -23,7 +24,7 @@ class AgentsRecyclerViewAdapter(val listener: ListItemClickListener) : RecyclerV
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent?.context)
-        val itemView = inflater.inflate(android.R.layout.simple_list_item_1, parent, false)
+        val itemView = inflater.inflate(R.layout.simple_list_item, parent, false)
 
         return ViewHolder(itemView)
     }

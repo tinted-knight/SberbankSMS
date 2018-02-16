@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="textPrimary">#000000</color>
     <color name="colorPrimary">#4e342e</color>
     <color name="colorPrimaryDark">#3e2723</color>
     <color name="colorAccent">#4e342e</color>
+    <color name="colorPressed">#904e342e</color>
     <color name="red">#ff1744</color>
     <color name="green">#2e7d32</color>
     <color name="december">#039be5</color>

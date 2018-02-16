@@ -5,7 +5,7 @@
                                              android:id="@+id/constraintLayout"
                                              android:layout_width="match_parent"
                                              android:layout_height="match_parent"
-                                             >
+    >
 
     <TextView
         android:id="@+id/tvLabelAgentDefaultName"
@@ -48,39 +48,34 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="8dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:ems="10"
         android:hint="Псевдоним агента"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvLabelAgentAlias"
-        android:layout_marginRight="8dp"
-        android:layout_marginLeft="16dp"/>
+        app:layout_constraintTop_toBottomOf="@+id/tvLabelAgentAlias"/>
 
     <Button
         android:id="@+id/btnCreate"
-        style="@style/Widget.AppCompat.Button.Borderless.Colored"
-        android:background="@color/colorAccent"
-        android:textColor="@color/cardview_light_background"
+        style="@style/AppTheme.Button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
         android:text="Choose / Create"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/guideline"
+        app:layout_constraintEnd_toStartOf="@+id/imageView3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvAlias"
         app:layout_constraintVertical_bias="1.0"/>
 
     <Button
         android:id="@+id/btnEdit"
-        style="@style/Widget.AppCompat.Button.ButtonBar.AlertDialog"
+        style="@style/AppTheme.Button"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
-        android:background="@color/colorAccent"
-        android:textColor="@color/cardview_light_background"
         android:text="Edit"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

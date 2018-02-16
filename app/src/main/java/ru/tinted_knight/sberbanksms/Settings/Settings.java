@@ -37,7 +37,7 @@ public class Settings extends AppCompatActivity implements AdapterView.OnItemCli
 
         lvMain = (ListView) findViewById(R.id.lvMain);
         list = new String[] { "Карты", "Агенты", "Псевдонимы", "Операции", "Исходные СМС", "Настройки приложения"};
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, list);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.simple_list_item, list);
         lvMain.setAdapter(adapter);
         lvMain.setOnItemClickListener(this);
     }

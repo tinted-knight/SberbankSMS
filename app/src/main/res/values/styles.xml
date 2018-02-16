@@ -40,7 +40,13 @@
     </style>
 
     <style name="AppTheme.Button" parent="Base.Widget.AppCompat.Button.Borderless.Colored">
-        <item name="android:background">@color/april</item>
+        <item name="android:background">@drawable/btn_colored</item>
+
+    </style>
+
+    <style name="AppTheme.TextSmall" parent="Base.TextAppearance.AppCompat.Small">
+        <item name="android:textColor">@color/textPrimary</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
 </resources>
